@@ -1,5 +1,7 @@
 # News
 
+Read [here](https://github.com/block-dog/news/issues/1) for tech stack details.
+
 ## Development
 
 ```bash
