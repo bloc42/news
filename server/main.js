@@ -1,4 +1,5 @@
 import koa from 'koa' // koa@2
+import cors from 'koa2-cors'
 import koaRouter from 'koa-router'
 import koaBody from 'koa-bodyparser'
 import { graphqlKoa } from 'apollo-server-koa'
@@ -11,6 +12,7 @@ const PORT = 3001
 
 // koaBody is needed just for POST.
 app.use(koaBody())
+app.use(cors())
 
 // Some fake data
 const books = [
@@ -41,6 +43,7 @@ const schema = makeExecutableSchema({
   resolvers
 })
 
+router.get('/graphql', graphqlKoa({ schema: schema }))
 router.post('/graphql', graphqlKoa({ schema: schema }))
 
 // Setup the /graphiql route to show the GraphiQL UI
