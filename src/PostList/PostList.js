@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Post from '../Post'
 
-const Posts = () => (
+const PostList = () => (
   <Query
     query={gql`
     {
@@ -28,4 +28,4 @@ const Posts = () => (
   </Query>
 )
 
-export default Posts
+export default PostList
