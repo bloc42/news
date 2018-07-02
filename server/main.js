@@ -4,7 +4,7 @@ import koaRouter from 'koa-router'
 import koaBody from 'koa-bodyparser'
 import { graphqlKoa } from 'apollo-server-koa'
 import { graphiqlKoa } from 'apollo-server-koa'
-import { makeExecutableSchema } from 'graphql-tools'
+import schema from './schema'
 
 const app = new koa()
 const router = new koaRouter()
@@ -13,35 +13,6 @@ const PORT = 3001
 // koaBody is needed just for POST.
 app.use(koaBody())
 app.use(cors())
-
-// Some fake data
-const posts = [
-  {
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling'
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton'
-  }
-]
-
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { posts: [Post] }
-  type Post { title: String, author: String }
-`
-
-// The resolvers
-const resolvers = {
-  Query: { posts: () => posts }
-}
-
-// Put together a schema
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-})
 
 router.get('/graphql', graphqlKoa({ schema }))
 router.post('/graphql', graphqlKoa({ schema }))

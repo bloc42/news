@@ -8,7 +8,7 @@ const theme = {
 function adjustColor (color, amount) {
   let usePound = false
 
-  if (color[0] == '#') {
+  if (color[0] === '#') {
     color = color.slice(1)
     usePound = true
   }
