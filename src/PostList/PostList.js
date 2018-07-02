@@ -1,12 +1,13 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import Post from '../Post/Post'
 
-const Books = () => (
+const Posts = () => (
   <Query
     query={gql`
     {
-      books {
+      posts {
         title,
         author
       }
@@ -20,13 +21,11 @@ const Books = () => (
         return <p>Error :(</p>
       }
 
-      return data.books.map(({ title, author }) => (
-        <div key={title}>
-          <p>{`Title: ${title}, By: ${author}`}</p>
-        </div>
+      return data.posts.map(({ title, author }) => (
+        <Post key={title} title={title} author={author} />
       ))
     }}
   </Query>
 )
 
-export default Books
+export default Posts

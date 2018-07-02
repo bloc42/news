@@ -15,7 +15,7 @@ app.use(koaBody())
 app.use(cors())
 
 // Some fake data
-const books = [
+const posts = [
   {
     title: "Harry Potter and the Sorcerer's stone",
     author: 'J.K. Rowling'
@@ -28,13 +28,13 @@ const books = [
 
 // The GraphQL schema in string form
 const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
+  type Query { posts: [Post] }
+  type Post { title: String, author: String }
 `
 
 // The resolvers
 const resolvers = {
-  Query: { books: () => books }
+  Query: { posts: () => posts }
 }
 
 // Put together a schema
@@ -43,8 +43,8 @@ const schema = makeExecutableSchema({
   resolvers
 })
 
-router.get('/graphql', graphqlKoa({ schema: schema }))
-router.post('/graphql', graphqlKoa({ schema: schema }))
+router.get('/graphql', graphqlKoa({ schema }))
+router.post('/graphql', graphqlKoa({ schema }))
 
 // Setup the /graphiql route to show the GraphiQL UI
 router.get(

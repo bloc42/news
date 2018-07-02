@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import Books from '../Books'
+import PostList from '../PostList'
+import styled from 'styled-components'
+
+const StyledApp = styled.div`
+  margin: 0 auto;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 1rem;
+  max-width: 800px;
+`
 
 class App extends Component {
   render () {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to React</h1>
-        </header>
-        <p className='App-intro'>
-          <Books />
-        </p>
-      </div>
+      <StyledApp>
+        <header>TODO: header</header>
+
+        <hr />
+
+        <main>
+          <PostList />
+        </main>
+      </StyledApp>
     )
   }
 }

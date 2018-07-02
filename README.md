@@ -19,7 +19,7 @@ Type in the following query:
 
 ```
 {
-  books {
+  posts {
     title,
     author
   }
