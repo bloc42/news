@@ -16,15 +16,16 @@ const StyledNav = styled.nav`
   > ul {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-around;
     list-style-type: none;
   }
 `
 
 const StyledNavLink = styled(NavLink)`
   color: ${props => props.theme.fontColor};
+  font-size: 1.4rem;
   font-weight: bold;
-  padding: 1rem;
+  margin: 1rem;
   text-decoration: none;
 
   &.active {
@@ -33,19 +34,23 @@ const StyledNavLink = styled(NavLink)`
 `
 
 const Header = () => {
-  return (
-    <StyledHeader>
+  return <StyledHeader>
       <StyledLogo>
-        <StyledNavLink exact strict to='/'>Blockdog</StyledNavLink>
+        <StyledNavLink exact strict to="/">
+          Blockdog
+        </StyledNavLink>
       </StyledLogo>
       <StyledNav>
         <ul>
-          <li><StyledNavLink to='/login'>Login</StyledNavLink></li>
-          <li><StyledNavLink to='/signup'>Signup</StyledNavLink></li>
+          <li>
+            <StyledNavLink to="/login">登录</StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink to="/signup">注册</StyledNavLink>
+          </li>
         </ul>
       </StyledNav>
     </StyledHeader>
-  )
 }
 
 export default Header

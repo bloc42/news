@@ -6,13 +6,19 @@ import Main from '../Main'
 const StyledApp = styled.div`
   margin: 0 auto;
   padding: 0;
-  font-family: sans-serif;
+  font-family: -apple-system,  PingFang SC,  Hiragino Sans GB,  Microsoft YaHei,
+    
+    Helvetica Neue,  Arial,  sans-serif;
   font-size: 1rem;
   max-width: 800px;
+
+  * {
+    box-sizing: border-box;
+  }
 `
 
 class App extends Component {
-  render () {
+  render() {
     return (
       <StyledApp>
         <Header />
