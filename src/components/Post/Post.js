@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 const StyledPost = styled.article`
   margin: 2rem 0;
+  padding: 0 1rem;
 
   > header {
     font-weight: bold;

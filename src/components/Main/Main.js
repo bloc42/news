@@ -4,18 +4,23 @@ import Home from '../../pages/Home'
 import Login from '../../pages/Login'
 import Signup from '../../pages/Signup'
 import styled from 'styled-components'
+import Container from '../Container'
 
 const StyledMain = styled.main`
-  margin: 2rem;
+  flex: 1;
+  margin: 0 auto;
+  width: 100%;
 `
 
 const Main = () => (
   <StyledMain>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route path='/login' component={Login} />
-      <Route path='/signup' component={Signup} />
-    </Switch>
+    <Container>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+      </Switch>
+    </Container>
   </StyledMain>
 )
 
