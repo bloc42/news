@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import PostList from '../PostList'
 import styled from 'styled-components'
+import Header from '../Header'
+import Main from '../Main'
 
 const StyledApp = styled.div`
   margin: 0 auto;
@@ -14,13 +15,8 @@ class App extends Component {
   render () {
     return (
       <StyledApp>
-        <header>TODO: header</header>
-
-        <hr />
-
-        <main>
-          <PostList />
-        </main>
+        <Header />
+        <Main />
       </StyledApp>
     )
   }

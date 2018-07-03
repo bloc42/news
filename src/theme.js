@@ -1,8 +1,13 @@
 const darkBlack = '#333'
+const tomato = 'tomato'
 
 const theme = {
   fontColor: darkBlack,
-  fontColorLight: adjustColor(darkBlack, 40)
+  fontColorLight: adjustColor(darkBlack, 40),
+  primaryColor: tomato,
+  primaryColorLight: adjustColor(tomato, 20),
+  borderColor: '#e8e8e8',
+  borderRadius: '4px'
 }
 
 function adjustColor (color, amount) {
