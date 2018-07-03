@@ -14,7 +14,10 @@ const PORT = 3001
 app.use(koaBody())
 app.use(cors())
 
+// Endpoint to read stuff
 router.get('/graphql', graphqlKoa({ schema }))
+
+// Endpoint to write stuff
 router.post('/graphql', graphqlKoa({ schema }))
 
 // Setup the /graphiql route to show the GraphiQL UI

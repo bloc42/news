@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools'
-import mockPosts from './mock/posts'
+import postApi from './entities/post/api'
 
 // The GraphQL schema in string form
 const typeDefs = `
@@ -9,7 +9,7 @@ const typeDefs = `
 
 // The resolvers
 const resolvers = {
-  Query: { posts: () => mockPosts }
+  Query: { posts: postApi.getPosts }
 }
 
 // Put together a schema
