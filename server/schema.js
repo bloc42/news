@@ -4,7 +4,7 @@ import postApi from './entities/post/api'
 // The GraphQL schema in string form
 const typeDefs = `
   type Query { posts: [Post] }
-  type Post { title: String, author: String }
+  type Post { title: String, author: String, source:String, createtime: String, comment_count: String}
 `
 
 // The resolvers

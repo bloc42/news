@@ -6,12 +6,15 @@ import Post from '../Post'
 const PostList = () => (
   <Query
     query={gql`
-    {
-      posts {
-        title,
-        author
+      {
+        posts {
+          title
+          author
+          source
+          createtime
+          comment_count
+        }
       }
-    }
     `}
   >
     {({ loading, error, data }) => {
@@ -21,9 +24,18 @@ const PostList = () => (
         return <p>Error :(</p>
       }
 
-      return data.posts.map(({ title, author }) => (
-        <Post key={title} title={title} author={author} />
-      ))
+      return data.posts.map(
+        ({ title, author, source, createtime, comment_count }) => (
+          <Post
+            key={title}
+            title={title}
+            author={author}
+            source={source}
+            createtime={createtime}
+            comment_count={comment_count}
+          />
+        )
+      )
     }}
   </Query>
 )
