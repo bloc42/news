@@ -27,7 +27,18 @@ class Signup extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    // TODO
+    const { username, phone, password } = this.state
+    const { data } = await this.props.signupMutation({
+      variables: {
+        username,
+        phone,
+        password
+      }
+    })
+
+    const { id, username } = data.signup
+    // TODO: save current user info
+    // TODO: redirect to homepage
   }
 
   render() {
