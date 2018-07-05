@@ -4,9 +4,12 @@ import koaRouter from 'koa-router'
 import koaBody from 'koa-bodyparser'
 import session from 'koa-session'
 import passport from 'koa-passport'
+import mongoose from 'mongoose'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 import schema from './schema'
 import config from '../config'
+
+mongoose.connect(config.DBURL)
 
 const app = new koa()
 const router = new koaRouter()

@@ -39,7 +39,7 @@ class Signup extends Component {
         password
       }
     })
-    console.log(`data: ${data}`)
+    console.log(`data: %o`, data)
 
     // const { id, username } = data.signup
     // TODO: save current user info

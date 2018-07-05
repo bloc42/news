@@ -4,6 +4,12 @@ Read [here](https://github.com/block-dog/news/issues/1) for tech stack details.
 
 ## Development
 
+Initialize config file:
+
+```bash
+cp config.example.js config.js
+```
+
 Install dependencies:
 
 ```bash
