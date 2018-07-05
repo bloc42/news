@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
@@ -10,7 +12,6 @@ class Signup extends Component {
     this.state = {
       username: '',
       phone: '',
-      email: '',
       password: ''
     }
   }
@@ -55,15 +56,6 @@ class Signup extends Component {
           </Form.Item>
           <Form.Item>
             <Input
-              type="email"
-              name="email"
-              placeholder="邮箱"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input
               type="password"
               name="password"
               placeholder="密码（不少于6位）"
@@ -82,4 +74,15 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+const SIGNUP_MUTATION = gql`
+  mutation Signup($username: String!, $phone: String!, $password: String!) {
+    signup(username: $username, phone: $phone, password: $password) {
+      id
+      username
+    }
+  }
+`
+
+export default compose(graphql(SIGNUP_MUTATION, { name: 'signupMutation' }))(
+  Signup
+)

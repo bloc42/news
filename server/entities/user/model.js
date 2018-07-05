@@ -7,12 +7,13 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, '用户名不能为空。']
   },
-  // TODO: either phone or email is required.
   phone: {
-    type: String
+    type: String,
+    require: [true, '手机号不能为空。']
   },
   email: {
     type: String
+    // TODO
   },
   password: {
     type: String,

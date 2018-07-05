@@ -37,7 +37,7 @@ class Login extends Component {
               type="text"
               name="username"
               value={this.state.username}
-              placeholder="用户名/手机号/邮箱"
+              placeholder="用户名/手机号"
               onChange={this.handleChange}
             />
           </Form.Item>
