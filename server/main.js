@@ -2,17 +2,27 @@ import koa from 'koa' // koa@2
 import cors from 'koa2-cors'
 import koaRouter from 'koa-router'
 import koaBody from 'koa-bodyparser'
+import session from 'koa-session'
+import passport from 'koa-passport'
 import { graphqlKoa } from 'apollo-server-koa'
 import { graphiqlKoa } from 'apollo-server-koa'
 import schema from './schema'
+import config from '../config'
 
 const app = new koa()
 const router = new koaRouter()
-const PORT = 3001
+const PORT = config.serverPort
+
+app.keys = [config.secret]
+app.use(session({}, app))
 
 // koaBody is needed just for POST.
 app.use(koaBody())
 app.use(cors())
+
+app.use(passport.initialize())
+app.use(passport.session())
+require('./passport')
 
 // Endpoint to read stuff
 router.get('/graphql', graphqlKoa({ schema }))
@@ -31,4 +41,4 @@ router.get(
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.listen(PORT)
-console.log(`Listening on PORT: ${PORT}`)
+console.log(`Server listening on port: ${PORT}`)
