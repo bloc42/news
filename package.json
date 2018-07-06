@@ -25,7 +25,6 @@
     "styled-components": "^3.3.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server/index.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
@@ -40,10 +39,8 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^3.6.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
-    "nodemon": "^1.17.5",
     "prettier": "^1.13.7"
   },
   "proxy": "http://localhost:3001"

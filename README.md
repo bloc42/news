@@ -16,17 +16,11 @@ Install dependencies:
 yarn
 ```
 
-For debugging purpose, we can start client and server separately:
+Start client and server separately:
 
 ```bash
 yarn run client
 yarn run server
-```
-
-Or we can start both concurrently:
-
-```bash
-yarn start
 ```
 
 ### GraphQL

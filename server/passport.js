@@ -16,12 +16,17 @@ passport.deserializeUser(async function(id, done) {
 })
 
 passport.use(
-  new LocalStrategy(async function(username, password, done) {
-    try {
-      const user = await userApi.signInViaLocal(username, password)
-      done(null, user)
-    } catch (err) {
-      done(err)
+  new LocalStrategy(
+    {
+      usernameField: 'username'
+    },
+    async function(username, password, done) {
+      try {
+        const user = await userApi.signInViaLocal(username, password)
+        done(null, user)
+      } catch (err) {
+        done(err)
+      }
     }
-  })
+  )
 )

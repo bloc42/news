@@ -30,7 +30,9 @@ require('./passport')
 router.get('/graphql', graphqlKoa({ schema }))
 
 // Endpoint to write stuff
-router.post('/graphql', graphqlKoa({ schema }))
+router.post('/graphql', async (ctx, next) => {
+  await graphqlKoa({ schema, context: { ctx } })(ctx, next)
+})
 
 // Setup the /graphiql route to show the GraphiQL UI
 router.get(
