@@ -1,7 +1,9 @@
 import postApi from '../entities/post/api'
-import userApi from '../entities/user/api'
 
 export default {
-  // currentUser: userApi.getUser,
+  currentUser: (obj, args, context, info) => {
+    const { ctx } = context
+    return ctx.state.user
+  },
   posts: postApi.getPosts
 }

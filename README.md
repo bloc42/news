@@ -23,19 +23,44 @@ yarn run client
 yarn run server
 ```
 
-### GraphQL
+## GraphQL
 
 There is a useful tool to interact with GraphQL API:
 
 `http://localhost:3001/graphiql`
 
-Type in the following query:
+### Examples
+
+Get posts:
 
 ```
-{
+query {
   posts {
     title,
     author
+  }
+}
+```
+
+Get current login user:
+
+```
+query {
+  currentUser {
+    id,
+    username,
+    phone
+  }
+}
+```
+
+Sign up a user:
+
+```
+mutation {
+  signup(username: "foo", phone: "123456", password: "89hf9&*H") {
+    id,
+    username
   }
 }
 ```

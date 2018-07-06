@@ -4,6 +4,7 @@ import resolvers from './resolvers'
 // The GraphQL schema in string form
 const typeDefs = `
   type Query { 
+    currentUser: User,
     posts: [Post] 
   }
 
@@ -23,8 +24,7 @@ const typeDefs = `
   type User {
     id: ID!,
     username: String!,
-    phone: String!,
-    password: String!
+    phone: String!
   }
 `
 

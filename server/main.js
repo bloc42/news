@@ -31,7 +31,13 @@ router.get('/graphql', graphqlKoa({ schema }))
 
 // Endpoint to write stuff
 router.post('/graphql', async (ctx, next) => {
-  await graphqlKoa({ schema, context: { ctx } })(ctx, next)
+  await graphqlKoa({
+    schema,
+    context: {
+      // Pass koa ctx to graphql context
+      ctx
+    }
+  })(ctx, next)
 })
 
 // Setup the /graphiql route to show the GraphiQL UI
