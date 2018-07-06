@@ -9,6 +9,7 @@ import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
+import { withRouter } from 'react-router-dom'
 
 class Signup extends Component {
   constructor(props) {
@@ -32,18 +33,23 @@ class Signup extends Component {
   handleSubmit = async e => {
     e.preventDefault()
     const { username, phone, password } = this.state
-    const { data } = await this.props.signupMutation({
-      variables: {
-        username,
-        phone,
-        password
-      }
-    })
-    console.log(`data: %o`, data)
 
-    // const { id, username } = data.signup
-    // TODO: save current user info
-    // TODO: redirect to homepage
+    try {
+      const { data } = await this.props.signupMutation({
+        variables: {
+          username,
+          phone,
+          password
+        }
+      })
+
+      console.log(data)
+      // TODO: save current user info ?
+      this.props.history.push('/')
+    } catch (err) {
+      // TODO: show error message in UI
+      console.log(err)
+    }
   }
 
   render() {
@@ -99,6 +105,8 @@ const SIGNUP_MUTATION = gql`
   }
 `
 
-export default compose(graphql(SIGNUP_MUTATION, { name: 'signupMutation' }))(
-  Signup
-)
+const SignupWithMutation = compose(
+  graphql(SIGNUP_MUTATION, { name: 'signupMutation' })
+)(Signup)
+
+export default withRouter(SignupWithMutation)
