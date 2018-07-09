@@ -1,8 +1,7 @@
-// Set options as a parameter, environment variable, or rc file.
-require = require('esm')(module /*, options */)
-module.exports = require('./main.js')
+/**
+ * Use esm to enable ES6 module loader for Node.
+ * https://github.com/standard-things/esm
+ */
 
-process.on('SIGINT', () => {
-  console.log('do SIGINT')
-  process.exit()
-})
+require = require('esm')(module)
+module.exports = require('./main.js')
