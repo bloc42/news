@@ -1,5 +1,5 @@
 import React from 'react'
-import PostList from '../../components/PostList'
+import PostList from '../../containers/PostList'
 
 const Home = () => {
   return (

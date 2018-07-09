@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import Container from '../Container'
 import { CURRENT_USER_QUERY } from '../../apollo/query'
 import { Query, withApollo } from 'react-apollo'
 import { LOGOUT_MUTATION } from '../../apollo/mutation'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
-import Menu from '../Menu'
+import Menu from '../../components/Menu'
+import Container from '../../components/Container'
 
 const StyledHeader = styled.header`
   background: white;

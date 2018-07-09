@@ -1,7 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import Post from '../Post'
+import Post from '../../components/Post'
 
 const POSTS_QUERY = gql`
   {

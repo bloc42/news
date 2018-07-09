@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import Header from '../Header'
-import Main from '../Main'
+import Header from '../containers/Header'
+import Main from '../components/Main'
 import './reset.css'
 
 const StyledApp = styled.div`
@@ -16,15 +16,11 @@ const StyledApp = styled.div`
   background: #f1f1f1;
 `
 
-class App extends Component {
-  render() {
-    return (
-      <StyledApp>
-        <Header />
-        <Main />
-      </StyledApp>
-    )
-  }
-}
+const App = () => (
+  <StyledApp>
+    <Header />
+    <Main />
+  </StyledApp>
+)
 
 export default App
