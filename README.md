@@ -52,8 +52,7 @@ Get current login user:
 query {
   currentUser {
     id,
-    username,
-    email
+    username
   }
 }
 ```

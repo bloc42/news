@@ -3,20 +3,20 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Post from '../Post'
 
+const POSTS_QUERY = gql`
+  {
+    posts {
+      title
+      author
+      source
+      createtime
+      comment_count
+    }
+  }
+`
+
 const PostList = () => (
-  <Query
-    query={gql`
-      {
-        posts {
-          title
-          author
-          source
-          createtime
-          comment_count
-        }
-      }
-    `}
-  >
+  <Query query={POSTS_QUERY}>
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>
       if (error) {
