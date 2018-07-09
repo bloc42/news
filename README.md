@@ -73,4 +73,6 @@ mutation {
 
 A user is authenticated via [koa-passport](https://github.com/rkusa/koa-passport) middleware after signup/login. The server will send back a session id and the browser saves the session id in cookie. The subsequent requests initiated by the browser will include this session id which allows the server to identify a specific user.
 
+We use [bcrypt](https://github.com/kelektiv/node.bcrypt.js) to hash the password before we save a new user to the databse. The implementation is in `server/entities/user/model.js`.
+
 After a user logged in or signed up, we update the `currentUser` in [Apollo cache](https://www.apollographql.com/docs/react/essentials/mutations.html#update). Once the user logs out, we reset the Apollo cache to make sure `currentUser` is cleared.
