@@ -22,7 +22,10 @@ const client = new ApolloClient({
   // Pass the configuration option { uri: YOUR_GRAPHQL_API_URL } to the `HttpLink` to connect
   // to a different host
   link: ApolloLink.from([stateLink, httpLink]),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaults: {
+    currentUser: null
+  }
 })
 
 export default client

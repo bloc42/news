@@ -60,6 +60,11 @@ class Header extends Component {
     return (
       <Query query={CURRENT_USER_QUERY}>
         {({ loading, error, data }) => {
+          if (error) {
+            console.log(error)
+            return null
+          }
+
           if (loading) {
             return null
           }
