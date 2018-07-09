@@ -25,6 +25,25 @@ yarn run server
 
 ## Documentation
 
+### Folder structure
+
+#### Client
+
+Under `src` folder:
+
+- `components`: Dumb components. Cares about how things look.
+- `containers`: Smart components. Cares about how things work.
+- `pages`: Page components. Each corresponds to an url route.
+- `theme.js`: Theme provider for [styled-components](https://www.styled-components.com/). Define global CSS variables here.
+
+#### Server
+
+Under `server` folder:
+
+- `entities`: A collection of data entities. Everything releated to an entity, e.g., model and API, is defined within the entity folder.
+- `passport.js`: Configurations and strategy definitions for [passport](http://www.passportjs.org/).
+- `schema.js`: Exports merged schema for GraphQL API.
+
 ### GraphQL
 
 There is a useful tool to interact with GraphQL API:
