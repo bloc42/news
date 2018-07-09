@@ -1,7 +1,14 @@
-import User from '../entities/user/model'
+import User from './model'
 import passport from 'koa-passport'
 
-export default {
+const Query = {
+  currentUser: (obj, args, context, info) => {
+    const { ctx } = context
+    return ctx.state.user
+  }
+}
+
+const Mutation = {
   login(obj, args, context, info) {
     return new Promise(async (resolve, reject) => {
       const { username, password } = args
@@ -72,4 +79,9 @@ export default {
     ctx.logout()
     return user
   }
+}
+
+export default {
+  Query,
+  Mutation
 }

@@ -9,7 +9,7 @@ const api = {
   signInViaLocal(username, password) {
     return new Promise(async (resolve, reject) => {
       let user = await User.findOne({
-        $or: [{ phone: username }, { username }]
+        $or: [{ email: username }, { username }]
       }).exec()
 
       const errorMsg = '用户名或密码错误。'

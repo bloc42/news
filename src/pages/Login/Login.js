@@ -30,7 +30,7 @@ class Login extends Component {
     const { username, password } = this.state
 
     try {
-      const { data } = await this.props.loginMutation({
+      await this.props.loginMutation({
         variables: {
           username,
           password
