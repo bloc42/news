@@ -2,6 +2,30 @@ import User from '../entities/user/model'
 import passport from 'koa-passport'
 
 export default {
+  login(obj, args, context, info) {
+    return new Promise(async (resolve, reject) => {
+      const { username, password } = args
+      const { ctx } = context
+      ctx.request.body = args
+
+      passport.authenticate('local', function(err, user) {
+        if (err) {
+          reject(err)
+        } else {
+          if (user) {
+            ctx.login(user)
+            resolve({
+              id: user.id,
+              username
+            })
+          } else {
+            reject('用户验证失败。')
+          }
+        }
+      })(ctx)
+    })
+  },
+
   signup(obj, args, context, info) {
     return new Promise(async (resolve, reject) => {
       const { username, phone, password } = args
@@ -35,7 +59,7 @@ export default {
                   username
                 })
               } else {
-                reject('Failed to authenticate user.')
+                reject('用户验证失败。')
               }
             }
           })(ctx)

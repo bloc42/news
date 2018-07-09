@@ -6,7 +6,12 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const cache = new InMemoryCache()
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' })
+const httpLink = new HttpLink({
+  uri: 'http://localhost:3001/graphql',
+  // credentials: 'include' if your backend is a different domain
+  // https://www.apollographql.com/docs/react/recipes/authentication.html#Cookie
+  credentials: 'include'
+})
 const stateLink = withClientState({
   cache
 })

@@ -5,5 +5,7 @@ export default {
     const { ctx } = context
     return ctx.state.user
   },
-  posts: postApi.getPosts
+  posts: (obj, args, context, info) => {
+    return postApi.getPosts()
+  }
 }

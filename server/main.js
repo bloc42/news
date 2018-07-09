@@ -12,19 +12,25 @@ import config from '../config'
 mongoose.connect(config.DBURL)
 
 const app = new koa()
-const router = new koaRouter()
 const PORT = config.serverPort
 
+app.proxy = true
 app.keys = [config.secret]
 app.use(session({}, app))
 
 // koaBody is needed just for POST.
 app.use(koaBody())
-app.use(cors())
+app.use(
+  cors({
+    credentials: true
+  })
+)
 
+require('./passport')
 app.use(passport.initialize())
 app.use(passport.session())
-require('./passport')
+
+const router = new koaRouter()
 
 // Endpoint to read stuff
 router.get('/graphql', graphqlKoa({ schema }))

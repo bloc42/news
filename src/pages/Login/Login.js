@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
@@ -22,9 +24,26 @@ class Login extends Component {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
     // TODO
+    const { username, password } = this.state
+
+    try {
+      const { data } = await this.props.loginMutation({
+        variables: {
+          username,
+          password
+        }
+      })
+
+      console.log(data)
+      // TODO: save current user info ?
+      this.props.history.push('/')
+    } catch (err) {
+      // TODO: show error message in UI
+      console.log(err)
+    }
   }
 
   render() {
@@ -61,4 +80,17 @@ class Login extends Component {
   }
 }
 
-export default Login
+const LOGIN_MUTATION = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      id
+      username
+    }
+  }
+`
+
+const LoginWithMutation = compose(
+  graphql(LOGIN_MUTATION, { name: 'loginMutation' })
+)(Login)
+
+export default LoginWithMutation
