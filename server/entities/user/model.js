@@ -8,12 +8,11 @@ const userSchema = mongoose.Schema({
     required: [true, '用户名不能为空。']
   },
   phone: {
-    type: String,
-    require: [true, '手机号不能为空。']
+    type: String
   },
   email: {
-    type: String
-    // TODO
+    type: String,
+    require: [true, '邮箱不能为空。']
   },
   password: {
     type: String,

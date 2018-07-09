@@ -16,7 +16,7 @@ class Signup extends Component {
     super(props)
     this.state = {
       username: '',
-      phone: '',
+      email: '',
       password: ''
     }
   }
@@ -32,13 +32,13 @@ class Signup extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, phone, password } = this.state
+    const { username, email, password } = this.state
 
     try {
       const { data } = await this.props.signupMutation({
         variables: {
           username,
-          phone,
+          email,
           password
         }
       })
@@ -69,10 +69,10 @@ class Signup extends Component {
           </Form.Item>
           <Form.Item>
             <Input
-              type="text"
-              name="phone"
-              placeholder="手机号"
-              value={this.state.phone}
+              type="email"
+              name="email"
+              placeholder="邮箱"
+              value={this.state.email}
               onChange={this.handleChange}
             />
           </Form.Item>
@@ -97,8 +97,8 @@ class Signup extends Component {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation Signup($username: String!, $phone: String!, $password: String!) {
-    signup(username: $username, phone: $phone, password: $password) {
+  mutation Signup($username: String!, $email: String!, $password: String!) {
+    signup(username: $username, email: $email, password: $password) {
       id
       username
     }

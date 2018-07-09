@@ -8,6 +8,8 @@ export default {
       const { ctx } = context
       ctx.request.body = args
 
+      // TODO: username and password non-empty validation
+
       passport.authenticate('local', function(err, user) {
         if (err) {
           reject(err)
@@ -28,16 +30,16 @@ export default {
 
   signup(obj, args, context, info) {
     return new Promise(async (resolve, reject) => {
-      const { username, phone, password } = args
+      const { username, email, password } = args
 
       let user = await User.findOne({
-        $or: [{ username }, { phone }]
+        $or: [{ username }, { email }]
       }).exec()
 
       if (user) {
-        reject('该用户名或手机号已存在。')
+        reject('该用户名或邮箱已存在。')
       } else {
-        user = new User({ username, phone, password })
+        user = new User({ username, email, password })
         const { ctx } = context
 
         // Add username and password to request body because

@@ -26,7 +26,6 @@ class Login extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    // TODO
     const { username, password } = this.state
 
     try {
@@ -56,7 +55,7 @@ class Login extends Component {
               type="text"
               name="username"
               value={this.state.username}
-              placeholder="用户名/手机号"
+              placeholder="用户名/邮箱"
               onChange={this.handleChange}
             />
           </Form.Item>

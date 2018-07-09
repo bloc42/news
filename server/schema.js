@@ -10,7 +10,7 @@ const typeDefs = `
 
   type Mutation {
     login(username: String!, password: String!): User
-    signup(username: String!, phone: String!, password: String!): User
+    signup(username: String!, email: String!, password: String!): User
   }
 
   type Post {
@@ -25,7 +25,7 @@ const typeDefs = `
   type User {
     id: ID!,
     username: String!,
-    phone: String!
+    email: String!
   }
 `
 
