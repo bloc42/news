@@ -7,6 +7,7 @@ import { Query, withApollo } from 'react-apollo'
 import { LOGOUT_MUTATION } from '../../apollo/mutation'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
+import Menu from '../Menu'
 
 const StyledHeader = styled.header`
   background: white;
@@ -16,31 +17,6 @@ const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
-
-const StyledLogo = styled.div`
-  display: flex;
-`
-
-const StyledNav = styled.nav`
-  ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    list-style-type: none;
-  }
-
-  a {
-    color: ${props => props.theme.fontColor};
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 1rem;
-    text-decoration: none;
-
-    &.active {
-      color: ${props => props.theme.primaryColor};
-    }
-  }
 `
 
 class Header extends Component {
@@ -56,6 +32,36 @@ class Header extends Component {
       console.log(err)
     }
   }
+
+  renderLoggedInMenu({ username }) {
+    return (
+      <Menu>
+        <Menu.Item>
+          {/* TODO: redirect to user profile */}
+          <a href="#">{username}</a>
+        </Menu.Item>
+        <Menu.Item>
+          <a href="#" onClick={this.handleLogout}>
+            登出
+          </a>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+
+  renderLoggedOutMenu() {
+    return (
+      <Menu>
+        <Menu.Item>
+          <NavLink to="/login">登录</NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink to="/signup">注册</NavLink>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>
@@ -73,37 +79,20 @@ class Header extends Component {
 
           return (
             <StyledHeader>
-              <StyledNav>
+              <nav>
                 <StyledContainer>
-                  <StyledLogo>
-                    <NavLink exact strict to="/">
-                      Blockdog
-                    </NavLink>
-                  </StyledLogo>
-                  {currentUser ? (
-                    <ul>
-                      <li>
-                        {/* TODO: redirect to user profile */}
-                        <a href="#">{currentUser.username}</a>
-                      </li>
-                      <li>
-                        <a href="#" onClick={this.handleLogout}>
-                          登出
-                        </a>
-                      </li>
-                    </ul>
-                  ) : (
-                    <ul>
-                      <li>
-                        <NavLink to="/login">登录</NavLink>
-                      </li>
-                      <li>
-                        <NavLink to="/signup">注册</NavLink>
-                      </li>
-                    </ul>
-                  )}
+                  <Menu>
+                    <Menu.Item>
+                      <NavLink exact strict to="/">
+                        Blockdog
+                      </NavLink>
+                    </Menu.Item>
+                  </Menu>
+                  {currentUser
+                    ? this.renderLoggedInMenu(currentUser)
+                    : this.renderLoggedOutMenu()}
                 </StyledContainer>
-              </StyledNav>
+              </nav>
             </StyledHeader>
           )
         }}
