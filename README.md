@@ -23,13 +23,17 @@ yarn run client
 yarn run server
 ```
 
-## GraphQL
+## Documentation
+
+### GraphQL
 
 There is a useful tool to interact with GraphQL API:
 
 `http://localhost:3001/graphiql`
 
-### Examples
+You can explore available query and mutation in Documentation Explorer on the right panel.
+
+#### Examples
 
 Get posts:
 
@@ -49,7 +53,7 @@ query {
   currentUser {
     id,
     username,
-    phone
+    email
   }
 }
 ```
@@ -58,9 +62,15 @@ Sign up a user:
 
 ```
 mutation {
-  signup(username: "foo", phone: "123456", password: "89hf9&*H") {
+  signup(username: "foo", email: "foo@bar.com", password: "89hf9&*H") {
     id,
     username
   }
 }
 ```
+
+### User Authentication
+
+A user is authenticated via [koa-passport](https://github.com/rkusa/koa-passport) middleware after signup/login. The server will send back a session id and the browser saves the session id in cookie. The subsequent requests initiated by the browser will include this session id which allows the server to identify a specific user.
+
+After a user logged in or signed up, we update the `currentUser` in Apollo cache. Once the user logs out, we reset the Apollo cache to make sure `currentUser` is cleared.

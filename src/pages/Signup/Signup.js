@@ -10,6 +10,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 import { withRouter } from 'react-router-dom'
+import { CURRENT_USER_QUERY } from '../../apollo/query'
 
 class Signup extends Component {
   constructor(props) {
@@ -35,16 +36,25 @@ class Signup extends Component {
     const { username, email, password } = this.state
 
     try {
-      const { data } = await this.props.signupMutation({
+      await this.props.signupMutation({
         variables: {
           username,
           email,
           password
+        },
+        update: (cache, { data }) => {
+          const currentUser = data.signup
+
+          // Update currentUser in cache
+          cache.writeQuery({
+            query: CURRENT_USER_QUERY,
+            data: {
+              currentUser
+            }
+          })
         }
       })
 
-      console.log(data)
-      // TODO: save current user info ?
       this.props.history.push('/')
     } catch (err) {
       // TODO: show error message in UI

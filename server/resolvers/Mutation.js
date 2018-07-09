@@ -16,10 +16,7 @@ export default {
         } else {
           if (user) {
             ctx.login(user)
-            resolve({
-              id: user.id,
-              username
-            })
+            resolve(user)
           } else {
             reject('用户验证失败。')
           }
@@ -56,10 +53,7 @@ export default {
             } else {
               if (user) {
                 ctx.login(user)
-                resolve({
-                  id: user.id,
-                  username
-                })
+                resolve(user)
               } else {
                 reject('用户验证失败。')
               }
@@ -70,5 +64,12 @@ export default {
         }
       }
     })
+  },
+
+  logout(obj, args, context, info) {
+    const { ctx } = context
+    const user = ctx.state.user
+    ctx.logout()
+    return user
   }
 }

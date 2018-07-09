@@ -5,6 +5,7 @@ import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
+import { CURRENT_USER_QUERY } from '../../apollo/query'
 
 class Login extends Component {
   constructor(props) {
@@ -33,11 +34,20 @@ class Login extends Component {
         variables: {
           username,
           password
+        },
+        update: (cache, { data }) => {
+          const currentUser = data.login
+
+          // Update currentUser in cache
+          cache.writeQuery({
+            query: CURRENT_USER_QUERY,
+            data: {
+              currentUser
+            }
+          })
         }
       })
 
-      console.log(data)
-      // TODO: save current user info ?
       this.props.history.push('/')
     } catch (err) {
       // TODO: show error message in UI
