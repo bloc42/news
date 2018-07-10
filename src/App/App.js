@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from '../containers/Header'
-import Main from '../components/Main'
+import Main from '../containers/Main'
 import './reset.css'
 
 const StyledApp = styled.div`

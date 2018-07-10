@@ -37,6 +37,9 @@ class Header extends Component {
     return (
       <Menu>
         <Menu.Item>
+          <NavLink to="/submit">发布文章</NavLink>
+        </Menu.Item>
+        <Menu.Item>
           {/* TODO: redirect to user profile */}
           <a href="">{username}</a>
         </Menu.Item>
