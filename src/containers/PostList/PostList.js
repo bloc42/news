@@ -7,9 +7,8 @@ const POSTS_QUERY = gql`
   {
     posts {
       title
+      url
       author
-      source
-      createtime
       comment_count
     }
   }
@@ -24,18 +23,15 @@ const PostList = () => (
         return <p>Error :(</p>
       }
 
-      return data.posts.map(
-        ({ title, author, source, createtime, comment_count }) => (
-          <Post
-            key={title}
-            title={title}
-            author={author}
-            source={source}
-            createtime={createtime}
-            comment_count={comment_count}
-          />
-        )
-      )
+      return data.posts.map(({ title, author, url, comment_count }) => (
+        <Post
+          key={title}
+          title={title}
+          url={url}
+          author={author}
+          comment_count={comment_count}
+        />
+      ))
     }}
   </Query>
 )

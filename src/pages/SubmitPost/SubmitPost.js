@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo'
 import Container from '../../components/Container'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import TextArea from '../../components/TextArea'
+import Alert from '../../components/Alert'
 
-class Submit extends Component {
+class SubmitPost extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,6 +31,29 @@ class Submit extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    const { title, url, content } = this.state
+
+    try {
+      const { errors } = await this.props.submitPostMutation({
+        variables: {
+          title,
+          url,
+          content
+        },
+        update: (cache, { data }) => {
+          // TODO: add post
+        }
+      })
+
+      if (errors && errors.length > 0) {
+        this.setState({ errors })
+      } else {
+        this.setState({ errors: [] })
+        this.props.history.push('/')
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
@@ -34,6 +61,10 @@ class Submit extends Component {
       <Container>
         <Form onSubmit={this.handleSubmit}>
           <h2>发布文章</h2>
+
+          {this.state.errors.map((error, index) => (
+            <Alert key={index} message={error.message} error />
+          ))}
 
           <Form.Item>
             <Input
@@ -74,4 +105,16 @@ class Submit extends Component {
   }
 }
 
-export default Submit
+const SUBMIT_POST_MUTATION = gql`
+  mutation SubmitPost($title: String!, $url: String, $content: String) {
+    submitPost(title: $title, url: $url, content: $content) {
+      id
+    }
+  }
+`
+
+const SubmitPostWithMutation = compose(
+  graphql(SUBMIT_POST_MUTATION, { name: 'submitPostMutation' })
+)(SubmitPost)
+
+export default withRouter(SubmitPostWithMutation)

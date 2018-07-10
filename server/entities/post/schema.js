@@ -6,13 +6,17 @@ const typeDefs = `
     posts: [Post]
   }
 
+  type Mutation {
+    submitPost(title: String!, url: String, content: String): Post
+  }
+
   type Post {
     id: ID!,
     title: String!, 
+    url: String, 
+    content: String,
     author: String!, 
-    source: String, 
-    createtime: String, 
-    comment_count: String
+    comment_count: Int
   }
 `
 

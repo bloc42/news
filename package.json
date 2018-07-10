@@ -17,6 +17,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
     "koa2-cors": "^2.0.5",
+    "lodash": "^4.17.10",
     "mongoose": "^5.2.0",
     "passport-local": "^1.0.0",
     "react": "^16.4.1",
