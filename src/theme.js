@@ -1,5 +1,5 @@
 const darkBlack = '#333'
-const tomato = 'tomato'
+const tomato = '#ff6246'
 
 const theme = {
   fontColor: darkBlack,
@@ -10,7 +10,7 @@ const theme = {
   borderRadius: '4px'
 }
 
-function adjustColor (color, amount) {
+function adjustColor(color, amount) {
   let usePound = false
 
   if (color[0] === '#') {

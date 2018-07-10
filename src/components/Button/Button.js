@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components'
 const StyledButton = styled.button`
   border: 1px solid ${props => props.theme.borderColor};
   border-radius: ${props => props.theme.borderRadius};
-  padding: 1rem;
+  padding: 0.8rem;
   outline: none;
   font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   color: ${props => props.theme.fontColor};
   background: white;
   border-color: ${props => props.theme.borderColor};

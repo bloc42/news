@@ -8,7 +8,7 @@ import Container from '../Container'
 
 const StyledMain = styled.main`
   flex: 1;
-  margin: 0 auto;
+  margin: 1rem auto;
   width: 100%;
 `
 
