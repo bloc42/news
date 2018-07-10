@@ -8,7 +8,7 @@ const Query = {
 }
 
 const Mutation = {
-  submitPost: async (obj, args, context, info) => {
+  async submitPost(obj, args, context, info) {
     const { ctx } = context
 
     if (ctx.isUnauthenticated()) {
@@ -18,6 +18,7 @@ const Mutation = {
     const { title, url, content } = args
     const author = ctx.state.user
 
+    // TODO: save author details
     const post = new Post({ title, url, content, author: author.username })
     await post.save()
   }

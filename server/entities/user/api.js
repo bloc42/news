@@ -1,9 +1,25 @@
 import bcrypt from 'bcrypt'
 import User from './model'
+import passport from 'koa-passport'
 
 const api = {
   async getUser(id) {
     return await User.findById(id).exec()
+  },
+
+  // Promisify passport's authentication method
+  authenticate(strategy) {
+    return ctx => {
+      return new Promise((resolve, reject) => {
+        passport.authenticate(strategy, function(err, user) {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(user)
+          }
+        })(ctx)
+      })
+    }
   },
 
   signInViaLocal(username, password) {
