@@ -8,6 +8,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import TextArea from '../../components/TextArea'
 import Alert from '../../components/Alert'
+import { GET_POSTS } from '../../containers/PostList/PostList'
 
 class SubmitPost extends Component {
   constructor(props) {
@@ -41,7 +42,16 @@ class SubmitPost extends Component {
           content
         },
         update: (cache, { data }) => {
-          // TODO: add post
+          const newPost = data.submitPost
+          const { posts } = cache.readQuery({ query: GET_POSTS })
+          const mergedPosts = [newPost, ...posts]
+
+          cache.writeQuery({
+            query: GET_POSTS,
+            data: {
+              posts: mergedPosts
+            }
+          })
         }
       })
 
@@ -109,6 +119,10 @@ const SUBMIT_POST_MUTATION = gql`
   mutation SubmitPost($title: String!, $url: String, $content: String) {
     submitPost(title: $title, url: $url, content: $content) {
       id
+      title
+      url
+      author
+      comment_count
     }
   }
 `

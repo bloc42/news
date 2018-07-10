@@ -7,11 +7,11 @@ const StyledPost = styled.article`
   padding: 0 1rem;
 
   > header {
+    font-weight: bold;
     margin-bottom: 0.2rem;
   }
 
   > header a {
-    font-weight: bold;
     color: ${props => props.theme.fontColor};
     text-decoration: none;
   }

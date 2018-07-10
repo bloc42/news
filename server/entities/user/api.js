@@ -15,6 +15,7 @@ const api = {
           if (err) {
             reject(err)
           } else {
+            ctx.login(user)
             resolve(user)
           }
         })(ctx)

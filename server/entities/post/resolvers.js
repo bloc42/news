@@ -2,8 +2,11 @@ import mockPosts from './mock'
 import Post from './model'
 
 const Query = {
-  posts: (obj, args, context, info) => {
-    return mockPosts
+  async posts(obj, args, context, info) {
+    const posts = await Post.find()
+      .sort({ createdAt: 'desc' })
+      .exec()
+    return [...posts, ...mockPosts]
   }
 }
 
@@ -21,6 +24,7 @@ const Mutation = {
     // TODO: save author details
     const post = new Post({ title, url, content, author: author.username })
     await post.save()
+    return post
   }
 }
 

@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Post from '../../components/Post'
 
-const POSTS_QUERY = gql`
+export const GET_POSTS = gql`
   {
     posts {
       title
@@ -15,7 +15,7 @@ const POSTS_QUERY = gql`
 `
 
 const PostList = () => (
-  <Query query={POSTS_QUERY}>
+  <Query query={GET_POSTS}>
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>
       if (error) {
@@ -23,9 +23,9 @@ const PostList = () => (
         return <p>Error :(</p>
       }
 
-      return data.posts.map(({ title, author, url, comment_count }) => (
+      return data.posts.map(({ title, author, url, comment_count }, index) => (
         <Post
-          key={title}
+          key={index}
           title={title}
           url={url}
           author={author}
