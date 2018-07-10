@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { CURRENT_USER_QUERY } from '../../apollo/query'
+import gql from 'graphql-tag'
+import { GET_CURRENT_USER } from '../../query'
 import { Query, withApollo } from 'react-apollo'
-import { LOGOUT_MUTATION } from '../../apollo/mutation'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import Menu from '../../components/Menu'
@@ -67,7 +67,7 @@ class Header extends Component {
 
   render() {
     return (
-      <Query query={CURRENT_USER_QUERY}>
+      <Query query={GET_CURRENT_USER}>
         {({ loading, error, data }) => {
           if (error) {
             console.log(error)
@@ -103,6 +103,15 @@ class Header extends Component {
     )
   }
 }
+
+const LOGOUT_MUTATION = gql`
+  mutation Logout {
+    logout {
+      id
+      username
+    }
+  }
+`
 
 const HeaderWithMutation = compose(
   graphql(LOGOUT_MUTATION, { name: 'logoutMutation' })

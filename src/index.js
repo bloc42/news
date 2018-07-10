@@ -6,7 +6,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ThemeProvider } from 'styled-components'
 import theme from './theme'
 import { BrowserRouter } from 'react-router-dom'
-import client from './apollo/client'
+import client from './apolloClient'
 
 ReactDOM.render(
   <ApolloProvider client={client}>

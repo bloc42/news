@@ -10,7 +10,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 import { withRouter } from 'react-router-dom'
-import { CURRENT_USER_QUERY } from '../../apollo/query'
+import { GET_CURRENT_USER } from '../../query'
 import Alert from '../../components/Alert'
 
 class Signup extends Component {
@@ -49,7 +49,7 @@ class Signup extends Component {
 
           // Update currentUser in cache
           cache.writeQuery({
-            query: CURRENT_USER_QUERY,
+            query: GET_CURRENT_USER,
             data: {
               currentUser
             }
