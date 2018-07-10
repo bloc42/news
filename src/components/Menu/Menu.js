@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MenuItem from './MenuItem'
 
@@ -16,7 +15,5 @@ const Menu = ({ children }) => {
 }
 
 Menu.Item = MenuItem
-
-Menu.propTypes = {}
 
 export default Menu

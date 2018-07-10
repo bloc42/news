@@ -38,10 +38,10 @@ class Header extends Component {
       <Menu>
         <Menu.Item>
           {/* TODO: redirect to user profile */}
-          <a href="#">{username}</a>
+          <a href="">{username}</a>
         </Menu.Item>
         <Menu.Item>
-          <a href="#" onClick={this.handleLogout}>
+          <a href="" onClick={this.handleLogout}>
             登出
           </a>
         </Menu.Item>
