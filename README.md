@@ -1,8 +1,24 @@
 # News
 
-Read [here](https://github.com/block-dog/news/issues/1) for tech stack details.
+## Tech stack
+
+Client: 
+
+- [React](https://reactjs.org/). Bootstrapped with [create-react-app](https://github.com/facebook/create-react-app).
+- [GraphQL](http://graphql.github.io/)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
+
+Server:
+
+- [Koa](https://github.com/koajs/koa)
+- [MongoDB](https://www.mongodb.com/)
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+
+Read [here](https://github.com/block-dog/news/issues/1) for more details.
 
 ## Development
+
+Make sure you have [MongoDB](https://docs.mongodb.com/manual/installation/) installed and running on your local.
 
 Initialize config file:
 
@@ -31,6 +47,7 @@ yarn run server
 
 Under `src` folder:
 
+- `index.js`: Entry point.
 - `components`: Dumb components. Cares about how things look.
 - `containers`: Smart components. Cares about how things work.
 - `pages`: Page components. Each corresponds to an url route.
@@ -40,6 +57,7 @@ Under `src` folder:
 
 Under `server` folder:
 
+- `index.js`: Entry point.
 - `entities`: A collection of data entities. Everything releated to an entity, e.g., model and API, is defined within the entity folder.
 - `passport.js`: Configurations and strategy definitions for [passport](http://www.passportjs.org/).
 - `schema.js`: Exports merged schema for GraphQL API.
