@@ -67,6 +67,7 @@ class Login extends Component {
               value={this.state.username}
               placeholder="用户名/邮箱"
               onChange={this.handleChange}
+              required
             />
           </Form.Item>
           <Form.Item>
@@ -76,6 +77,7 @@ class Login extends Component {
               placeholder="密码"
               value={this.state.password}
               onChange={this.handleChange}
+              required
             />
           </Form.Item>
           <Form.Item>

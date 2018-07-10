@@ -75,6 +75,7 @@ class Signup extends Component {
               placeholder="用户名"
               value={this.state.username}
               onChange={this.handleChange}
+              required
             />
           </Form.Item>
           <Form.Item>
@@ -84,6 +85,7 @@ class Signup extends Component {
               placeholder="邮箱"
               value={this.state.email}
               onChange={this.handleChange}
+              required
             />
           </Form.Item>
           <Form.Item>
@@ -93,6 +95,8 @@ class Signup extends Component {
               placeholder="密码（不少于6位）"
               value={this.state.password}
               onChange={this.handleChange}
+              minlength="6"
+              required
             />
           </Form.Item>
           <Form.Item>
