@@ -11,6 +11,7 @@ import Button from '../../components/Button'
 import Container from '../../components/Container'
 import { withRouter } from 'react-router-dom'
 import { CURRENT_USER_QUERY } from '../../apollo/query'
+import Alert from '../../components/Alert'
 
 class Signup extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class Signup extends Component {
     this.state = {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      errors: []
     }
   }
 
@@ -36,7 +38,7 @@ class Signup extends Component {
     const { username, email, password } = this.state
 
     try {
-      await this.props.signupMutation({
+      const { errors } = await this.props.signupMutation({
         variables: {
           username,
           email,
@@ -55,10 +57,15 @@ class Signup extends Component {
         }
       })
 
-      this.props.history.push('/')
+      if (errors && errors.length > 0) {
+        this.setState({ errors })
+      } else {
+        this.setState({ errors: [] })
+        this.props.history.push('/')
+      }
     } catch (err) {
       // TODO: show error message in UI
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -67,6 +74,10 @@ class Signup extends Component {
       <Container small>
         <Form onSubmit={this.handleSubmit}>
           <h2>注册</h2>
+
+          {this.state.errors.map((error, index) => (
+            <Alert key={index} message={error.message} error />
+          ))}
 
           <Form.Item>
             <Input

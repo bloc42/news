@@ -6,13 +6,15 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 import { CURRENT_USER_QUERY } from '../../apollo/query'
+import Alert from '../../components/Alert'
 
 class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      errors: []
     }
   }
 
@@ -30,7 +32,7 @@ class Login extends Component {
     const { username, password } = this.state
 
     try {
-      await this.props.loginMutation({
+      const { errors } = await this.props.loginMutation({
         variables: {
           username,
           password
@@ -48,10 +50,14 @@ class Login extends Component {
         }
       })
 
-      this.props.history.push('/')
+      if (errors && errors.length > 0) {
+        this.setState({ errors })
+      } else {
+        this.setState({ errors: [] })
+        this.props.history.push('/')
+      }
     } catch (err) {
-      // TODO: show error message in UI
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -60,6 +66,11 @@ class Login extends Component {
       <Container small>
         <Form onSubmit={this.handleSubmit}>
           <h2>登录</h2>
+
+          {this.state.errors.map((error, index) => (
+            <Alert key={index} message={error.message} error />
+          ))}
+
           <Form.Item>
             <Input
               type="text"

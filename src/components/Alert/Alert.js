@@ -17,7 +17,7 @@ const StyledAlert = styled.div`
     `};
 `
 
-const Alert = ({ message }) => <StyledAlert>{message}</StyledAlert>
+const Alert = props => <StyledAlert {...props}>{props.message}</StyledAlert>
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired

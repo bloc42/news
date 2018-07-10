@@ -25,6 +25,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   defaults: {
     currentUser: null
+  },
+  defaultOptions: {
+    mutate: {
+      // https://www.apollographql.com/docs/react/features/error-handling.html#policies
+      errorPolicy: 'all'
+    }
   }
 })
 

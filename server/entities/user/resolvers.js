@@ -11,11 +11,8 @@ const Query = {
 const Mutation = {
   login(obj, args, context, info) {
     return new Promise(async (resolve, reject) => {
-      const { username, password } = args
       const { ctx } = context
       ctx.request.body = args
-
-      // TODO: username and password non-empty validation
 
       passport.authenticate('local', function(err, user) {
         if (err) {

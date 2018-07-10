@@ -12,7 +12,7 @@ const api = {
         $or: [{ email: username }, { username }]
       }).exec()
 
-      const errorMsg = '用户名或密码错误。'
+      const errorMsg = '用户名或密码不正确。'
 
       if (user) {
         const isMatch = await bcrypt.compare(password, user.password)
