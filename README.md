@@ -62,6 +62,22 @@ Under `server` folder:
 - `passport.js`: Configurations and strategy definitions for [passport](http://www.passportjs.org/).
 - `schema.js`: Exports merged schema for GraphQL API.
 
+### Naming convention
+
+Use `camelCase` for:
+
+- Variables.
+- MongoDB document fields.
+- GraphQL schema.
+
+Use `PascalCase` for:
+
+- React component name and filename.
+
+Use `UPPER_CASE` for:
+
+- Constants.
+
 ### GraphQL
 
 There is a useful tool to interact with GraphQL API:
