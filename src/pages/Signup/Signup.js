@@ -9,6 +9,7 @@ const Signup = () => {
   return (
     <Container small>
       <Section padded>
+        <h2>创建属于你的Blockdog账号。</h2>
         <SignupForm />
         <Small>
           <span>已经有账号？</span>

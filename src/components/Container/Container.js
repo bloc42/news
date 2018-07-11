@@ -8,7 +8,7 @@ const StyledContainer = styled.div`
   ${props =>
     props.small &&
     css`
-      max-width: 24em;
+      max-width: 26em;
     `};
 `
 

@@ -71,8 +71,6 @@ class Signup extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <h2>创建你的Blockdog账号。</h2>
-
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
         ))}

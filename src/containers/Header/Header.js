@@ -10,7 +10,7 @@ import Menu from '../../components/Menu'
 import Container from '../../components/Container'
 
 const StyledHeader = styled.header`
-  background: white;
+  /* background: white; */
 `
 
 const StyledContainer = styled(Container)`

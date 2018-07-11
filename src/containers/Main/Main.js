@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 const StyledMain = styled.main`
   flex: 1;
-  margin: 2rem auto;
+  margin: 4rem auto;
   width: 100%;
 `
 
