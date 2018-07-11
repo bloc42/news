@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledMenuItem = styled.li`
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 1rem;
+  margin: 0 0.8rem;
 
   a {
     color: ${props => props.theme.fontColor};

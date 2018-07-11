@@ -1,118 +1,29 @@
-import React, { Component } from 'react'
-import { graphql, compose } from 'react-apollo'
-import gql from 'graphql-tag'
-import Form from '../../components/Form'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
+import React from 'react'
+import Section from '../../components/Section'
+import LoginForm from '../../containers/LoginForm'
 import Container from '../../components/Container'
-import { GET_CURRENT_USER } from '../../query'
-import Alert from '../../components/Alert'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import Small from '../../components/Small'
 
-class Login extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      errors: []
-    }
-  }
-
-  handleChange = e => {
-    const { target } = e
-    const { name, value } = target
-
-    this.setState({
-      [name]: value
-    })
-  }
-
-  handleSubmit = async e => {
-    e.preventDefault()
-    const { username, password } = this.state
-
-    try {
-      const { errors } = await this.props.loginMutation({
-        variables: {
-          username,
-          password
-        },
-        update: (cache, { data }) => {
-          const currentUser = data.login
-
-          // Update currentUser in cache
-          cache.writeQuery({
-            query: GET_CURRENT_USER,
-            data: {
-              currentUser
-            }
-          })
-        }
-      })
-
-      if (errors && errors.length > 0) {
-        this.setState({ errors })
-      } else {
-        this.setState({ errors: [] })
-        this.props.history.push('/')
-      }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  render() {
-    return (
-      <Container small>
-        <Form onSubmit={this.handleSubmit}>
-          <h2>登录</h2>
-
-          {this.state.errors.map((error, index) => (
-            <Alert key={index} message={error.message} error />
-          ))}
-
-          <Form.Item>
-            <Input
-              type="text"
-              name="username"
-              value={this.state.username}
-              placeholder="用户名/邮箱"
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input
-              type="password"
-              name="password"
-              placeholder="密码"
-              value={this.state.password}
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button primary fullWidth>
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
-      </Container>
-    )
-  }
-}
-
-const LOGIN_MUTATION = gql`
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      username
-    }
-  }
+const StyledWrapper = styled.div`
+  padding: 2rem;
 `
 
-const LoginWithMutation = compose(
-  graphql(LOGIN_MUTATION, { name: 'loginMutation' })
-)(Login)
+const Login = () => {
+  return (
+    <Container small>
+      <Section>
+        <StyledWrapper>
+          <LoginForm />
+          <Small>
+            <span>没有账号？</span>
+            <Link to="/signup">注册</Link>
+          </Small>
+        </StyledWrapper>
+      </Section>
+    </Container>
+  )
+}
 
-export default LoginWithMutation
+export default Login

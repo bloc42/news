@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import RelativeTime from '../RelativeTime/RelativeTime'
 
 const StyledPost = styled.article`
-  margin: 2rem 0;
-  padding: 0 1rem;
+  padding: 1.2rem 1.2rem 0 1.2rem;
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 
   > header {
     font-weight: bold;

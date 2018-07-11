@@ -3,13 +3,12 @@ import styled, { css } from 'styled-components'
 
 const StyledContainer = styled.div`
   margin: 0 auto;
-  padding: 0 1rem;
   max-width: 50em;
 
   ${props =>
     props.small &&
     css`
-      max-width: 20em;
+      max-width: 24em;
     `};
 `
 
