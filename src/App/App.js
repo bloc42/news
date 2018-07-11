@@ -13,7 +13,7 @@ const StyledApp = styled.div`
   font-family: -apple-system, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
     Helvetica Neue, Arial, sans-serif;
   font-size: 1rem;
-  background: #f1f1f1;
+  background: #f6f9fc;
 `
 
 const App = () => (

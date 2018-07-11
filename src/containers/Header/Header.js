@@ -65,41 +65,40 @@ class Header extends Component {
     )
   }
 
-  render() {
+  renderRightMenu() {
     return (
       <Query query={GET_CURRENT_USER}>
-        {({ loading, error, data }) => {
-          if (error) {
-            console.log(error)
-            return null
-          }
-
+        {({ loading, data }) => {
           if (loading) {
             return null
           }
 
           const { currentUser } = data
 
-          return (
-            <StyledHeader>
-              <nav>
-                <StyledContainer>
-                  <Menu>
-                    <Menu.Item>
-                      <NavLink exact strict to="/">
-                        Blockdog
-                      </NavLink>
-                    </Menu.Item>
-                  </Menu>
-                  {currentUser
-                    ? this.renderLoggedInMenu(currentUser)
-                    : this.renderLoggedOutMenu()}
-                </StyledContainer>
-              </nav>
-            </StyledHeader>
-          )
+          return currentUser
+            ? this.renderLoggedInMenu(currentUser)
+            : this.renderLoggedOutMenu()
         }}
       </Query>
+    )
+  }
+
+  render() {
+    return (
+      <StyledHeader>
+        <nav>
+          <StyledContainer>
+            <Menu>
+              <Menu.Item>
+                <NavLink exact strict to="/">
+                  Blockdog
+                </NavLink>
+              </Menu.Item>
+            </Menu>
+            {this.renderRightMenu()}
+          </StyledContainer>
+        </nav>
+      </StyledHeader>
     )
   }
 }
