@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const SALT_WORK_FACTOR = 10
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
+import is from 'is_js'
 
 const userSchema = mongoose.Schema({
   username: {
@@ -12,7 +12,11 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    require: [true, '邮箱不能为空。']
+    require: [true, '邮箱不能为空。'],
+    validate: {
+      validator: v => is.email(v),
+      message: '邮箱格式不正确。'
+    }
   },
   password: {
     type: String,
@@ -29,25 +33,24 @@ const userSchema = mongoose.Schema({
 
 userSchema.set('timestamps', true)
 
-userSchema.pre('save', function(next) {
-  let user = this
+userSchema.pre('save', async function(next) {
+  // Only hash the password if it has been modified (or is new)
+  if (!this.isModified('password')) return next()
 
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next()
+  const SALT_WORK_FACTOR = 10
 
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err)
+  try {
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
 
-    // hash the password using our new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) return next(err)
+    // Hash the password using our new salt
+    const hash = await bcrypt.hash(this.password, salt)
 
-      // override the cleartext password with the hashed one
-      user.password = hash
-      next()
-    })
-  })
+    // Override the cleartext password with the hashed one
+    this.password = hash
+    next()
+  } catch (err) {
+    next(err)
+  }
 })
 
-module.exports = mongoose.model('user', userSchema)
+export default mongoose.model('user', userSchema)
