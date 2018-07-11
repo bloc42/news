@@ -19,6 +19,7 @@ const Mutation = {
     }
 
     const { title, url, content } = args
+
     const author = ctx.state.user
 
     // TODO: save author details
