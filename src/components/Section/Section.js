@@ -1,12 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const StyledSection = styled.section`
   background: white;
+
+  ${props =>
+    props.padded &&
+    css`
+      padding: 2rem;
+    `};
 `
 
-const Section = ({ children }) => {
-  return <StyledSection>{children}</StyledSection>
+const Section = props => {
+  return <StyledSection {...props}>{props.children}</StyledSection>
 }
 
 export default Section

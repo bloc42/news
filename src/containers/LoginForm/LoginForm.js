@@ -6,6 +6,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import { GET_CURRENT_USER } from '../../query'
 import Alert from '../../components/Alert'
+import { withRouter } from 'react-router-dom'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -112,4 +113,4 @@ const LoginFormWithMutation = compose(
   graphql(LOGIN_MUTATION, { name: 'loginMutation' })
 )(LoginForm)
 
-export default LoginFormWithMutation
+export default withRouter(LoginFormWithMutation)
