@@ -122,7 +122,7 @@ const SUBMIT_POST_MUTATION = gql`
       title
       url
       author
-      comment_count
+      commentCount
     }
   }
 `

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import RelativeTime from '../RelativeTime/RelativeTime'
 
 const StyledPost = styled.article`
   margin: 2rem 0;
@@ -20,9 +21,20 @@ const StyledPost = styled.article`
     font-size: 0.8rem;
     color: ${props => props.theme.fontColorLight};
   }
+
+  > footer ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+  }
+
+  > footer ul li {
+    margin-right: 0.8rem;
+  }
 `
 
-const Post = ({ title, author, url, comment_count }) => {
+const Post = ({ title, author, url, commentCount, createdAt }) => {
   const postTitle = url ? <a href={url}>{title}</a> : title
 
   return (
@@ -30,7 +42,13 @@ const Post = ({ title, author, url, comment_count }) => {
       <header>{postTitle}</header>
       <footer>
         {/* TODO: add link */}
-        {`${author} | ${comment_count}条评论`}
+        <ul>
+          <li>{author}</li>
+          <li>
+            <RelativeTime timestamp={createdAt} />
+          </li>
+          <li>{`${commentCount}条评论`}</li>
+        </ul>
       </footer>
     </StyledPost>
   )
@@ -40,7 +58,7 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   url: PropTypes.string,
-  comment_count: PropTypes.number.isRequired
+  commentCount: PropTypes.number.isRequired
 }
 
 export default Post

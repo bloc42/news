@@ -6,6 +6,7 @@ Together bring gathering night and first male male moved. Have green given secon
 
 const generateRandomCount = () => random(1, 200)
 const url = 'https://duckduckgo.com'
+const createdAt = new Date()
 
 const posts = [
   {
@@ -13,28 +14,32 @@ const posts = [
     url,
     author: 'J.K. Rowling',
     content,
-    comment_count: generateRandomCount()
+    commentCount: generateRandomCount(),
+    createdAt
   },
   {
     title: 'Jurassic Park',
     url,
     author: 'Michael Crichton',
     content,
-    comment_count: generateRandomCount()
+    commentCount: generateRandomCount(),
+    createdAt
   },
   {
     title: 'ETH涨幅90%',
     url,
     author: '金色财经',
     content,
-    comment_count: generateRandomCount()
+    commentCount: generateRandomCount(),
+    createdAt
   },
   {
     title: 'BTC突破$10000',
     url,
     author: 'jack',
     content,
-    comment_count: generateRandomCount()
+    commentCount: generateRandomCount(),
+    createdAt
   }
 ]
 

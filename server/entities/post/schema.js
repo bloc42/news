@@ -16,7 +16,8 @@ const typeDefs = `
     url: String, 
     content: String,
     author: String!, 
-    comment_count: Int
+    commentCount: Int,
+    createdAt: String
   }
 `
 

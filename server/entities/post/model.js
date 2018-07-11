@@ -16,15 +16,15 @@ const postSchema = mongoose.Schema({
     type: String,
     required: [true, '作者不能为空。']
   },
-  comment_count: {
+  commentCount: {
     type: Number,
     default: 0
   },
-  upvote_count: {
+  upvoteCount: {
     type: Number,
     default: 0
   },
-  favorite_count: {
+  favoriteCount: {
     type: Number,
     default: 0
   }

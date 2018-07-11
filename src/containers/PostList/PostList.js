@@ -9,7 +9,8 @@ export const GET_POSTS = gql`
       title
       url
       author
-      comment_count
+      commentCount
+      createdAt
     }
   }
 `
@@ -23,13 +24,14 @@ const PostList = () => (
         return <p>Error :(</p>
       }
 
-      return data.posts.map(({ title, author, url, comment_count }, index) => (
+      return data.posts.map((post, index) => (
         <Post
           key={index}
-          title={title}
-          url={url}
-          author={author}
-          comment_count={comment_count}
+          title={post.title}
+          url={post.url}
+          author={post.author}
+          commentCount={post.commentCount}
+          createdAt={post.createdAt}
         />
       ))
     }}
