@@ -32,7 +32,13 @@ Install dependencies:
 yarn
 ```
 
-Start client and server separately:
+Seed database:
+
+```bash
+yarn run seed
+```
+
+Start client and server in separate terminals:
 
 ```bash
 yarn run client

@@ -1,6 +1,10 @@
+import mongoose from 'mongoose'
+import config from '../config'
 import faker from 'faker'
 import User from './entities/user/model'
 import Post from './entities/post/model'
+
+mongoose.connect(config.DBURL)
 ;(async () => {
   console.log('Removing documents...')
   await User.find()
@@ -41,4 +45,6 @@ import Post from './entities/post/model'
   }
 
   console.log('Done seeding.')
+
+  process.exit()
 })()
