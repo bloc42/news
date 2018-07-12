@@ -1,4 +1,3 @@
-import mockPosts from './mock'
 import Post from './model'
 
 const Query = {
@@ -6,7 +5,7 @@ const Query = {
     const posts = await Post.find()
       .sort({ createdAt: 'desc' })
       .exec()
-    return [...posts, ...mockPosts]
+    return posts
   }
 }
 

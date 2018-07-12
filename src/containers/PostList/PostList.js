@@ -18,11 +18,12 @@ export const GET_POSTS = gql`
 const PostList = () => (
   <Query query={GET_POSTS}>
     {({ loading, error, data }) => {
-      if (loading) return <p>Loading...</p>
       if (error) {
         console.log(error)
         return <p>Error :(</p>
       }
+
+      if (loading) return null
 
       return data.posts.map((post, index) => (
         <Post

@@ -11,6 +11,10 @@ import config from '../config'
 
 mongoose.connect(config.DBURL)
 
+if (config.isLocal) {
+  require('./seeder')
+}
+
 const app = new koa()
 const PORT = config.serverPort
 
