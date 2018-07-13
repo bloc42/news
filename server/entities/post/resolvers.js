@@ -2,7 +2,7 @@ import Post from './model'
 
 const Query = {
   async postFeed(obj, { cursor }) {
-    const limit = 20
+    const limit = 15
     const sortCriteria = { createdAt: 'desc' }
     let posts = []
 

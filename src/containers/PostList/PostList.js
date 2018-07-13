@@ -2,7 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Post from '../../components/Post'
-import Button from '../../components/Button'
+import ScrollDetector from '../../components/ScrollDetector'
 
 export const GET_POSTS = gql`
   query GetPosts($cursor: String) {
@@ -19,14 +19,6 @@ export const GET_POSTS = gql`
     }
   }
 `
-
-const LoadMore = ({ onClick }) => {
-  return (
-    <Button onClick={onClick} fullWidth>
-      加载更多
-    </Button>
-  )
-}
 
 const PostList = () => (
   <Query query={GET_POSTS}>
@@ -48,8 +40,8 @@ const PostList = () => (
               createdAt={post.createdAt}
             />
           ))}
-          <LoadMore
-            onClick={() =>
+          <ScrollDetector
+            onReachBottom={() =>
               fetchMore({
                 query: GET_POSTS,
                 variables: { cursor },
