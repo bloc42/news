@@ -3,11 +3,16 @@ import resolvers from './resolvers'
 
 const typeDefs = `
   type Query {
-    posts: [Post]
+    postFeed(cursor: String): PostFeed
   }
 
   type Mutation {
     submitPost(title: String!, url: String, content: String): Post
+  }
+
+  type PostFeed {
+    cursor: String!,
+    posts: [Post]!
   }
 
   type Post {
