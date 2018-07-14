@@ -1,21 +1,5 @@
 # News
 
-## Tech stack
-
-Client: 
-
-- [React](https://reactjs.org/). Bootstrapped with [create-react-app](https://github.com/facebook/create-react-app).
-- [GraphQL](http://graphql.github.io/)
-- [Apollo Client](https://www.apollographql.com/docs/react/)
-
-Server:
-
-- [Koa](https://github.com/koajs/koa)
-- [MongoDB](https://www.mongodb.com/)
-- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
-
-Read [here](https://github.com/block-dog/news/issues/1) for more details.
-
 ## Development
 
 Make sure you have [MongoDB](https://docs.mongodb.com/manual/installation/) installed and running on your local.
@@ -45,7 +29,25 @@ yarn run client
 yarn run server
 ```
 
+Our default branch is `develop` and release branch is `master`. Always make your changes in a feature branch and create a PR against `develop` branch. 
+
 ## Documentation
+
+### Tech stack
+
+Client: 
+
+- [React](https://reactjs.org/). Bootstrapped with [create-react-app](https://github.com/facebook/create-react-app).
+- [GraphQL](http://graphql.github.io/)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
+
+Server:
+
+- [Koa](https://github.com/koajs/koa)
+- [MongoDB](https://www.mongodb.com/)
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+
+Read [here](https://github.com/block-dog/news/issues/1) for more details.
 
 ### Folder structure
 
