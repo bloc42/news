@@ -30,9 +30,10 @@ const PostList = () => (
 
       return (
         <div>
-          {posts.map((post, index) => (
+          {posts.map(post => (
             <Post
-              key={index}
+              key={post.id}
+              id={post.id}
               title={post.title}
               url={post.url}
               author={post.author}

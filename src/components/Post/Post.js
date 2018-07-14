@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import RelativeTime from '../RelativeTime/RelativeTime'
+import { Link } from 'react-router-dom'
 
 const StyledPost = styled.article`
   padding: 1.2rem 1.2rem 0 1.2rem;
@@ -34,8 +35,14 @@ const StyledPost = styled.article`
   }
 `
 
-const Post = ({ title, author, url, commentCount, createdAt }) => {
-  const postTitle = url ? <a href={url}>{title}</a> : title
+const Post = ({ id, title, author, url, commentCount, createdAt }) => {
+  const postTitle = url ? (
+    <a href={url} target="_blank">
+      {title}
+    </a>
+  ) : (
+    <Link to={`/post/${id}`}>{title}</Link>
+  )
 
   return (
     <StyledPost>
@@ -55,6 +62,7 @@ const Post = ({ title, author, url, commentCount, createdAt }) => {
 }
 
 Post.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   url: PropTypes.string,

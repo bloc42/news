@@ -5,6 +5,7 @@ import Login from '../../pages/Login'
 import Signup from '../../pages/Signup'
 import SubmitPost from '../../pages/SubmitPost'
 import styled from 'styled-components'
+import Post from '../../pages/Post'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -19,6 +20,7 @@ const Main = () => (
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/submit" component={SubmitPost} />
+      <Route path="/post/:id" component={Post} />
     </Switch>
   </StyledMain>
 )
