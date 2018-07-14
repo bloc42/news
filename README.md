@@ -29,7 +29,7 @@ yarn run client
 yarn run server
 ```
 
-Our default branch is `develop` and release branch is `master`. Always make your changes in a feature branch and create a PR against `develop` branch. 
+Always make your changes in a feature branch and create a PR against `develop` branch. Our release branch is `master`, which should only accept PR from `develop` branch and hotfix branch.
 
 ## Documentation
 
