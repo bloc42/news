@@ -249,24 +249,24 @@ apollo-link@1.2.2, apollo-link@^1.0.0, apollo-link@^1.2.2:
     apollo-utilities "^1.0.0"
     zen-observable-ts "^0.8.9"
 
-apollo-server-core@^1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.3.6.tgz#08636243c2de56fa8c267d68dd602cb1fbd323e3"
+apollo-server-core@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.4.0.tgz#4faff7f110bfdd6c3f47008302ae24140f94c592"
   dependencies:
     apollo-cache-control "^0.1.0"
     apollo-tracing "^0.1.0"
     graphql-extensions "^0.0.x"
 
-apollo-server-koa@1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/apollo-server-koa/-/apollo-server-koa-1.3.6.tgz#51771d856cc4d22373ebcd869e4ad8f4e53ab45c"
+apollo-server-koa@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/apollo-server-koa/-/apollo-server-koa-1.4.0.tgz#59accc941d02ab2b2f8c7e76426a20b7a0ad5a3a"
   dependencies:
-    apollo-server-core "^1.3.6"
-    apollo-server-module-graphiql "^1.3.4"
+    apollo-server-core "^1.4.0"
+    apollo-server-module-graphiql "^1.4.0"
 
-apollo-server-module-graphiql@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/apollo-server-module-graphiql/-/apollo-server-module-graphiql-1.3.4.tgz#50399b7c51b7267d0c841529f5173e5fc7304de4"
+apollo-server-module-graphiql@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/apollo-server-module-graphiql/-/apollo-server-module-graphiql-1.4.0.tgz#c559efa285578820709f1769bb85d3b3eed3d8ec"
 
 apollo-tracing@^0.1.0:
   version "0.1.4"
