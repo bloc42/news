@@ -38,7 +38,7 @@ class ScrollDetector extends Component {
   }
 
   render() {
-    return null
+    return <div />
   }
 }
 
