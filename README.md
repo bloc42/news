@@ -139,6 +139,8 @@ After a user logged in or signed up, we update the `currentUser` in [Apollo cach
 
 ### Admin Account
 
+After `yarn run seeder`, an admin account will be created:
+
 - username: `admin`
 - password: `123456`
 
