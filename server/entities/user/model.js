@@ -28,13 +28,21 @@ const userSchema = mongoose.Schema({
   },
   role: { type: String, default: 'user' }, // ['admin', 'moderator', 'user']
   first_name: String,
-  last_name: String
+  last_name: String,
+  //for mail active
+  is_active: { type: Number, default: 0 },
+  active_code: String,
+  active_deadline: {
+    type: Date,
+    default: new Date(Date.now() + 24 * 60 * 60 * 1000)
+  }
 })
 
 userSchema.set('timestamps', true)
 
 userSchema.pre('save', async function(next) {
   // Only hash the password if it has been modified (or is new)
+
   if (!this.isModified('password')) return next()
 
   const SALT_WORK_FACTOR = 10
