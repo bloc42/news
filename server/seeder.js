@@ -4,6 +4,11 @@ import faker from 'faker'
 import User from './entities/user/model'
 import Post from './entities/post/model'
 
+if (!config.isLocal) {
+  console.log('Do not seed database in production!')
+  process.exit()
+}
+
 mongoose.connect(config.DBURL)
 ;(async () => {
   console.log('Removing documents...')
@@ -27,6 +32,16 @@ mongoose.connect(config.DBURL)
     await user.save()
     users.push(user)
   }
+
+  const admin = new User({
+    username: 'admin',
+    email: 'admin@blockdog.com',
+    password: '123456',
+    role: 'admin'
+  })
+
+  await admin.save()
+  users.push(admin)
 
   console.log('Seeding posts...')
   for (let i = 0; i < 80; i++) {

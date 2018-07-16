@@ -136,3 +136,10 @@ A user is authenticated via [koa-passport](https://github.com/rkusa/koa-passport
 We use [bcrypt](https://github.com/kelektiv/node.bcrypt.js) to hash the password before we save a new user to the database. The implementation is in `server/entities/user/model.js`.
 
 After a user logged in or signed up, we update the `currentUser` in [Apollo cache](https://www.apollographql.com/docs/react/essentials/mutations.html#update). Once the user logs out, we reset the Apollo cache to make sure `currentUser` is cleared.
+
+### Admin Account
+
+- username: `admin`
+- password: `123456`
+
+This is for local testing only.
