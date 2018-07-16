@@ -22,7 +22,7 @@ const Main = () => (
       <Route path="/signup" component={Signup} />
       <Route path="/submit" component={SubmitPost} />
       <Route path="/post/:id" component={Post} />
-      <Route path="/user/:name" component={UserProfile} />
+      <Route path="/user/:username" component={UserProfile} />
     </Switch>
   </StyledMain>
 )

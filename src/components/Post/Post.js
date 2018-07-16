@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import RelativeTime from '../RelativeTime/RelativeTime'
+import RelativeTime from '../RelativeTime'
 import { Link } from 'react-router-dom'
 
 const StyledPost = styled.article`
@@ -33,6 +33,11 @@ const StyledPost = styled.article`
   > footer ul li {
     margin-right: 0.8rem;
   }
+
+  > footer ul li a {
+    color: ${props => props.theme.fontColorLight};
+    text-decoration: none;
+  }
 `
 
 const Post = ({ id, title, author, url, commentCount, createdAt }) => {
@@ -48,13 +53,16 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
     <StyledPost>
       <header>{postTitle}</header>
       <footer>
-        {/* TODO: add link */}
         <ul>
-          <li>{author}</li>
+          <li>
+            <Link to={`/user/${author}`}>{author}</Link>
+          </li>
           <li>
             <RelativeTime timestamp={createdAt} />
           </li>
-          <li>{`${commentCount}条评论`}</li>
+          <li>
+            <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
+          </li>
         </ul>
       </footer>
     </StyledPost>

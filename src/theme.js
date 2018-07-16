@@ -3,7 +3,7 @@ const tomato = '#ff6246'
 
 const theme = {
   fontColor: darkBlack,
-  fontColorLight: adjustColor(darkBlack, 40),
+  fontColorLight: '#777',
   primaryColor: tomato,
   primaryColorLight: adjustColor(tomato, 20),
   borderColor: '#e8e8e8',

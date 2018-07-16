@@ -45,7 +45,7 @@ class Header extends Component {
 
   renderRightMenu() {
     return (
-      <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
+      <Query query={GET_CURRENT_USER}>
         {({ loading, data }) => {
           if (loading) {
             return null
