@@ -41,13 +41,13 @@ class Header extends Component {
         </Menu.Item>
         <Menu.Item>
           {/* TODO: redirect to user profile */}
-          <a href="">{username}</a>
+          <NavLink to={`/user/${username}`}>{username}</NavLink>
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <a href="" onClick={this.handleLogout}>
             登出
           </a>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     )
   }
