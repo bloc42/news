@@ -2,10 +2,10 @@ import React from 'react'
 import Section from '../../components/Section'
 import SignupForm from '../../containers/SignupForm'
 import Container from '../../components/Container'
-import { Link } from 'react-router-dom'
 import Small from '../../components/Small'
+import Link from '../../components/Link'
 
-const Signup = () => {
+const SignupPage = () => {
   return (
     <Container small>
       <Section padded>
@@ -20,4 +20,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default SignupPage

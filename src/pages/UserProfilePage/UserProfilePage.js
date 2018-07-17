@@ -7,7 +7,7 @@ import { GET_USER, GET_CURRENT_USER } from '../../query'
 import RelativeTime from '../../components/RelativeTime'
 import Small from '../../components/Small'
 
-class UserProfile extends Component {
+class UserProfilePage extends Component {
   render() {
     const { username } = this.props.match.params
 
@@ -58,4 +58,4 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile
+export default UserProfilePage

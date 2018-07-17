@@ -2,10 +2,10 @@ import React from 'react'
 import Section from '../../components/Section'
 import LoginForm from '../../containers/LoginForm'
 import Container from '../../components/Container'
-import { Link } from 'react-router-dom'
 import Small from '../../components/Small'
+import Link from '../../components/Link'
 
-const Login = () => {
+const LoginPage = () => {
   return (
     <Container small>
       <Section padded>
@@ -19,4 +19,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage
