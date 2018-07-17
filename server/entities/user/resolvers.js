@@ -43,16 +43,20 @@ const Mutation = {
       user = new User({ username, email, password })
       const { ctx } = context
 
-      //send mail for active
-      const template =
-        '<div><h2>感谢您注册Block-dog</h2><p>请点击以下连接激活用户</p><p><a href="localhost:3000">立即激活</a></p><p>如果点击没有反应,请将以下连接复制到浏览器</p><p>localhost:3000</p></div>'
-      mailsend.send(email, 'test', template)
       // Add username and password to request body because
       // passport needs them for authentication
       ctx.request.body = args
 
       await user.save()
-      await userApi.authenticate('local')(ctx)
+      //send mail for active
+      const template =
+        '<div><h2>感谢您注册Block-dog</h2><p>请点击以下连接激活用户</p><p><a href="localhost:3000?active=' +
+        user.active_code +
+        '">立即激活</a></p><p>如果点击没有反应,请将以下连接复制到浏览器</p><p>localhost:3000?active=' +
+        user.active_code +
+        '</p></div>'
+      mailsend.send(email, 'test', template)
+      //await userApi.authenticate('local')(ctx)
 
       return user
     }

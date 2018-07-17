@@ -52,9 +52,13 @@ userSchema.pre('save', async function(next) {
 
     // Hash the password using our new salt
     const hash = await bcrypt.hash(this.password, salt)
+    // create the active_code
+    const active_hash_code = await bcrypt.hash(this.username + Date.now(), salt)
 
     // Override the cleartext password with the hashed one
     this.password = hash
+    // Save active_code
+    this.active_code = active_hash_code
     next()
   } catch (err) {
     next(err)
