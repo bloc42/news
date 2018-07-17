@@ -2,9 +2,15 @@ import User from './model'
 import userApi from './api'
 
 const Query = {
-  currentUser: (obj, args, context, info) => {
+  currentUser(obj, args, context, info) {
     const { ctx } = context
     return ctx.state.user
+  },
+
+  async user(ojb, args) {
+    const { username } = args
+    const user = await User.findOne({ username }).exec()
+    return user
   }
 }
 
