@@ -27,6 +27,11 @@ const Query = {
       cursor,
       posts
     }
+  },
+
+  async post(obj, { id }) {
+    const post = await Post.findById(id).exec()
+    return post
   }
 }
 

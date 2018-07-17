@@ -47,9 +47,6 @@ const PostList = () => (
                 query: GET_POSTS,
                 variables: { cursor },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
-                  console.log(previousResult)
-
-                  console.log(fetchMoreResult)
                   return {
                     postFeed: {
                       cursor: fetchMoreResult.postFeed.cursor,

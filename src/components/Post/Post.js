@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import RelativeTime from '../RelativeTime'
-import { Link } from 'react-router-dom'
+import Anchor from '../Anchor'
+import Link from '../Link'
 
 const StyledPost = styled.article`
   padding: 1.2rem 1.2rem 0 1.2rem;
@@ -11,6 +12,11 @@ const StyledPost = styled.article`
   > header {
     font-weight: bold;
     margin-bottom: 0.2rem;
+  }
+
+  > header small {
+    font-weight: normal;
+    margin-left: 0.8rem;
   }
 
   > header a {
@@ -42,16 +48,20 @@ const StyledPost = styled.article`
 
 const Post = ({ id, title, author, url, commentCount, createdAt }) => {
   const postTitle = url ? (
-    <a href={url} target="_blank">
+    <Anchor href={url} target="_blank">
       {title}
-    </a>
+    </Anchor>
   ) : (
     <Link to={`/post/${id}`}>{title}</Link>
   )
 
+  const domainMatch = url.match(/:\/\/(.[^/]+)/)
+
   return (
     <StyledPost>
-      <header>{postTitle}</header>
+      <header>
+        <span>{postTitle}</span>
+      </header>
       <footer>
         <ul>
           <li>
@@ -62,6 +72,14 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
           </li>
           <li>
             <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
+          </li>
+          <li>
+            {domainMatch &&
+              domainMatch.length > 1 && (
+                <Anchor href={domainMatch[1]} target="_blank">
+                  {domainMatch[1]}
+                </Anchor>
+              )}
           </li>
         </ul>
       </footer>
