@@ -11,6 +11,7 @@ const typeDefs = `
     signup(username: String!, email: String!, password: String!): User
     logout: User
     active(username: String!, active_code: String!): User
+    sendmail(email: String!): User
   }
 
   type User {

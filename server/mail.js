@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer'
 import config from '../config'
 
 const mailsend = {
-  send(target, title, template, success) {
+  send(target, title, template, callback) {
     const transporter = nodemailer.createTransport({
       host: config.SMTPhost,
       port: config.SMTPport,
@@ -21,10 +21,10 @@ const mailsend = {
       },
       (error, info) => {
         if (error) {
-          return console.log(error)
+          callback(false, error)
+        } else {
+          callback(true)
         }
-        console.log('Message %s sent: %s', info.messageId, info.response)
-        success()
       }
     )
   }

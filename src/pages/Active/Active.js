@@ -13,7 +13,8 @@ class Active extends Component {
     this.state = {
       username: '',
       active_code: '',
-      errors: []
+      errors: [],
+      successes: []
     }
   }
   handleActive = async e => {
@@ -29,8 +30,8 @@ class Active extends Component {
       if (errors && errors.length > 0) {
         this.setState({ errors })
       } else {
-        this.setState({ errors: [] })
-        //   this.props.history.push('/')
+        this.setState({ successes: [{ message: '邮件激活成功,请登录' }] })
+        //setTimeout(()=>{this.props.history.push('/login')},2000)
       }
     } catch (err) {
       console.error(err)
@@ -49,6 +50,9 @@ class Active extends Component {
           <h2>激活邮箱</h2>
           {this.state.errors.map((error, index) => (
             <Alert key={index} message={error.message} error />
+          ))}
+          {this.state.successes.map((success, index) => (
+            <Alert key={index} message={success.message} success />
           ))}
         </Section>
       </Container>
