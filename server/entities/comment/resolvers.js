@@ -2,9 +2,14 @@ import Comment from './model'
 import dayjs from 'dayjs'
 
 const Query = {
-  async comment(obj, args) {
+  async commentById(obj, args) {
     const { id } = args
     return await Comment.findById(id).exec()
+  },
+
+  async commentsByPostId(obj, args) {
+    const { postId } = args
+    return await Comment.find({ postId }).exec()
   }
 }
 

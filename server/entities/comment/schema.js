@@ -3,7 +3,8 @@ import resolvers from './resolvers'
 
 const typeDefs = `
   type Query {
-    comment(id: ID!): Comment
+    commentById(id: ID!): Comment
+    commentsByPostId(postId: ID!): [Comment]
   }
 
   type Mutation {
