@@ -10,8 +10,7 @@ const commentSchema = Schema({
     type: String,
     required: true
   },
-  discussionId: {
-    // References the root comment id
+  postId: {
     type: Schema.Types.ObjectId,
     required: true
   },
