@@ -31,5 +31,6 @@ const commentSchema = mongoose.Schema({
 })
 
 commentSchema.set('timestamps', true)
+commentSchema.index({ postId: 1, fullSlug: 1 })
 
 export default mongoose.model('comment', commentSchema)
