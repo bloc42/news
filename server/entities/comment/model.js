@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
 // https://docs.mongodb.com/ecosystem/use-cases/storing-comments/#one-document-per-comment
-const commentSchema = Schema({
+const commentSchema = mongoose.Schema({
   author: {
     type: String,
     required: true
@@ -11,12 +11,12 @@ const commentSchema = Schema({
     required: true
   },
   postId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   parentId: {
     // Stores the contents of the _id field of the parent comment
-    type: Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId
   },
   slug: {
     // Holds a path composed of the parent or parent’s slug and this comment’s unique slug
@@ -32,4 +32,4 @@ const commentSchema = Schema({
 
 commentSchema.set('timestamps', true)
 
-export default model('comment', commentSchema)
+export default mongoose.model('comment', commentSchema)
