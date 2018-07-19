@@ -7,7 +7,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    addComment(content: String!, postId: ID!, parentId: String): Comment
+    addComment(content: String!, postId: ID!, parentId: ID): Comment
   }
 
   type Comment {
