@@ -1,5 +1,6 @@
 import User from './model'
 import userApi from './api'
+import mailApi from '../mail/api'
 
 const Query = {
   currentUser: (obj, args, context, info) => {
@@ -19,6 +20,9 @@ const Mutation = {
     let user = await User.findOne({
       $or: [{ username }, { email }]
     })
+    if (!user) {
+      throw '未找到此用户'
+    }
     if (user.is_active == 0 && Date.now() > user.active_deadline) {
       throw '该用户未激活,激活邮件已失效,请重新发送'
     } else if (user.is_active == 0 && Date.now() < user.active_deadline) {
@@ -48,7 +52,13 @@ const Mutation = {
       ctx.request.body = args
 
       user = await user.save()
-      await userApi.sendMail(user, 'activemail')
+      const activeurl =
+        'localhost:3000/active?username=' +
+        user.username +
+        '&active=' +
+        user.active_code +
+        ''
+      await mailApi.sendMail(user.email, 'activemail', activeurl)
       //await userApi.authenticate('local')(ctx)
       return user
     }
@@ -62,13 +72,13 @@ const Mutation = {
     return user
   },
 
-  async sendmail(obj, args, context, info) {
-    const { email } = args
-    let user = await User.findOne({ username }).exec()
-    await user.save()
-    await userApi.sendMail(user, 'activemail')
-    return user
-  },
+  // async sendmail(obj, args, context, info) {
+  //   const { email } = args
+  //   let user = await User.findOne({ username }).exec()
+  //   await user.save()
+  //   await userApi.sendMail(user, 'activemail')
+  //   return user
+  // },
 
   async active(obj, args, context, info) {
     //active mail
