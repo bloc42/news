@@ -9,7 +9,9 @@ const Query = {
 
   async commentsByPostId(obj, args) {
     const { postId } = args
-    return await Comment.find({ postId }).exec()
+    return await Comment.find({ postId })
+      .sort({ fullSlug: 1 })
+      .exec()
   }
 }
 
