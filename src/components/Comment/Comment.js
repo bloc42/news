@@ -51,7 +51,7 @@ class Comment extends Component {
   render() {
     const { id, author, content, createdAt, postId, level } = this.props
     return (
-      <StyledComment level={level}>
+      <StyledComment level={level} id={`comment-${id}`}>
         <section>{content}</section>
         <footer>
           <div>
@@ -59,7 +59,9 @@ class Comment extends Component {
           </div>
           <Divider />
           <div>
-            <RelativeTime timestamp={createdAt} />
+            <Link smooth to={`/post/${postId}#comment-${id}`}>
+              <RelativeTime timestamp={createdAt} />
+            </Link>
           </div>
           <Divider />
           <div>

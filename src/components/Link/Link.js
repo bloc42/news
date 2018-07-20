@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { HashLink } from 'react-router-hash-link'
 import styled from 'styled-components'
 
-const StyledLink = styled(ReactRouterLink)`
+const StyledLink = styled(HashLink)`
   color: ${props => props.theme.fontColor};
   text-decoration: none;
 
