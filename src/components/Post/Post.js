@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import RelativeTime from '../RelativeTime'
 import Anchor from '../Anchor'
 import Link from '../Link'
+import Divider from '../Divider'
 
 const StyledPost = styled.article`
   padding: 1.2rem 1.2rem 0 1.2rem;
@@ -36,10 +37,6 @@ const StyledPost = styled.article`
     padding: 0;
   }
 
-  > footer ul li {
-    margin-right: 0.8rem;
-  }
-
   > footer ul li a {
     color: ${props => props.theme.fontColorLight};
     text-decoration: none;
@@ -68,19 +65,32 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
             <Link to={`/user/${author}`}>{author}</Link>
           </li>
           <li>
+            <Divider />
+          </li>
+          <li>
             <RelativeTime timestamp={createdAt} />
+          </li>
+          <li>
+            <Divider />
           </li>
           <li>
             <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
           </li>
-          <li>
-            {domainMatch &&
-              domainMatch.length > 1 && (
+          {domainMatch &&
+            domainMatch.length > 1 && (
+              <li>
+                <Divider />
+              </li>
+            )}
+
+          {domainMatch &&
+            domainMatch.length > 1 && (
+              <li>
                 <Anchor href={domainMatch[1]} target="_blank">
                   {domainMatch[1]}
                 </Anchor>
-              )}
-          </li>
+              </li>
+            )}
         </ul>
       </footer>
     </StyledPost>
