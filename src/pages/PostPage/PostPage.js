@@ -8,9 +8,10 @@ import RelativeTime from '../../components/RelativeTime'
 import Link from '../../components/Link'
 import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import styled from 'styled-components'
+import Comment from '../../components/Comment'
 
 const StyledArticle = styled.article`
-  header ul {
+  footer ul {
     list-style-type: none;
     display: flex;
     flex-direction: row;
@@ -18,16 +19,16 @@ const StyledArticle = styled.article`
     color: ${props => props.theme.fontColorLight};
   }
 
-  header ul li {
+  footer ul li {
     margin-right: 0.8rem;
   }
 
-  header ul a {
+  footer ul a {
     color: ${props => props.theme.fontColorLight};
   }
 `
 
-const GET_POST = gql`
+export const GET_POST = gql`
   query GetPost($id: ID!) {
     post(id: $id) {
       id
@@ -37,6 +38,16 @@ const GET_POST = gql`
       author
       commentCount
       createdAt
+      comments {
+        id
+        author
+        content
+        fullSlug
+        level
+        postId
+        parentId
+        createdAt
+      }
     }
   }
 `
@@ -57,8 +68,10 @@ const PostPage = props => {
               content,
               author,
               createdAt,
-              commentCount
+              commentCount,
+              comments
             } = data.post
+
             const postTitle = url ? (
               <Anchor href={url} target="_blank">
                 {title}
@@ -68,10 +81,11 @@ const PostPage = props => {
             )
 
             return (
-              <StyledArticle>
-                <header>
+              <div>
+                <StyledArticle>
                   <h2>{postTitle}</h2>
-                  <section>
+                  <section>{content}</section>
+                  <footer>
                     <ul>
                       <li>
                         <Link to={`/user/${author}`}>{author}</Link>
@@ -85,13 +99,16 @@ const PostPage = props => {
                         >{`${commentCount}条评论`}</Link>
                       </li>
                     </ul>
-                  </section>
-                </header>
-                <section>{content}</section>
+                  </footer>
+                </StyledArticle>
                 <section>
-                  <SubmitCommentForm postId={id} />
+                  <SubmitCommentForm postId={id} parentAuthor={author} />
+
+                  {comments.map(comment => {
+                    return <Comment key={comment.id} {...comment} />
+                  })}
                 </section>
-              </StyledArticle>
+              </div>
             )
           }}
         </Query>

@@ -6,8 +6,7 @@ const StyledButton = styled.button`
   border-radius: ${props => props.theme.borderRadius};
   padding: 0.6rem 1.2rem;
   outline: none;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1rem;
   letter-spacing: 0.1rem;
   color: ${props => props.theme.fontColor};
   background: white;

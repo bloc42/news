@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
-import Container from '../../components/Container'
 import Form from '../../components/Form'
 import Button from '../../components/Button'
 import TextArea from '../../components/TextArea'
 import Alert from '../../components/Alert'
+import { GET_POST } from '../../pages/PostPage/PostPage'
 
 class SubmitCommentForm extends Component {
   constructor(props) {
@@ -39,15 +39,35 @@ class SubmitCommentForm extends Component {
           parentId
         },
         update: (cache, { data }) => {
-          console.log(data)
-          // TODO: update comments
+          const newComment = data.addComment
+          console.log(newComment)
+          const { post } = cache.readQuery({
+            query: GET_POST,
+            variables: { id: postId }
+          })
+          const { commentCount, comments } = post
+          const mergedComments = [...comments, newComment].sort((a, b) =>
+            a.fullSlug.localeCompare(b.fullSlug)
+          )
+
+          cache.writeQuery({
+            query: GET_POST,
+            variables: { id: postId },
+            data: {
+              post: {
+                ...post,
+                commentCount: commentCount + 1,
+                comments: mergedComments
+              }
+            }
+          })
         }
       })
 
       if (errors && errors.length > 0) {
         this.setState({ errors })
       } else {
-        this.setState({ errors: [] })
+        this.setState({ errors: [], content: '' })
       }
     } catch (err) {
       console.error(err)
@@ -55,33 +75,34 @@ class SubmitCommentForm extends Component {
   }
 
   render() {
-    return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          {this.state.errors.map((error, index) => (
-            <Alert key={index} message={error.message} error />
-          ))}
+    const { parentAuthor } = this.props
 
-          <Form.Item>
-            <TextArea
-              name="content"
-              value={this.state.content}
-              onChange={this.handleChange}
-              placeholder="回复"
-              rows="6"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button primary>提交评论</Button>
-          </Form.Item>
-        </Form>
-      </Container>
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        {this.state.errors.map((error, index) => (
+          <Alert key={index} message={error.message} error />
+        ))}
+
+        <Form.Item>
+          <TextArea
+            name="content"
+            value={this.state.content}
+            onChange={this.handleChange}
+            placeholder={`回复 ${parentAuthor}`}
+            rows="6"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button primary>提交评论</Button>
+        </Form.Item>
+      </Form>
     )
   }
 }
 
 SubmitCommentForm.propTypes = {
   postId: PropTypes.string.isRequired,
+  parentAuthor: PropTypes.string.isRequired,
   parentId: PropTypes.string
 }
 
@@ -91,9 +112,11 @@ const Add_COMMENT_MUTATION = gql`
       id
       author
       content
+      postId
       parentId
       fullSlug
       createdAt
+      level
     }
   }
 `

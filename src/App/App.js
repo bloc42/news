@@ -10,8 +10,7 @@ const StyledApp = styled.div`
   flex-direction: column;
   margin: 0 auto;
   padding: 0;
-  font-family: -apple-system, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
-    Helvetica Neue, Arial, sans-serif;
+  font-family: Helvetica Neue, Arial, sans-serif;
   font-size: 1rem;
   background: #f6f9fc;
 `

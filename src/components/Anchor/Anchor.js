@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const StyledAnchor = styled.a`
   color: ${props => props.theme.fontColor};
   text-decoration: none;
+  cursor: pointer;
 
   :hover {
     color: ${props => props.theme.primaryColor};

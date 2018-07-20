@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
-import Container from '../../components/Container'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
@@ -68,47 +67,45 @@ class SubmitPostForm extends Component {
 
   render() {
     return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          <h2>发布文章</h2>
+      <Form onSubmit={this.handleSubmit}>
+        <h2>发布文章</h2>
 
-          {this.state.errors.map((error, index) => (
-            <Alert key={index} message={error.message} error />
-          ))}
+        {this.state.errors.map((error, index) => (
+          <Alert key={index} message={error.message} error />
+        ))}
 
-          <Form.Item>
-            <Input
-              type="text"
-              name="title"
-              value={this.state.title}
-              placeholder="标题"
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input
-              type="url"
-              name="url"
-              placeholder="链接"
-              value={this.state.url}
-              onChange={this.handleChange}
-            />
-          </Form.Item>
-          <Form.Item>
-            <TextArea
-              name="content"
-              value={this.state.content}
-              onChange={this.handleChange}
-              placeholder="内容"
-              rows="10"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button primary>提交</Button>
-          </Form.Item>
-        </Form>
-      </Container>
+        <Form.Item>
+          <Input
+            type="text"
+            name="title"
+            value={this.state.title}
+            placeholder="标题"
+            onChange={this.handleChange}
+            required
+          />
+        </Form.Item>
+        <Form.Item>
+          <Input
+            type="url"
+            name="url"
+            placeholder="链接"
+            value={this.state.url}
+            onChange={this.handleChange}
+          />
+        </Form.Item>
+        <Form.Item>
+          <TextArea
+            name="content"
+            value={this.state.content}
+            onChange={this.handleChange}
+            placeholder="内容"
+            rows="10"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button primary>提交</Button>
+        </Form.Item>
+      </Form>
     )
   }
 }

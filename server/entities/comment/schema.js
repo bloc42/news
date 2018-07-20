@@ -16,6 +16,7 @@ const typeDefs = `
     author: String!,
     content: String!,
     parentId: ID,
+    postId: ID,
     fullSlug: String!,
     createdAt: String!,
     level: Int!
