@@ -5,6 +5,7 @@ import RelativeTime from '../RelativeTime'
 import Divider from '../Divider'
 import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import Anchor from '../Anchor'
+import Link from '../Link'
 
 const StyledComment = styled.div`
   margin: 2rem 0;
@@ -14,7 +15,7 @@ const StyledComment = styled.div`
     font-size: 0.8rem;
     display: flex;
     flex-direction: row;
-    margin-top: 1rem;
+    margin-top: 0.4rem;
     color: ${props => props.theme.fontColorLight};
   }
 
@@ -53,7 +54,9 @@ class Comment extends Component {
       <StyledComment level={level}>
         <section>{content}</section>
         <footer>
-          <div>{author}</div>
+          <div>
+            <Link to={`/user/${author}`}>{author}</Link>
+          </div>
           <Divider />
           <div>
             <RelativeTime timestamp={createdAt} />
