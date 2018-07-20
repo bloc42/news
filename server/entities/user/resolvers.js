@@ -7,7 +7,7 @@ const Query = {
     return ctx.state.user
   },
 
-  async user(ojb, args) {
+  async user(obj, args) {
     const { username } = args
     const user = await User.findOne({ username }).exec()
     return user

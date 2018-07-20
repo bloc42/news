@@ -10,7 +10,7 @@ import TextArea from '../../components/TextArea'
 import Alert from '../../components/Alert'
 import { GET_POSTS } from '../../containers/PostList/PostList'
 
-class SubmitPost extends Component {
+class SubmitPostForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -105,9 +105,7 @@ class SubmitPost extends Component {
             />
           </Form.Item>
           <Form.Item>
-            <Button primary fullWidth>
-              提交
-            </Button>
+            <Button primary>提交</Button>
           </Form.Item>
         </Form>
       </Container>
@@ -129,6 +127,6 @@ const SUBMIT_POST_MUTATION = gql`
 
 const SubmitPostWithMutation = compose(
   graphql(SUBMIT_POST_MUTATION, { name: 'submitPostMutation' })
-)(SubmitPost)
+)(SubmitPostForm)
 
 export default withRouter(SubmitPostWithMutation)

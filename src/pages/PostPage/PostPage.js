@@ -6,6 +6,7 @@ import Section from '../../components/Section'
 import Anchor from '../../components/Anchor'
 import RelativeTime from '../../components/RelativeTime'
 import Link from '../../components/Link'
+import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import styled from 'styled-components'
 
 const StyledArticle = styled.article`
@@ -87,6 +88,9 @@ const PostPage = props => {
                   </section>
                 </header>
                 <section>{content}</section>
+                <section>
+                  <SubmitCommentForm postId={id} />
+                </section>
               </StyledArticle>
             )
           }}
