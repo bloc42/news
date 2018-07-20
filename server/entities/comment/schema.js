@@ -17,7 +17,8 @@ const typeDefs = `
     content: String!,
     parentId: ID,
     fullSlug: String!,
-    createdAt: String!
+    createdAt: String!,
+    level: Int!
   }
 `
 

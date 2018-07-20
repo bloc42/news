@@ -1,5 +1,6 @@
 import Comment from './model'
-import dayjs from 'dayjs'
+import Post from '../post/model'
+import CommentAPI from './api'
 
 const Query = {
   async commentById(obj, args) {
@@ -25,33 +26,21 @@ const Mutation = {
 
     const { content, postId, parentId } = args
 
-    const timestamp = dayjs().format('YYYY.MM.DD.hh:mm:ss')
-    const slugPart = Math.random()
-      .toString(36)
-      .substr(2, 4)
-    const fullSlugPart = `${timestamp}:${slugPart}`
-    let slug
-    let fullSlug
+    const post = await Post.findById(postId).exec()
 
-    if (parentId) {
-      const parentComment = await Comment.findById(parentId).exec()
-      slug = `${parentComment.slug}/${slugPart}`
-      fullSlug = `${parentComment.fullSlug}/${fullSlugPart}`
-    } else {
-      slug = slugPart
-      fullSlug = fullSlugPart
+    if (!post) {
+      throw '无法找到该文章。'
     }
 
-    const comment = new Comment({
-      author: ctx.state.user.username,
+    const author = ctx.state.user.username
+    const comment = await CommentAPI.saveComment(
+      author,
       content,
       postId,
-      parentId,
-      slug,
-      fullSlug
-    })
-
-    await comment.save()
+      parentId
+    )
+    post.commentCount = post.commentCount + 1
+    await post.save()
 
     return comment
   }

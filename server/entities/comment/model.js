@@ -27,6 +27,11 @@ const commentSchema = mongoose.Schema({
     // Combines the slugs and time information to make it easier to sort documents in a threaded discussion by date.
     type: String,
     required: true
+  },
+  level: {
+    // The nesting level for the purpose of comment threads indentation
+    type: Number,
+    default: 0
   }
 })
 
