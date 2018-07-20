@@ -3,6 +3,8 @@ import config from '../config'
 import faker from 'faker'
 import User from './entities/user/model'
 import Post from './entities/post/model'
+import Comment from './entities/comment/model'
+import CommentAPI from './entities/comment/api'
 
 if (!config.isLocal) {
   console.log('Do not seed database in production!')
@@ -16,6 +18,9 @@ mongoose.connect(config.DBURL)
     .remove()
     .exec()
   await Post.find()
+    .remove()
+    .exec()
+  await Comment.find()
     .remove()
     .exec()
 
@@ -47,16 +52,23 @@ mongoose.connect(config.DBURL)
   for (let i = 0; i < 80; i++) {
     const randomUser = faker.random.arrayElement(users)
     const hasUrl = faker.random.boolean()
+    const commentCount = faker.random.number(10)
 
     const post = new Post({
       title: faker.lorem.sentence(),
       url: hasUrl ? faker.internet.url() : '',
       content: hasUrl ? '' : faker.lorem.paragraphs(),
       author: randomUser.username,
-      commentCount: faker.random.number(300)
+      commentCount
     })
 
     await post.save()
+
+    for (let j = 0; j < commentCount; j++) {
+      const author = faker.random.arrayElement(users).username
+      const content = faker.lorem.paragraphs()
+      await CommentAPI.saveComment(author, content, post.id)
+    }
   }
 
   console.log('Done seeding.')
