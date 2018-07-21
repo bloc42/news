@@ -10,8 +10,8 @@ const StyledApp = styled.div`
   flex-direction: column;
   margin: 0 auto;
   padding: 0;
-  font-family: Helvetica Neue, Arial, sans-serif;
-  font-size: 1rem;
+  font-family: ${props => props.theme.fontFamily};
+  font-size: ${props => props.theme.fontSize};
   background: #f6f9fc;
 `
 

@@ -24,6 +24,7 @@ const PostList = () => (
   <Query query={GET_POSTS}>
     {({ loading, data, fetchMore }) => {
       if (loading) return null
+
       const {
         postFeed: { cursor, posts }
       } = data

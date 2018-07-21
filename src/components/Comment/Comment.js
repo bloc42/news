@@ -12,7 +12,7 @@ const StyledComment = styled.div`
   margin-left: ${props => props.level * 2}rem;
 
   footer {
-    font-size: 0.8rem;
+    font-size: ${props => props.theme.fontSizeSmall};
     display: flex;
     flex-direction: row;
     margin-top: 0.4rem;

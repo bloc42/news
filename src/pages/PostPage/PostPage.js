@@ -9,6 +9,7 @@ import Link from '../../components/Link'
 import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import styled from 'styled-components'
 import Comment from '../../components/Comment'
+import Divider from '../../components/Divider'
 
 const StyledArticle = styled.article`
   footer ul {
@@ -17,10 +18,7 @@ const StyledArticle = styled.article`
     flex-direction: row;
     padding: 0;
     color: ${props => props.theme.fontColorLight};
-  }
-
-  footer ul li {
-    margin-right: 0.8rem;
+    font-size: ${props => props.theme.fontSizeSmall};
   }
 
   footer ul a {
@@ -91,7 +89,13 @@ const PostPage = props => {
                         <Link to={`/user/${author}`}>{author}</Link>
                       </li>
                       <li>
+                        <Divider />
+                      </li>
+                      <li>
                         <RelativeTime timestamp={createdAt} />
+                      </li>
+                      <li>
+                        <Divider />
                       </li>
                       <li>
                         <Link

@@ -26,7 +26,7 @@ const StyledPost = styled.article`
   }
 
   > footer {
-    font-size: 0.8rem;
+    font-size: ${props => props.theme.fontSizeSmall};
     color: ${props => props.theme.fontColorLight};
   }
 
@@ -55,7 +55,7 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
   const domainMatch = url.match(/:\/\/(.[^/]+)/)
 
   return (
-    <StyledPost>
+    <StyledPost id={`post-${id}`}>
       <header>
         <span>{postTitle}</span>
       </header>
@@ -68,7 +68,9 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
             <Divider />
           </li>
           <li>
-            <RelativeTime timestamp={createdAt} />
+            <Link smooth to={`#post-${id}`}>
+              <RelativeTime timestamp={createdAt} />
+            </Link>
           </li>
           <li>
             <Divider />
