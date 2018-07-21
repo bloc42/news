@@ -22,8 +22,8 @@ const typeDefs = `
     url: String, 
     content: String,
     author: String!, 
-    commentCount: Int,
-    createdAt: String
+    commentCount: Int!,
+    createdAt: String!
   }
 `
 

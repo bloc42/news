@@ -31,17 +31,7 @@ const PostList = () => (
 
       return (
         <div>
-          {posts.map(post => (
-            <Post
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              url={post.url}
-              author={post.author}
-              commentCount={post.commentCount}
-              createdAt={post.createdAt}
-            />
-          ))}
+          {posts.map(post => <Post key={post.id} {...post} />)}
           <ScrollDetector
             onReachBottom={() =>
               fetchMore({

@@ -7,7 +7,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import TextArea from '../../components/TextArea'
 import Alert from '../../components/Alert'
-import { GET_POSTS } from '../../containers/PostList/PostList'
+import { GET_POSTS } from '../PostList'
 
 class SubmitPostForm extends Component {
   constructor(props) {
@@ -42,13 +42,17 @@ class SubmitPostForm extends Component {
         },
         update: (cache, { data }) => {
           const newPost = data.submitPost
-          const { posts } = cache.readQuery({ query: GET_POSTS })
+          const { postFeed } = cache.readQuery({ query: GET_POSTS })
+          const { posts } = postFeed
           const mergedPosts = [newPost, ...posts]
 
           cache.writeQuery({
             query: GET_POSTS,
             data: {
-              posts: mergedPosts
+              postFeed: {
+                ...postFeed,
+                posts: mergedPosts
+              }
             }
           })
         }

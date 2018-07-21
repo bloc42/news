@@ -45,10 +45,8 @@ const Mutation = {
 
     const { title, url, content } = args
 
-    const author = ctx.state.user
-
-    // TODO: save author details
-    const post = new Post({ title, url, content, author: author.username })
+    const author = ctx.state.user.username
+    const post = new Post({ title, url, content, author })
     await post.save()
     return post
   }
