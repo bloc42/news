@@ -52,7 +52,11 @@ class Comment extends Component {
     const { id, author, content, createdAt, postId, level } = this.props
     return (
       <StyledComment level={level} id={`comment-${id}`}>
-        <section>{content}</section>
+        <section>
+          {content.split('\n').map((paragraph, key) => {
+            return <p key={key}>{paragraph}</p>
+          })}
+        </section>
         <footer>
           <div>
             <Link to={`/user/${author}`}>{author}</Link>

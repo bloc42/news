@@ -82,7 +82,13 @@ const PostPage = props => {
               <div>
                 <StyledArticle>
                   <h2>{postTitle}</h2>
-                  <section>{content}</section>
+
+                  <section>
+                    {content.split('\n').map((paragraph, key) => {
+                      return <p key={key}>{paragraph}</p>
+                    })}
+                  </section>
+
                   <footer>
                     <ul>
                       <li>
