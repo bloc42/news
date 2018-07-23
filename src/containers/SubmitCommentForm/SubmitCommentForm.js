@@ -40,7 +40,6 @@ class SubmitCommentForm extends Component {
         },
         update: (cache, { data }) => {
           const newComment = data.addComment
-          console.log(newComment)
           const { post } = cache.readQuery({
             query: GET_POST,
             variables: { id: postId }
