@@ -7,6 +7,7 @@ import Button from '../../components/Button'
 import { GET_CURRENT_USER } from '../../query'
 import Alert from '../../components/Alert'
 import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -66,10 +67,18 @@ class LoginForm extends Component {
       <Form onSubmit={this.handleSubmit}>
         <h2>欢迎回来！</h2>
 
-        {this.state.errors.map((error, index) => (
-          <Alert key={index} message={error.message} error />
-        ))}
-
+        {this.state.errors.map((error, index) => {
+          let template = <Alert key={index} message={error.message} error />
+          if (error.code == '223') {
+            template = (
+              <Alert key={index} message={error.message} error>
+                <br />
+                <Link to="/resend">立即发送</Link>
+              </Alert>
+            )
+          }
+          return template
+        })}
         <Form.Item>
           <Input
             type="text"

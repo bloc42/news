@@ -7,6 +7,7 @@ import passport from 'koa-passport'
 import morgan from 'koa-morgan'
 import mongoose from 'mongoose'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
+import { formatError } from 'graphql/error/formatError'
 import schema from './schema'
 import config from '../config'
 
@@ -45,7 +46,11 @@ router.post('/graphql', async (ctx, next) => {
     context: {
       // Pass koa ctx to graphql context
       ctx
-    }
+    },
+    formatError: err =>
+      err.originalError
+        ? formatError(err.originalError.errors[0].originalError)
+        : formatError(err)
   })(ctx, next)
 })
 

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import Section from '../../components/Section'
 import Container from '../../components/Container'
 import Alert from '../../components/Alert'
+import { Link } from 'react-router-dom'
 
 class Active extends Component {
   constructor(props) {
@@ -48,9 +49,18 @@ class Active extends Component {
       <Container small>
         <Section padded>
           <h2>激活邮箱</h2>
-          {this.state.errors.map((error, index) => (
-            <Alert key={index} message={error.message} error />
-          ))}
+          {this.state.errors.map((error, index) => {
+            let template = <Alert key={index} message={error.message} error />
+            if (error.code == '223') {
+              template = (
+                <Alert key={index} message={error.message} error>
+                  <br />
+                  <Link to="/resend">立即发送</Link>
+                </Alert>
+              )
+            }
+            return template
+          })}
           {this.state.successes.map((success, index) => (
             <Alert key={index} message={success.message} success />
           ))}
@@ -62,6 +72,7 @@ class Active extends Component {
 const ACTIVE_MUTATION = gql`
   mutation Active($username: String!, $active_code: String!) {
     active(username: $username, active_code: $active_code) {
+      id
       username
     }
   }

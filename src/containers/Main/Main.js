@@ -7,6 +7,7 @@ import SubmitPost from '../../pages/SubmitPost'
 import styled from 'styled-components'
 import Post from '../../pages/Post'
 import Active from '../../pages/Active'
+import ReSendMail from '../../pages/ReSendMail'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -23,6 +24,7 @@ const Main = () => (
       <Route path="/submit" component={SubmitPost} />
       <Route path="/post/:id" component={Post} />
       <Route path="/active" component={Active} />
+      <Route path="/resend" component={ReSendMail} />
     </Switch>
   </StyledMain>
 )
