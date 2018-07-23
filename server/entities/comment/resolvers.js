@@ -1,5 +1,6 @@
 import Comment from './model'
 import Post from '../post/model'
+import Notification from '../notification/model'
 import CommentAPI from './api'
 
 const Query = {
@@ -41,6 +42,32 @@ const Mutation = {
     )
     post.commentCount = post.commentCount + 1
     await post.save()
+
+    if (parentId) {
+      // Notify parent comment author
+      const parentComment = await Comment.findById(parentId).exec()
+
+      if (parentComment.author !== author) {
+        const notification = new Notification({
+          from: author,
+          to: parentComment.author,
+          postId: post.id,
+          commentId: comment.id
+        })
+
+        await notification.save()
+      }
+    } else if (post.author !== author) {
+      // Notify post author
+      const notification = new Notification({
+        from: author,
+        to: post.author,
+        postId: post.id,
+        commentId: comment.id
+      })
+
+      await notification.save()
+    }
 
     return comment
   }
