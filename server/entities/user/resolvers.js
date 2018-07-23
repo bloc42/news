@@ -138,6 +138,8 @@ const Mutation = {
           }
         }
       ).exec()
+      const activeurl = DOMAIN + '/active?username='
+      user.username + '&active=' + user.active_code + ''
       await mail.send({
         to: user.email,
         subject: '帐号激活',
