@@ -11,7 +11,7 @@ class SendmailForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      eamil: '',
+      email: '',
       errors: [],
       successes: []
     }
@@ -19,11 +19,7 @@ class SendmailForm extends Component {
 
   handleChange = e => {
     const { target } = e
-    const { name, value } = target
-
-    this.setState({
-      [name]: value
-    })
+    this.setState({ email: target.value })
   }
 
   handleSubmit = async e => {
