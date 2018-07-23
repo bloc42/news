@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-// https://docs.mongodb.com/ecosystem/use-cases/storing-comments/#one-document-per-comment
 const notificationSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +11,7 @@ const notificationSchema = mongoose.Schema({
   commentId: {
     type: mongoose.Schema.Types.ObjectId
   },
-  isViewed: {
+  isRead: {
     type: Boolean,
     default: false
   }
