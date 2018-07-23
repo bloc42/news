@@ -1,8 +1,12 @@
 import mongoose from 'mongoose'
 
 const notificationSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
+  from: {
+    type: String,
+    required: true
+  },
+  to: {
+    type: String,
     required: true
   },
   postId: {
