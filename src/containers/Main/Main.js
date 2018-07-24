@@ -7,6 +7,8 @@ import SubmitPostPage from '../../pages/SubmitPostPage'
 import styled from 'styled-components'
 import PostPage from '../../pages/PostPage'
 import UserProfilePage from '../../pages/UserProfilePage'
+import ActivationPage from '../../pages/ActivationPage'
+import SendActivationPage from '../../pages/SendActivationPage'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -23,6 +25,8 @@ const Main = () => (
       <Route path="/submit" component={SubmitPostPage} />
       <Route path="/post/:id" component={PostPage} />
       <Route path="/user/:username" component={UserProfilePage} />
+      <Route path="/activation" component={ActivationPage} />
+      <Route path="/sendactivation" component={SendActivationPage} />
     </Switch>
   </StyledMain>
 )

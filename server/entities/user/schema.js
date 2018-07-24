@@ -11,6 +11,8 @@ const typeDefs = `
     login(username: String!, password: String!): User
     signup(username: String!, email: String!, password: String!): User
     logout: User
+    activation(username: String!, activationCode: String!): User
+    sendActivationMail(email: String!): User
   }
 
   type User {
