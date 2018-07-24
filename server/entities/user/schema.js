@@ -10,8 +10,8 @@ const typeDefs = `
     login(username: String!, password: String!): User
     signup(username: String!, email: String!, password: String!): User
     logout: User
-    active(username: String!, active_code: String!): User
-    sendmail(email: String!): User
+    activation(username: String!, activationCode: String!): User
+    sendActivationMail(email: String!): User
   }
 
   type User {

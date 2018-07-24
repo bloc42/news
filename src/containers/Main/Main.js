@@ -6,8 +6,8 @@ import Signup from '../../pages/Signup'
 import SubmitPost from '../../pages/SubmitPost'
 import styled from 'styled-components'
 import Post from '../../pages/Post'
-import Active from '../../pages/Active'
-import ReSendMail from '../../pages/ReSendMail'
+import ActivationPage from '../../pages/ActivationPage'
+import SendActivationPage from '../../pages/SendActivationPage'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -23,8 +23,8 @@ const Main = () => (
       <Route path="/signup" component={Signup} />
       <Route path="/submit" component={SubmitPost} />
       <Route path="/post/:id" component={Post} />
-      <Route path="/active" component={Active} />
-      <Route path="/resend" component={ReSendMail} />
+      <Route path="/activation" component={ActivationPage} />
+      <Route path="/sendactivation" component={SendActivationPage} />
     </Switch>
   </StyledMain>
 )

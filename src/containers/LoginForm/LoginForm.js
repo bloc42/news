@@ -73,7 +73,7 @@ class LoginForm extends Component {
             template = (
               <Alert key={index} message={error.message} error>
                 <br />
-                <Link to="/resend">立即发送</Link>
+                <Link to="/sendactivation">立即发送</Link>
               </Alert>
             )
           }

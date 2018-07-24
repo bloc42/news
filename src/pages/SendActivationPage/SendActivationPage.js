@@ -3,7 +3,7 @@ import Section from '../../components/Section'
 import SendMailForm from '../../containers/SendMailForm'
 import Container from '../../components/Container'
 
-const Login = () => {
+const SendActivationPage = () => {
   return (
     <Container small>
       <Section padded>
@@ -13,4 +13,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SendActivationPage

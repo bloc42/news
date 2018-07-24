@@ -4,16 +4,11 @@ import mail from '../../mail'
 import bcrypt from 'bcrypt'
 import config from '../../../config'
 import { GraphQLError } from 'graphql/error'
-import activemail from '../../maillayout/activemail'
+import activationMail from '../../maillayout/activationMail'
 
 const DOMAIN = config.isLocal ? 'http://localhost:3000' : config.domain
 const SALT_WORK_FACTOR = 1
-class newError extends Error {
-  constructor(message, code) {
-    super(message)
-    this.code = code
-  }
-}
+
 const Query = {
   currentUser: (obj, args, context, info) => {
     const { ctx } = context
@@ -26,7 +21,6 @@ const Mutation = {
     const { ctx } = context
     ctx.request.body = args
 
-    //validate is_active
     const { username } = args
     const email = username
     let user = await User.findOne({
@@ -35,7 +29,7 @@ const Mutation = {
     if (!user) {
       throw '未找到此用户'
     }
-    if (user.is_active == 0 && Date.now() > user.active_deadline) {
+    if (user.isActivated == 0 && Date.now() > user.activationDeadline) {
       const error = new GraphQLError(
         '该用户未激活,激活邮件已失效,请重新发送',
         null,
@@ -48,9 +42,9 @@ const Mutation = {
         }
       )
       throw error
-    } else if (user.is_active == 0 && Date.now() < user.active_deadline) {
+    } else if (user.isActivated == 0 && Date.now() < user.activationDeadline) {
       throw '该用户未激活,请在注册邮箱中查看激活邮件'
-    } else if (user.is_active == 1) {
+    } else if (user.isActivated == 1) {
       console.log(args)
       user = await userApi.authenticate('local')(ctx)
     }
@@ -78,14 +72,17 @@ const Mutation = {
 
       //save activeInfo
       const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
-      const active_hash_code = await bcrypt.hash(
+      const activationHashCode = await bcrypt.hash(
         user.username + Date.now().toString(),
         salt
       )
-      const active_deadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
+      const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
       await User.findOneAndUpdate(
         { username: user.username },
-        { active_code: active_hash_code, active_deadline: active_deadline },
+        {
+          activationCode: activationHashCode,
+          activationDeadline: activationDeadline
+        },
         { new: true },
         function(err, doc) {
           if (err) {
@@ -95,12 +92,12 @@ const Mutation = {
           }
         }
       ).exec()
-      const activeurl = DOMAIN + '/active?username='
-      user.username + '&active=' + user.active_code + ''
+      const activationUrl = DOMAIN + '/activation?username='
+      user.username + '&activationcode=' + user.activationCode + ''
       await mail.send({
         to: user.email,
         subject: '帐号激活',
-        html: activemail(activeurl)
+        html: activationMail(activationUrl)
       })
       return user
     }
@@ -114,21 +111,24 @@ const Mutation = {
     return user
   },
 
-  async sendmail(obj, args, context, info) {
+  async sendActivationMail(obj, args, context, info) {
     const { email } = args
     let user = await User.findOne({ email }).exec()
-    if (user.is_active !== 0) {
+    if (user.isActivated !== 0) {
       throw '此邮箱已经激活'
     } else {
       const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
-      const active_hash_code = await bcrypt.hash(
+      const activationHashCode = await bcrypt.hash(
         user.username + Date.now().toString(),
         salt
       )
-      const active_deadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
+      const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
       await User.findOneAndUpdate(
         { username: user.username },
-        { active_code: active_hash_code, active_deadline: active_deadline },
+        {
+          activationCode: activationHashCode,
+          activationDeadline: activationDeadline
+        },
         { new: true },
         function(err, doc) {
           if (err) {
@@ -138,30 +138,28 @@ const Mutation = {
           }
         }
       ).exec()
-      const activeurl = DOMAIN + '/active?username='
-      user.username + '&active=' + user.active_code + ''
+      const activationUrl = DOMAIN + '/activation?username='
+      user.username + '&activationcode=' + user.activationCode + ''
       await mail.send({
         to: user.email,
         subject: '帐号激活',
-        html: activemail(activeurl)
+        html: activationMail(activationUrl)
       })
     }
     return user
   },
 
-  async active(obj, args, context, info) {
-    //active mail
-    const { username, active_code } = args
+  async activation(obj, args, context, info) {
+    const { username, activationCode } = args
     let user = await User.findOne({ username }).exec()
     if (
-      user.active_code == active_code &&
-      Date.now() < user.active_deadline &&
-      user.is_active == 0
+      user.activationCode == activationCode &&
+      Date.now() < user.activationDeadline &&
+      user.isActivated == 0
     ) {
-      //active success
       await User.findOneAndUpdate(
         { username: user.username },
-        { is_active: 1 },
+        { isActivated: 1 },
         { new: true },
         function(err, doc) {
           if (err) {
@@ -172,11 +170,11 @@ const Mutation = {
         }
       ).exec()
       return user
-    } else if (user.is_active == 1) {
+    } else if (user.isActivated == 1) {
       throw '此账户为已激活账户,请登陆'
     } else if (
-      user.active_code == active_code ||
-      Date.now() > user.active_deadline
+      user.activationCode == activationCode ||
+      Date.now() > user.activationDeadline
     ) {
       const error = new GraphQLError(
         '该用户未激活,激活邮件已失效,请重新发送',
@@ -190,7 +188,7 @@ const Mutation = {
         }
       )
       throw error
-    } else if (user.active_code !== active_code) {
+    } else if (user.activationCode !== activationCode) {
       throw '此链接未通过验证,请检查链接地址是否正确'
     }
   }

@@ -8,23 +8,23 @@ import Container from '../../components/Container'
 import Alert from '../../components/Alert'
 import { Link } from 'react-router-dom'
 
-class Active extends Component {
+class ActivationPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
-      active_code: '',
+      activationCode: '',
       errors: [],
       successes: []
     }
   }
-  handleActive = async e => {
-    const { username, active_code } = this.state
+  handleActivation = async e => {
+    const { username, activationCode } = this.state
     try {
-      const { errors } = await this.props.activeMutation({
+      const { errors } = await this.props.activationMutation({
         variables: {
           username,
-          active_code
+          activationCode
         }
       })
 
@@ -41,8 +41,8 @@ class Active extends Component {
   componentDidMount() {
     const searchParams = new URLSearchParams(this.props.location.search)
     this.state.username = searchParams.get('username')
-    this.state.active_code = searchParams.get('active')
-    this.handleActive()
+    this.state.activationCode = searchParams.get('activationcode')
+    this.handleActivation()
   }
   render() {
     return (
@@ -55,7 +55,7 @@ class Active extends Component {
               template = (
                 <Alert key={index} message={error.message} error>
                   <br />
-                  <Link to="/resend">立即发送</Link>
+                  <Link to="/sendactivation">立即发送</Link>
                 </Alert>
               )
             }
@@ -69,17 +69,17 @@ class Active extends Component {
     )
   }
 }
-const ACTIVE_MUTATION = gql`
-  mutation Active($username: String!, $active_code: String!) {
-    active(username: $username, active_code: $active_code) {
+const ACTIVATION_MUTATION = gql`
+  mutation Activation($username: String!, $activationCode: String!) {
+    activation(username: $username, activationCode: $activationCode) {
       id
       username
     }
   }
 `
 
-const ActiveWithMutation = compose(
-  graphql(ACTIVE_MUTATION, { name: 'activeMutation' })
-)(Active)
+const ActivationWithMutation = compose(
+  graphql(ACTIVATION_MUTATION, { name: 'activationMutation' })
+)(ActivationPage)
 
-export default withRouter(withApollo(ActiveWithMutation))
+export default withRouter(withApollo(ActivationWithMutation))

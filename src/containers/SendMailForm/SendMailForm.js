@@ -27,7 +27,7 @@ class SendmailForm extends Component {
     const { email } = this.state
 
     try {
-      const { errors } = await this.props.sendmailMutation({
+      const { errors } = await this.props.sendActivationMailMutation({
         variables: {
           email
         }
@@ -76,17 +76,17 @@ class SendmailForm extends Component {
   }
 }
 
-const SENDMAIL_MUTATION = gql`
-  mutation sendmail($email: String!) {
-    sendmail(email: $email) {
+const SENDACTIVATIONMAIL_MUTATION = gql`
+  mutation sendActivationMail($email: String!) {
+    sendActivationMail(email: $email) {
       id
       username
     }
   }
 `
 
-const sendmailFormWithMutation = compose(
-  graphql(SENDMAIL_MUTATION, { name: 'sendmailMutation' })
+const sendActivationMailFormWithMutation = compose(
+  graphql(SENDACTIVATIONMAIL_MUTATION, { name: 'sendActivationMailMutation' })
 )(SendmailForm)
 
-export default withRouter(sendmailFormWithMutation)
+export default withRouter(sendActivationMailFormWithMutation)

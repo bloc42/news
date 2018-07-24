@@ -22,17 +22,17 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: [6, '密码不能少于6位。']
   },
-  invitation_code: {
+  invitationCode: {
     type: String
     // TODO
   },
   role: { type: String, default: 'user' }, // ['admin', 'moderator', 'user']
-  first_name: String,
-  last_name: String,
+  firstName: String,
+  lastName: String,
   //for mail active
-  is_active: { type: Number, default: 0 },
-  active_code: String,
-  active_deadline: Date
+  isActivated: { type: Number, default: 0 },
+  activationCode: String,
+  activationDeadline: Date
 })
 
 userSchema.set('timestamps', true)
