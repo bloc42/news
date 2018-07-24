@@ -9,8 +9,8 @@ const StyledSmall = styled.small`
   }
 `
 
-const Small = ({ children }) => {
-  return <StyledSmall>{children}</StyledSmall>
+const Small = props => {
+  return <StyledSmall {...props}>{props.children}</StyledSmall>
 }
 
 export default Small

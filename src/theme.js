@@ -2,8 +2,13 @@ const darkBlack = '#333'
 const tomato = '#ff6246'
 
 const theme = {
+  fontFamily:
+    'Tahoma, Arial, Helvetica, "Microsoft YaHei New", "Microsoft Yahei", "微软雅黑", 宋体, SimSun, STXihei, "华文细黑", sans-serif',
+  fontSizeLarge: '1.2rem',
+  fontSize: '1rem',
+  fontSizeSmall: '0.8rem',
   fontColor: darkBlack,
-  fontColorLight: adjustColor(darkBlack, 40),
+  fontColorLight: '#777',
   primaryColor: tomato,
   primaryColorLight: adjustColor(tomato, 20),
   borderColor: '#e8e8e8',

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledMenuItem = styled.li`
-  font-size: 1.2rem;
+  font-size: ${props => props.theme.fontSizeLarge};
   font-weight: bold;
   margin: 0.8rem;
 

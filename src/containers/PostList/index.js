@@ -1,1 +1,1 @@
-export { default } from './PostList'
+export { default, GET_POSTS } from './PostList'
