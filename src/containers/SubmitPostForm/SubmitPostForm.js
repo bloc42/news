@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
-import Container from '../../components/Container'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import TextArea from '../../components/TextArea'
 import Alert from '../../components/Alert'
-import { GET_POSTS } from '../../containers/PostList/PostList'
+import { GET_POSTS } from '../PostList'
 
-class SubmitPost extends Component {
+class SubmitPostForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -43,13 +42,17 @@ class SubmitPost extends Component {
         },
         update: (cache, { data }) => {
           const newPost = data.submitPost
-          const { posts } = cache.readQuery({ query: GET_POSTS })
+          const { postFeed } = cache.readQuery({ query: GET_POSTS })
+          const { posts } = postFeed
           const mergedPosts = [newPost, ...posts]
 
           cache.writeQuery({
             query: GET_POSTS,
             data: {
-              posts: mergedPosts
+              postFeed: {
+                ...postFeed,
+                posts: mergedPosts
+              }
             }
           })
         }
@@ -68,49 +71,45 @@ class SubmitPost extends Component {
 
   render() {
     return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          <h2>发布文章</h2>
+      <Form onSubmit={this.handleSubmit}>
+        <h2>发布文章</h2>
 
-          {this.state.errors.map((error, index) => (
-            <Alert key={index} message={error.message} error />
-          ))}
+        {this.state.errors.map((error, index) => (
+          <Alert key={index} message={error.message} error />
+        ))}
 
-          <Form.Item>
-            <Input
-              type="text"
-              name="title"
-              value={this.state.title}
-              placeholder="标题"
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input
-              type="url"
-              name="url"
-              placeholder="链接"
-              value={this.state.url}
-              onChange={this.handleChange}
-            />
-          </Form.Item>
-          <Form.Item>
-            <TextArea
-              name="content"
-              value={this.state.content}
-              onChange={this.handleChange}
-              placeholder="内容"
-              rows="10"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button primary fullWidth>
-              提交
-            </Button>
-          </Form.Item>
-        </Form>
-      </Container>
+        <Form.Item>
+          <Input
+            type="text"
+            name="title"
+            value={this.state.title}
+            placeholder="标题"
+            onChange={this.handleChange}
+            required
+          />
+        </Form.Item>
+        <Form.Item>
+          <Input
+            type="url"
+            name="url"
+            placeholder="链接"
+            value={this.state.url}
+            onChange={this.handleChange}
+          />
+        </Form.Item>
+        <Form.Item>
+          <TextArea
+            name="content"
+            value={this.state.content}
+            onChange={this.handleChange}
+            placeholder="内容"
+            rows="10"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button primary>提交</Button>
+        </Form.Item>
+      </Form>
     )
   }
 }
@@ -129,6 +128,6 @@ const SUBMIT_POST_MUTATION = gql`
 
 const SubmitPostWithMutation = compose(
   graphql(SUBMIT_POST_MUTATION, { name: 'submitPostMutation' })
-)(SubmitPost)
+)(SubmitPostForm)
 
 export default withRouter(SubmitPostWithMutation)

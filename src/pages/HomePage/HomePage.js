@@ -1,16 +1,16 @@
 import React from 'react'
 import Section from '../../components/Section'
+import PostList from '../../containers/PostList'
 import Container from '../../components/Container'
-import SubmitPostForm from '../../containers/SubmitPostForm'
 
-const SubmitPost = () => {
+const HomePage = () => {
   return (
     <Container>
-      <Section padded>
-        <SubmitPostForm />
+      <Section>
+        <PostList />
       </Section>
     </Container>
   )
 }
 
-export default SubmitPost
+export default HomePage

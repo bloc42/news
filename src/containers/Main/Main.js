@@ -1,11 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Home from '../../pages/Home'
-import Login from '../../pages/Login'
-import Signup from '../../pages/Signup'
-import SubmitPost from '../../pages/SubmitPost'
+import HomePage from '../../pages/HomePage'
+import LoginPage from '../../pages/LoginPage'
+import SignupPage from '../../pages/SignupPage'
+import SubmitPostPage from '../../pages/SubmitPostPage'
 import styled from 'styled-components'
-import Post from '../../pages/Post'
+import PostPage from '../../pages/PostPage'
+import UserProfilePage from '../../pages/UserProfilePage'
 import ActivationPage from '../../pages/ActivationPage'
 import SendActivationPage from '../../pages/SendActivationPage'
 
@@ -18,11 +19,12 @@ const StyledMain = styled.main`
 const Main = () => (
   <StyledMain>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/submit" component={SubmitPost} />
-      <Route path="/post/:id" component={Post} />
+      <Route exact path="/" component={HomePage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignupPage} />
+      <Route path="/submit" component={SubmitPostPage} />
+      <Route path="/post/:id" component={PostPage} />
+      <Route path="/user/:username" component={UserProfilePage} />
       <Route path="/activation" component={ActivationPage} />
       <Route path="/sendactivation" component={SendActivationPage} />
     </Switch>

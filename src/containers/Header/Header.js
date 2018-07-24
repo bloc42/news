@@ -3,15 +3,10 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { GET_CURRENT_USER } from '../../query'
-import { Query, withApollo } from 'react-apollo'
-import { graphql, compose } from 'react-apollo'
-import { withRouter } from 'react-router-dom'
+import { Query, graphql, compose } from 'react-apollo'
 import Menu from '../../components/Menu'
 import Container from '../../components/Container'
-
-const StyledHeader = styled.header`
-  /* background: white; */
-`
+import Avatar from '../../components/Avatar'
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -20,19 +15,6 @@ const StyledContainer = styled(Container)`
 `
 
 class Header extends Component {
-  handleLogout = async e => {
-    e.preventDefault()
-
-    try {
-      await this.props.logoutMutation()
-      this.props.client.resetStore()
-      this.props.history.push('/')
-    } catch (err) {
-      // TODO: show error message
-      console.log(err)
-    }
-  }
-
   renderLoggedInMenu({ username }) {
     return (
       <Menu>
@@ -40,13 +22,9 @@ class Header extends Component {
           <NavLink to="/submit">发布文章</NavLink>
         </Menu.Item>
         <Menu.Item>
-          {/* TODO: redirect to user profile */}
-          <a href="">{username}</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a href="" onClick={this.handleLogout}>
-            登出
-          </a>
+          <NavLink to={`/user/${username}`}>
+            <Avatar />
+          </NavLink>
         </Menu.Item>
       </Menu>
     )
@@ -85,7 +63,7 @@ class Header extends Component {
 
   render() {
     return (
-      <StyledHeader>
+      <header>
         <nav>
           <StyledContainer>
             <Menu>
@@ -98,7 +76,7 @@ class Header extends Component {
             {this.renderRightMenu()}
           </StyledContainer>
         </nav>
-      </StyledHeader>
+      </header>
     )
   }
 }
@@ -116,4 +94,4 @@ const HeaderWithMutation = compose(
   graphql(LOGOUT_MUTATION, { name: 'logoutMutation' })
 )(Header)
 
-export default withRouter(withApollo(HeaderWithMutation))
+export default HeaderWithMutation

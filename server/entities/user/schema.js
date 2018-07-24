@@ -4,6 +4,7 @@ import resolvers from './resolvers'
 const typeDefs = `
   type Query {
     currentUser: User
+    user(username: String!): User
   }
 
   type Mutation {
@@ -16,7 +17,9 @@ const typeDefs = `
 
   type User {
     id: ID!,
-    username: String!
+    username: String!,
+    email: String,
+    createdAt: String
   }
 `
 

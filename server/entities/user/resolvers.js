@@ -10,9 +10,15 @@ const DOMAIN = config.isLocal ? 'http://localhost:3000' : config.domain
 const SALT_WORK_FACTOR = 1
 
 const Query = {
-  currentUser: (obj, args, context, info) => {
+  currentUser(obj, args, context, info) {
     const { ctx } = context
     return ctx.state.user
+  },
+
+  async user(obj, args) {
+    const { username } = args
+    const user = await User.findOne({ username }).exec()
+    return user
   }
 }
 
