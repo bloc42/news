@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import RelativeTime from '../RelativeTime/RelativeTime'
-import { Link } from 'react-router-dom'
+import RelativeTime from '../RelativeTime'
+import Anchor from '../Anchor'
+import Link from '../Link'
+import Divider from '../Divider'
 
 const StyledPost = styled.article`
   padding: 1.2rem 1.2rem 0 1.2rem;
@@ -13,13 +15,18 @@ const StyledPost = styled.article`
     margin-bottom: 0.2rem;
   }
 
+  > header small {
+    font-weight: normal;
+    margin-left: 0.8rem;
+  }
+
   > header a {
     color: ${props => props.theme.fontColor};
     text-decoration: none;
   }
 
   > footer {
-    font-size: 0.8rem;
+    font-size: ${props => props.theme.fontSizeSmall};
     color: ${props => props.theme.fontColorLight};
   }
 
@@ -30,31 +37,62 @@ const StyledPost = styled.article`
     padding: 0;
   }
 
-  > footer ul li {
-    margin-right: 0.8rem;
+  > footer ul li a {
+    color: ${props => props.theme.fontColorLight};
+    text-decoration: none;
   }
 `
 
 const Post = ({ id, title, author, url, commentCount, createdAt }) => {
   const postTitle = url ? (
-    <a href={url} target="_blank">
+    <Anchor href={url} target="_blank">
       {title}
-    </a>
+    </Anchor>
   ) : (
     <Link to={`/post/${id}`}>{title}</Link>
   )
 
+  const domainMatch = url.match(/:\/\/(.[^/]+)/)
+
   return (
-    <StyledPost>
-      <header>{postTitle}</header>
+    <StyledPost id={`post-${id}`}>
+      <header>
+        <span>{postTitle}</span>
+      </header>
       <footer>
-        {/* TODO: add link */}
         <ul>
-          <li>{author}</li>
           <li>
-            <RelativeTime timestamp={createdAt} />
+            <Link to={`/user/${author}`}>{author}</Link>
           </li>
-          <li>{`${commentCount}条评论`}</li>
+          <li>
+            <Divider />
+          </li>
+          <li>
+            <Link smooth to={`#post-${id}`}>
+              <RelativeTime timestamp={createdAt} />
+            </Link>
+          </li>
+          <li>
+            <Divider />
+          </li>
+          <li>
+            <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
+          </li>
+          {domainMatch &&
+            domainMatch.length > 1 && (
+              <li>
+                <Divider />
+              </li>
+            )}
+
+          {domainMatch &&
+            domainMatch.length > 1 && (
+              <li>
+                <Anchor href={domainMatch[1]} target="_blank">
+                  {domainMatch[1]}
+                </Anchor>
+              </li>
+            )}
         </ul>
       </footer>
     </StyledPost>

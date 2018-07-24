@@ -6,6 +6,7 @@ const StyledMenu = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   list-style-type: none;
   padding: 0;
 `

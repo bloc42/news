@@ -5,7 +5,8 @@ import is from 'is_js'
 const userSchema = mongoose.Schema({
   username: {
     type: String,
-    required: [true, '用户名不能为空。']
+    required: [true, '用户名不能为空。'],
+    index: true
   },
   phone: {
     type: String

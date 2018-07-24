@@ -15,9 +15,15 @@ class newError extends Error {
   }
 }
 const Query = {
-  currentUser: (obj, args, context, info) => {
+  currentUser(obj, args, context, info) {
     const { ctx } = context
     return ctx.state.user
+  },
+
+  async user(obj, args) {
+    const { username } = args
+    const user = await User.findOne({ username }).exec()
+    return user
   }
 }
 

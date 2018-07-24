@@ -11,6 +11,12 @@ const StyledSection = styled.section`
     css`
       padding: 2rem;
     `};
+
+  ${props =>
+    props.centered &&
+    css`
+      text-align: center;
+    `};
 `
 
 const Section = props => {

@@ -29,7 +29,6 @@ class ScrollDetector extends Component {
       html.offsetHeight
     )
     const windowBottom = windowHeight + window.pageYOffset
-
     const { onReachBottom } = this.props
 
     if (windowBottom >= docHeight) {
@@ -38,7 +37,7 @@ class ScrollDetector extends Component {
   }
 
   render() {
-    return null
+    return <div />
   }
 }
 
