@@ -3,10 +3,11 @@ import resolvers from './resolvers'
 
 const typeDefs = `
   type Query {
+    InvitationCodeByCode(code: String!): InvitationCode
   }
 
   type Mutation {
-    sendInvitationMail(email: String!, invitor:String!): InvitationCode
+    sendInvitationMail(email: String!): InvitationCode
   }
 
   type InvitationCode {

@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const invitationCodeSchema = Schema({
+const invitationCodeSchema = mongoose.Schema({
   code: {
     type: String,
     required: true
@@ -20,4 +20,5 @@ const invitationCodeSchema = Schema({
 
 invitationCodeSchema.set('timstamps', true)
 
-export default model('invitationCode', invitationCodeSchema)
+
+export default mongoose.model('invitationCode', invitationCodeSchema)

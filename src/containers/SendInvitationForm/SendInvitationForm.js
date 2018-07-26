@@ -80,7 +80,6 @@ const SENDINVITATIONMAIL_MUTATION = gql`
   mutation sendInvitationMail($email: String!) {
     sendInvitationMail(email: $email) {
       id
-      username
     }
   }
 `

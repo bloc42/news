@@ -19,6 +19,7 @@ class Signup extends Component {
       username: '',
       email: '',
       password: '',
+      invitationCode: '',
       errors: [],
       successes: []
     }
@@ -32,11 +33,19 @@ class Signup extends Component {
       [name]: value
     })
   }
+  componentDidMount() {
+    const searchParams = new URLSearchParams(this.props.location.search)
+    this.state.invitationCode = searchParams.get('code')
 
+  }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password } = this.state
-
+    const { username, email, password, invitationCode } = this.state
+    console.log(invitationCode)
+    if(invitationCode == ''){
+      this.setState({ errors: [{ message: '目前只可通过邀请链接注册'}] })
+      return 
+    }
     try {
       const { errors } = await this.props.signupMutation({
         variables: {
