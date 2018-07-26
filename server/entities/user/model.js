@@ -23,24 +23,19 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: [6, '密码不能少于6位。']
   },
-  invitationCode: {
+  invitation_code: {
     type: String
     // TODO
   },
   role: { type: String, default: 'user' }, // ['admin', 'moderator', 'user']
-  firstName: String,
-  lastName: String,
-  //for mail active
-  isActivated: { type: Number, default: 0 },
-  activationCode: String,
-  activationDeadline: Date
+  first_name: String,
+  last_name: String
 })
 
 userSchema.set('timestamps', true)
 
 userSchema.pre('save', async function(next) {
   // Only hash the password if it has been modified (or is new)
-
   if (!this.isModified('password')) return next()
 
   const SALT_WORK_FACTOR = 10
@@ -53,10 +48,10 @@ userSchema.pre('save', async function(next) {
 
     // Override the cleartext password with the hashed one
     this.password = hash
-
     next()
   } catch (err) {
     next(err)
   }
 })
+
 export default mongoose.model('user', userSchema)

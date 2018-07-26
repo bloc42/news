@@ -15,20 +15,9 @@ const StyledAlert = styled.div`
       border: 1px solid #ffa39e;
       background-color: #fff1f0;
     `};
-  ${props =>
-    props.success &&
-    css`
-      border: 1px solid #c3ff9e;
-      background-color: #f8fff0;
-    `};
 `
 
-const Alert = props => (
-  <StyledAlert {...props}>
-    {props.message}
-    {props.children}
-  </StyledAlert>
-)
+const Alert = props => <StyledAlert {...props}>{props.message}</StyledAlert>
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired
