@@ -19,8 +19,7 @@ class Signup extends Component {
       username: '',
       email: '',
       password: '',
-      errors: [],
-      successes: []
+      errors: []
     }
   }
 
@@ -46,19 +45,14 @@ class Signup extends Component {
         },
         update: (cache, { data }) => {
           const currentUser = data.signup
-          this.setState({
-            successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
-          })
-          this.state.username = ''
-          this.state.password = ''
-          this.state.email = ''
+
           // Update currentUser in cache
-          // cache.writeQuery({
-          //   query: GET_CURRENT_USER,
-          //   data: {
-          //     currentUser
-          //   }
-          // })
+          cache.writeQuery({
+            query: GET_CURRENT_USER,
+            data: {
+              currentUser
+            }
+          })
         }
       })
 
@@ -66,7 +60,7 @@ class Signup extends Component {
         this.setState({ errors })
       } else {
         this.setState({ errors: [] })
-        //this.props.history.push('/login')
+        this.props.history.push('/')
       }
     } catch (err) {
       // TODO: show error message in UI
@@ -80,9 +74,7 @@ class Signup extends Component {
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
         ))}
-        {this.state.successes.map((success, index) => (
-          <Alert key={index} message={success.message} success />
-        ))}
+
         <Form.Item>
           <Input
             type="text"
