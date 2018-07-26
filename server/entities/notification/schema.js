@@ -8,7 +8,10 @@ const typeDefs = `
 
   type Notification {
     id: ID!,
+    from: String!,
+    to: String!,
     postId: ID!,
+    postTitle: String!,
     commentId: ID!
   }
 `

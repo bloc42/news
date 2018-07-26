@@ -20,7 +20,7 @@ export class LogoutButton extends Component {
 
   render() {
     return (
-      <Button primary fullWidth onClick={this.handleLogout}>
+      <Button primary onClick={this.handleLogout}>
         登出
       </Button>
     )

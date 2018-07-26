@@ -10,10 +10,19 @@ const notificationSchema = mongoose.Schema({
     required: true
   },
   postId: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+  postTitle: {
+    type: String,
+    required: true
   },
   commentId: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+  content: {
+    type: String
   },
   isRead: {
     type: Boolean,

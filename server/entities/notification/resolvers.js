@@ -11,10 +11,14 @@ const Query = {
     const user = ctx.state.user
     const notifications = await Notification.find({
       isRead: false,
-      userId: user.id
+      to: user.username
     })
       .sort({ createdAt: -1 })
       .exec()
     return notifications
   }
+}
+
+export default {
+  Query
 }

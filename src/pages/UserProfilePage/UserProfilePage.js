@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Container from '../../components/Container'
+import NotificationList from '../../containers/NotificationList'
 import LogoutButton from '../../containers/LogoutButton'
 import Section from '../../components/Section'
 import { Query } from 'react-apollo'
@@ -12,7 +13,7 @@ class UserProfilePage extends Component {
     const { username } = this.props.match.params
 
     return (
-      <Container small>
+      <Container>
         <Section padded>
           <Query
             query={GET_USER}
@@ -42,7 +43,14 @@ class UserProfilePage extends Component {
                       const { currentUser } = data
 
                       if (currentUser && currentUser.username === username) {
-                        return <LogoutButton />
+                        return (
+                          <div>
+                            <LogoutButton />
+                            <br />
+                            <br />
+                            <NotificationList />
+                          </div>
+                        )
                       } else {
                         return null
                       }

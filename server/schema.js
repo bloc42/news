@@ -7,6 +7,7 @@ import { mergeSchemas } from 'graphql-tools'
 import userSchema from './entities/user/schema'
 import postSchema from './entities/post/schema'
 import commentSchema from './entities/comment/schema'
+import notificationSchema from './entities/notification/schema'
 
 const linkTypeDefs = `
   extend type Post {
@@ -14,7 +15,13 @@ const linkTypeDefs = `
   }
 `
 
-const schemas = [userSchema, postSchema, commentSchema, linkTypeDefs]
+const schemas = [
+  userSchema,
+  postSchema,
+  commentSchema,
+  notificationSchema,
+  linkTypeDefs
+]
 
 // https://www.apollographql.com/docs/graphql-tools/schema-stitching.html#adding-resolvers
 const resolvers = {

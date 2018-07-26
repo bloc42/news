@@ -4,6 +4,7 @@ import faker from 'faker'
 import User from './entities/user/model'
 import Post from './entities/post/model'
 import Comment from './entities/comment/model'
+import Notification from './entities/notification/model'
 import CommentAPI from './entities/comment/api'
 
 if (!config.isLocal) {
@@ -23,6 +24,7 @@ mongoose.connect(config.DBURL)
   await Comment.find()
     .remove()
     .exec()
+  await Notification.find().remove.exec()
 
   console.log('Seeding users...')
   let users = []
@@ -31,7 +33,7 @@ mongoose.connect(config.DBURL)
     const user = new User({
       username: faker.name.findName(),
       email: faker.internet.email(),
-      password: faker.internet.password()
+      password: '123456'
     })
 
     await user.save()
