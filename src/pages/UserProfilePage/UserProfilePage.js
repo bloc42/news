@@ -6,6 +6,9 @@ import { Query } from 'react-apollo'
 import { GET_USER, GET_CURRENT_USER } from '../../query'
 import RelativeTime from '../../components/RelativeTime'
 import Small from '../../components/Small'
+import Link from '../../components/Link'
+import CircleDiv from '../../components/CircleDiv'
+import Ticket from '../../components/Icon'
 
 class UserProfilePage extends Component {
   render() {
@@ -33,7 +36,11 @@ class UserProfilePage extends Component {
                   </Small>
                   <br />
                   <br />
-
+                  
+                    <Link to="/sendinvitation">
+                      <CircleDiv><Ticket /><small>邀请用户</small></CircleDiv>
+                    </Link>
+                  <br />
                   {/* TODO: Refactor to one query */}
                   <Query query={GET_CURRENT_USER}>
                     {({ loading, data }) => {

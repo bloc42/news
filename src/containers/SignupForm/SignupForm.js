@@ -19,7 +19,7 @@ class Signup extends Component {
       username: '',
       email: '',
       password: '',
-      invitationCode: '',
+      code: '',
       errors: [],
       successes: []
     }
@@ -35,14 +35,14 @@ class Signup extends Component {
   }
   componentDidMount() {
     const searchParams = new URLSearchParams(this.props.location.search)
-    this.state.invitationCode = searchParams.get('code')
+    this.state.code = searchParams.get('code') ? searchParams.get('code') : ''
 
   }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password, invitationCode } = this.state
-    console.log(invitationCode)
-    if(invitationCode == ''){
+    const { username, email, password, code } = this.state
+    console.log(code)
+    if(code == ''){
       this.setState({ errors: [{ message: '目前只可通过邀请链接注册'}] })
       return 
     }
@@ -51,7 +51,8 @@ class Signup extends Component {
         variables: {
           username,
           email,
-          password
+          password,
+          code
         },
         update: (cache, { data }) => {
           const currentUser = data.signup
@@ -61,6 +62,7 @@ class Signup extends Component {
           this.state.username = ''
           this.state.password = ''
           this.state.email = ''
+          this.state.code = ''
           // Update currentUser in cache
           // cache.writeQuery({
           //   query: GET_CURRENT_USER,
@@ -134,8 +136,8 @@ class Signup extends Component {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation Signup($username: String!, $email: String!, $password: String!) {
-    signup(username: $username, email: $email, password: $password) {
+  mutation Signup($username: String!, $email: String!, $password: String!, $code: String!) {
+    signup(username: $username, email: $email, password: $password, code:$code) {
       id
       username
     }

@@ -16,14 +16,14 @@ class Mailer {
   static async send(mailOptions) {
     const mergedOptions = R.merge(
       {
-        from: ''
+        from: 'postmaster@bloc42.com'
       },
       mailOptions
     )
 
     try {
       const info = await transporter.sendMail(mergedOptions)
-      console.log('Message sent: %s', info.messageId)
+      console.log(info)
     } catch (err) {
       console.log(err)
     }

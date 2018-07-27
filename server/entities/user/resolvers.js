@@ -1,5 +1,6 @@
 import User from './model'
 import userApi from './api'
+import invitationCodeApi from '../invitationCode/api'
 import mail from '../../mail'
 import bcrypt from 'bcrypt'
 import config from '../../../config'
@@ -58,54 +59,60 @@ const Mutation = {
   },
 
   async signup(obj, args, context, info) {
-    const { username, email, password } = args
+    const { username, email, password, code } = args
 
     let user = await User.findOne({
       $or: [{ username }, { email }]
     }).exec()
 
-    if (user) {
-      throw '该用户名或邮箱已存在。'
-    } else {
-      user = new User({ username, email, password })
-      const { ctx } = context
+    
+    const invitation =  await invitationCodeApi.getInvitationCode(code)
+    if(!invitation || invitation.isClaimed){
+      throw '此邀请链接无效'
+    }else{
+      if (user) {
+        throw '该用户名或邮箱已存在。'
+      } else {
+        user = new User({ username, email, password })
+        const { ctx } = context
 
-      // Add username and password to request body because
-      // passport needs them for authentication
-      ctx.request.body = args
+        // Add username and password to request body because
+        // passport needs them for authentication
+        ctx.request.body = args
 
-      user = await user.save()
-
-      //save activeInfo
-      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
-      const activationHashCode = await bcrypt.hash(
-        user.username + Date.now().toString(),
-        salt
-      )
-      const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
-      await User.findOneAndUpdate(
-        { username: user.username },
-        {
-          activationCode: activationHashCode,
-          activationDeadline: activationDeadline
-        },
-        { new: true },
-        function(err, doc) {
-          if (err) {
-            console.log('Error:' + err)
-          } else {
-            user = doc
+        user = await user.save()
+        //update invitationcode
+        await invitationCodeApi.claimedCode(code, user.username)
+        //save activeInfo
+        const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
+        const activationHashCode = await bcrypt.hash(
+          user.username + Date.now().toString(),
+          salt
+        )
+        const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
+        await User.findOneAndUpdate(
+          { username: user.username },
+          {
+            activationCode: activationHashCode,
+            activationDeadline: activationDeadline
+          },
+          { new: true },
+          function(err, doc) {
+            if (err) {
+              console.log('Error:' + err)
+            } else {
+              user = doc
+            }
           }
-        }
-      ).exec()
-      const activationUrl = DOMAIN + '/activation?username='
-      user.username + '&activationcode=' + user.activationCode + ''
-      await mail.send({
-        to: user.email,
-        subject: '帐号激活',
-        html: activationMail(activationUrl)
-      })
-      return user
+        ).exec()
+        const activationUrl = `${DOMAIN}/activation?username=${user.username}&activationcode=${user.activationCode}`
+        await mail.send({
+          to: user.email,
+          subject: '帐号激活',
+          html: activationMail(activationUrl)
+        })
+        return user
+      }
     }
   },
 

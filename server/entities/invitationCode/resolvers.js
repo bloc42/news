@@ -9,9 +9,6 @@ const DOMAIN = config.isLocal ? 'http://localhost:3000' : config.domain
 const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 const Query = {
-    async InvitationCodeByCode(obj, args, context) {
-
-    }
 }
 
 const Mutation = {
@@ -32,7 +29,7 @@ const Mutation = {
         await mail.send({
             to: email,
             subject: '欢迎加入Bloc42',
-            html: invitationMail(invitationUrl)
+            html: invitationMail(invitor,invitationUrl)
         })
         return invitationCode
     }
