@@ -11,8 +11,8 @@ const typeDefs = `
     from: String!,
     to: String!,
     postId: ID!,
-    postTitle: String!,
-    commentId: ID!
+    commentId: ID!,
+    createdAt: String!
   }
 `
 

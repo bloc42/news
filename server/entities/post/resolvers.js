@@ -29,7 +29,7 @@ const Query = {
     }
   },
 
-  async post(obj, { id }) {
+  async postById(obj, { id }) {
     const post = await Post.findById(id).exec()
     return post
   }

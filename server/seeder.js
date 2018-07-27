@@ -24,7 +24,9 @@ mongoose.connect(config.DBURL)
   await Comment.find()
     .remove()
     .exec()
-  await Notification.find().remove.exec()
+  await Notification.find()
+    .remove()
+    .exec()
 
   console.log('Seeding users...')
   let users = []
@@ -69,7 +71,16 @@ mongoose.connect(config.DBURL)
     for (let j = 0; j < commentCount; j++) {
       const author = faker.random.arrayElement(users).username
       const content = faker.lorem.paragraphs()
-      await CommentAPI.saveComment(author, content, post.id)
+      const comment = await CommentAPI.saveComment(author, content, post.id)
+
+      const notification = new Notification({
+        from: author,
+        to: post.author,
+        postId: post.id,
+        commentId: comment.id
+      })
+
+      await notification.save()
     }
   }
 

@@ -4,7 +4,7 @@ import resolvers from './resolvers'
 const typeDefs = `
   type Query {
     postFeed(cursor: String): PostFeed
-    post(id: ID!): Post
+    postById(id: ID!): Post
   }
 
   type Mutation {

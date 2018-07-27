@@ -10,7 +10,7 @@ const theme = {
   fontColor: darkBlack,
   fontColorLight: '#777',
   primaryColor: tomato,
-  primaryColorLight: adjustColor(tomato, 20),
+  primaryColorLight: adjustColor(tomato, 40),
   borderColor: '#e8e8e8',
   borderRadius: '4px'
 }

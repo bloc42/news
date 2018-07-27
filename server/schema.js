@@ -13,6 +13,11 @@ const linkTypeDefs = `
   extend type Post {
     comments: [Comment]
   }
+
+  extend type Notification {
+    post: Post
+    comment: Comment
+  }
 `
 
 const schemas = [
@@ -35,6 +40,38 @@ const resolvers = {
           fieldName: 'commentsByPostId',
           args: {
             postId: post.id
+          },
+          context,
+          info
+        })
+      }
+    }
+  },
+  Notification: {
+    post: {
+      fragment: `... on Notification { postId }`,
+      resolve(notification, args, context, info) {
+        return info.mergeInfo.delegateToSchema({
+          schema: postSchema,
+          operation: 'query',
+          fieldName: 'postById',
+          args: {
+            id: notification.postId
+          },
+          context,
+          info
+        })
+      }
+    },
+    comment: {
+      fragment: `... on Notification { commentId }`,
+      resolve(notification, args, context, info) {
+        return info.mergeInfo.delegateToSchema({
+          schema: commentSchema,
+          operation: 'query',
+          fieldName: 'commentById',
+          args: {
+            id: notification.commentId
           },
           context,
           info

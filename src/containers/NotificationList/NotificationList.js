@@ -8,9 +8,15 @@ export const GET_NOTIFICATIONS = gql`
     notifications {
       id
       from
-      postId
-      postTitle
-      commentId
+      post {
+        id
+        title
+      }
+      comment {
+        id
+        content
+        createdAt
+      }
     }
   }
 `
@@ -25,6 +31,7 @@ const NotificationList = () => (
       if (notifications.length > 0) {
         return (
           <div>
+            <p>你有{notifications.length}条未读通知。</p>
             {notifications.map(notification => (
               <Notification key={notification.id} {...notification} />
             ))}

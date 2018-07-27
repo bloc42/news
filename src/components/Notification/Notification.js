@@ -1,14 +1,30 @@
 import React from 'react'
 import Link from '../Link'
+import RelativeTime from '../RelativeTime'
+import Blockquote from '../Blockquote'
+import styled from 'styled-components'
 
-const Notification = ({ from, postId, postTitle, commentId }) => {
+const StyledNotification = styled.div`
+  margin: 3rem 0;
+`
+
+const Notification = ({ from, post, comment }) => {
   return (
-    <div>
-      <Link to={`/user/${from}`}>{from} </Link>
-      在文章
-      <Link to={`/post/${postId}#comment-${commentId}`}>《{postTitle}》</Link>
-      中回复了你。
-    </div>
+    <StyledNotification>
+      <header>
+        <Link to={`/user/${from}`}>{from}</Link>
+        <span> </span>
+        <RelativeTime timestamp={comment.createdAt} />
+        <span>在 </span>
+        <Link to={`/post/${post.id}#comment-${comment.id}`}>{post.title}</Link>
+        <span> 中回复了你：</span>
+      </header>
+      <Blockquote>
+        {comment.content.split('\n').map((paragraph, key) => {
+          return <p key={key}>{paragraph}</p>
+        })}
+      </Blockquote>
+    </StyledNotification>
   )
 }
 
