@@ -137,11 +137,8 @@ We use [bcrypt](https://github.com/kelektiv/node.bcrypt.js) to hash the password
 
 After a user logged in or signed up, we update the `currentUser` in [Apollo cache](https://www.apollographql.com/docs/react/essentials/mutations.html#update). Once the user logs out, we reset the Apollo cache to make sure `currentUser` is cleared.
 
-### Admin Account
+#### Local Testing
 
-After `yarn run seeder`, an admin account will be created:
+After `yarn run seed`, fake users will be created with password `123456`.
 
-- username: `admin`
-- password: `123456`
-
-This is for local testing only.
+An admin account will also be created with username `admin`.
