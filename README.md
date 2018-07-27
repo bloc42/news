@@ -96,13 +96,36 @@ You can explore available query and mutation in Documentation Explorer on the ri
 
 #### Examples
 
-Get posts:
+Get post feed:
 
 ```
 query {
-  posts {
-    title,
-    author
+ 	postFeed {
+    posts {
+      id
+      title
+      author
+    }
+  }
+}
+```
+
+Get post and its comments:
+
+```
+query {
+	postById(id: "5b5b9422347605b1342553f4") {
+      id
+      title
+      url
+      content
+      author
+      comments {
+        id
+        author
+        content
+        createdAt
+      }
   }
 }
 ```
