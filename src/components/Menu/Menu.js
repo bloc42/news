@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import MenuItem from './MenuItem'
 
 const StyledMenu = styled.ul`
@@ -9,10 +9,23 @@ const StyledMenu = styled.ul`
   align-items: center;
   list-style-type: none;
   padding: 0;
+
+  ${props =>
+    props.underline &&
+    css`
+      li > a {
+        padding: 0.2rem 0;
+        border-bottom: 3px solid ${props.theme.borderColor};
+      }
+
+      li > a.active {
+        border-bottom: 3px solid ${props.theme.primaryColor};
+      }
+    `};
 `
 
-const Menu = ({ children }) => {
-  return <StyledMenu>{children}</StyledMenu>
+const Menu = props => {
+  return <StyledMenu {...props}>{props.children}</StyledMenu>
 }
 
 Menu.Item = MenuItem

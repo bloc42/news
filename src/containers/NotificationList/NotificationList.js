@@ -18,17 +18,21 @@ export const GET_NOTIFICATIONS = gql`
 const NotificationList = () => (
   <Query query={GET_NOTIFICATIONS}>
     {({ loading, data }) => {
-      if (loading) return null
+      if (loading) return '加载中。。。'
 
       const { notifications } = data
 
-      return (
-        <div>
-          {notifications.map(notification => (
-            <Notification key={notification.id} {...notification} />
-          ))}
-        </div>
-      )
+      if (notifications.length > 0) {
+        return (
+          <div>
+            {notifications.map(notification => (
+              <Notification key={notification.id} {...notification} />
+            ))}
+          </div>
+        )
+      } else {
+        return <p>没有未读通知。</p>
+      }
     }}
   </Query>
 )
