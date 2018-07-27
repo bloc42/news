@@ -100,7 +100,7 @@ Get post feed:
 
 ```
 query {
- 	postFeed {
+  postFeed {
     posts {
       id
       title
