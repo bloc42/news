@@ -114,18 +114,18 @@ Get post and its comments:
 
 ```
 query {
-	postById(id: "5b5b9422347605b1342553f4") {
+  postById(id: "5b5b9422347605b1342553f4") {
+    id
+    title
+    url
+    content
+    author
+    comments {
       id
-      title
-      url
-      content
       author
-      comments {
-        id
-        author
-        content
-        createdAt
-      }
+      content
+      createdAt
+    }
   }
 }
 ```
