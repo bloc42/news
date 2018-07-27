@@ -12,11 +12,15 @@ const Notification = ({ from, post, comment }) => {
   return (
     <StyledNotification>
       <header>
-        <Link to={`/user/${from}`}>{from}</Link>
+        <Link bold to={`/user/${from}`}>
+          {from}
+        </Link>
         <span> </span>
         <RelativeTime timestamp={comment.createdAt} />
         <span>在 </span>
-        <Link to={`/post/${post.id}#comment-${comment.id}`}>{post.title}</Link>
+        <Link bold to={`/post/${post.id}#comment-${comment.id}`}>
+          {post.title}
+        </Link>
         <span> 中回复了你：</span>
       </header>
       <Blockquote>

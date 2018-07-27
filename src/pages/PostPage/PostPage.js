@@ -68,7 +68,7 @@ const PostPage = props => {
               createdAt,
               commentCount,
               comments
-            } = data.post
+            } = data.postById
 
             const postTitle = url ? (
               <Anchor href={url} target="_blank">
