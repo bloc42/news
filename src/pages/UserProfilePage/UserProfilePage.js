@@ -17,7 +17,7 @@ const StyledMenu = styled(Menu)`
 `
 
 const StyledSection = styled.section`
-  margin: 1rem;
+  margin-top: 2rem;
 `
 
 const GET_USER = gql`
@@ -43,7 +43,7 @@ class UserProfilePage extends Component {
     return (
       <div>
         <StyledMenu underline>
-          <Menu.Item>
+          <Menu.Item compact>
             <NavLink
               to={`${url}/notifications`}
               isActive={(_, { pathname }) =>
@@ -53,10 +53,10 @@ class UserProfilePage extends Component {
               通知
             </NavLink>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item compact>
             <NavLink to={`${url}/invite`}>邀请</NavLink>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item compact>
             <LogoutLink />
           </Menu.Item>
         </StyledMenu>

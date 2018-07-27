@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Link from '../Link'
 import RelativeTime from '../RelativeTime'
 import Blockquote from '../Blockquote'
@@ -30,6 +31,12 @@ const Notification = ({ from, post, comment }) => {
       </Blockquote>
     </StyledNotification>
   )
+}
+
+Notification.propTypes = {
+  from: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
+  comment: PropTypes.object.isRequired
 }
 
 export default Notification
