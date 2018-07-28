@@ -52,6 +52,7 @@ const Mutation = {
           from: author,
           to: parentComment.author,
           postId: post.id,
+          postTitle: post.title,
           commentId: comment.id
         })
 
@@ -63,6 +64,7 @@ const Mutation = {
         from: author,
         to: post.author,
         postId: post.id,
+        postTitle: post.title,
         commentId: comment.id
       })
 

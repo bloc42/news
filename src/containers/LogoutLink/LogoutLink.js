@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { withApollo, graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
-import Button from '../../components/Button'
+import Anchor from '../../components/Anchor'
 
-export class LogoutButton extends Component {
+export class LogoutLink extends Component {
   handleLogout = async e => {
     e.preventDefault()
 
@@ -19,11 +19,7 @@ export class LogoutButton extends Component {
   }
 
   render() {
-    return (
-      <Button primary fullWidth onClick={this.handleLogout}>
-        登出
-      </Button>
-    )
+    return <Anchor onClick={this.handleLogout}>登出</Anchor>
   }
 }
 
@@ -36,8 +32,8 @@ const LOGOUT_MUTATION = gql`
   }
 `
 
-const LogoutButtonWithMutation = compose(
+const LogoutLinkWithMutation = compose(
   graphql(LOGOUT_MUTATION, { name: 'logoutMutation' })
-)(LogoutButton)
+)(LogoutLink)
 
-export default withRouter(withApollo(LogoutButtonWithMutation))
+export default withRouter(withApollo(LogoutLinkWithMutation))

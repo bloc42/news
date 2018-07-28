@@ -23,7 +23,7 @@ export const GET_POSTS = gql`
 const PostList = () => (
   <Query query={GET_POSTS}>
     {({ loading, data, fetchMore }) => {
-      if (loading) return null
+      if (loading || !data) return null
 
       const {
         postFeed: { cursor, posts }

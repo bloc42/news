@@ -28,7 +28,7 @@ const StyledArticle = styled.article`
 
 export const GET_POST = gql`
   query GetPost($id: ID!) {
-    post(id: $id) {
+    postById(id: $id) {
       id
       title
       url
@@ -68,7 +68,7 @@ const PostPage = props => {
               createdAt,
               commentCount,
               comments
-            } = data.post
+            } = data.postById
 
             const postTitle = url ? (
               <Anchor href={url} target="_blank">

@@ -8,14 +8,3 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `
-
-export const GET_USER = gql`
-  query GetUser($username: String!) {
-    user(username: $username) {
-      id
-      username
-      email
-      createdAt
-    }
-  }
-`
