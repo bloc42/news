@@ -47,7 +47,7 @@ class Header extends Component {
     return (
       <Query query={GET_CURRENT_USER}>
         {({ loading, data }) => {
-          if (loading) {
+          if (loading || !data) {
             return null
           }
 
