@@ -60,7 +60,7 @@ class InvitationForm extends Component {
             type="text"
             name="email"
             value={this.state.email}
-            placeholder="被邀请人邮箱"
+            placeholder="被邀请人邮箱,请用逗号隔开"
             onChange={this.handleChange}
             required
           />
@@ -87,7 +87,9 @@ const SENDINVITATIONMAIL_MUTATION = gql`
 `
 
 const sendInvitationFormMailWithMutation = compose(
-  graphql(SENDINVITATIONMAIL_MUTATION, { name: 'sendInvitationFormMailMutation' })
+  graphql(SENDINVITATIONMAIL_MUTATION, {
+    name: 'sendInvitationFormMailMutation'
+  })
 )(InvitationForm)
 
 export default withRouter(sendInvitationFormMailWithMutation)
