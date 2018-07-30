@@ -5,6 +5,8 @@ import koaBody from 'koa-bodyparser'
 import session from 'koa-session'
 import passport from 'koa-passport'
 import morgan from 'koa-morgan'
+import serve from 'koa-static'
+import send from 'koa-send'
 import mongoose from 'mongoose'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 import schema from './schema'
@@ -59,5 +61,16 @@ router.get(
 
 app.use(router.routes())
 app.use(router.allowedMethods())
+
+// Serve client build if in production
+if (!config.isLocal) {
+  app.use(serve('./build'))
+
+  // Serve 'index.html' for any unknown paths
+  app.use(async function(ctx) {
+    await send(ctx, '/index.html', { root: './build' })
+  })
+}
+
 app.listen(PORT)
 console.log(`Server listening on port: ${PORT}`)
