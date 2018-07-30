@@ -34,8 +34,8 @@
     "styled-components": "3.3.3"
   },
   "scripts": {
-    "seed": "node -r esm server/seeder.js",
-    "server": "nodemon server/index.js",
+    "seed": "node -r esm src/server/seeder.js",
+    "server": "nodemon src/server/index.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
