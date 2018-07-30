@@ -8,9 +8,6 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import RelativeTime from '../../components/RelativeTime'
 import Small from '../../components/Small'
-import Link from '../../components/Link'
-import CircleDiv from '../../components/CircleDiv'
-import Ticket from '../../components/Icon'
 import Menu from '../../components/Menu'
 import InvitationForm from '../../containers/InvitationForm'
 import styled from 'styled-components'
@@ -31,7 +28,6 @@ const GET_USER = gql`
       email
       createdAt
     }
-
     currentUser {
       id
       username
@@ -105,27 +101,6 @@ class UserProfilePage extends Component {
                   <Small>
                     <RelativeTime timestamp={createdAt} />加入
                   </Small>
-                  <br />
-                  <br />
-                  
-                    <Link to="/sendinvitation">
-                      <CircleDiv><Ticket /><small>邀请用户</small></CircleDiv>
-                    </Link>
-                  <br />
-                  {/* TODO: Refactor to one query */}
-                  <Query query={GET_CURRENT_USER}>
-                    {({ loading, data }) => {
-                      if (loading) return null
-
-                      const { currentUser } = data
-
-                      if (currentUser && currentUser.username === username) {
-                        return <LogoutButton />
-                      } else {
-                        return null
-                      }
-                    }}
-                  </Query>
 
                   {isCurrentUser && this.renderUserActions()}
                 </div>

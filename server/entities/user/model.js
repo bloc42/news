@@ -23,10 +23,6 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: [6, '密码不能少于6位。']
   },
-  invitationCode: {
-    type: String
-    // TODO
-  },
   role: { type: String, default: 'user' }, // ['admin', 'moderator', 'user']
   firstName: String,
   lastName: String,

@@ -64,12 +64,12 @@ class Signup extends Component {
           this.state.email = ''
           this.state.code = ''
           // Update currentUser in cache
-          cache.writeQuery({
-            query: GET_CURRENT_USER,
-            data: {
-              currentUser
-            }
-          })
+          // cache.writeQuery({
+          //   query: GET_CURRENT_USER,
+          //   data: {
+          //     currentUser
+          //   }
+          // })
         }
       })
 
@@ -77,7 +77,6 @@ class Signup extends Component {
         this.setState({ errors })
       } else {
         this.setState({ errors: [] })
-        this.props.history.push('/')
       }
     } catch (err) {
       // TODO: show error message in UI
@@ -90,6 +89,9 @@ class Signup extends Component {
       <Form onSubmit={this.handleSubmit}>
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
+        ))}
+        {this.state.successes.map((success, index) => (
+          <Alert key={index} message={success.message} success />
         ))}
 
         <Form.Item>

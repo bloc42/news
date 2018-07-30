@@ -7,7 +7,11 @@ const typeDefs = `
   }
 
   type Mutation {
-    sendInvitationMail(email: String!): InvitationCode
+    sendInvitationMail(emails: [String!]): Codes
+  }
+  
+  type Codes {
+    invitationCodes: [InvitationCode]!
   }
 
   type InvitationCode {
