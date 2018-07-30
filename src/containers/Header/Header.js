@@ -69,7 +69,7 @@ class Header extends Component {
             <Menu>
               <Menu.Item>
                 <NavLink exact strict to="/">
-                  Blockdog
+                  Bloc42
                 </NavLink>
               </Menu.Item>
             </Menu>
