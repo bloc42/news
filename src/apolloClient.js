@@ -3,11 +3,12 @@ import { ApolloLink } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import config from './config'
 
 const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: `${config.serverHost}/graphql`,
   // credentials: 'include' if your backend is a different domain
   // https://www.apollographql.com/docs/react/recipes/authentication.html#Cookie
   credentials: 'include'

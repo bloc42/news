@@ -40,11 +40,11 @@ class SubmitCommentForm extends Component {
         },
         update: (cache, { data }) => {
           const newComment = data.addComment
-          const { post } = cache.readQuery({
+          const { postById } = cache.readQuery({
             query: GET_POST,
             variables: { id: postId }
           })
-          const { commentCount, comments } = post
+          const { commentCount, comments } = postById
           const mergedComments = [...comments, newComment].sort((a, b) =>
             a.fullSlug.localeCompare(b.fullSlug)
           )
@@ -53,8 +53,8 @@ class SubmitCommentForm extends Component {
             query: GET_POST,
             variables: { id: postId },
             data: {
-              post: {
-                ...post,
+              postById: {
+                ...postById,
                 commentCount: commentCount + 1,
                 comments: mergedComments
               }

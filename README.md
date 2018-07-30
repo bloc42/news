@@ -63,7 +63,7 @@ Under `src` folder:
 
 #### Server
 
-Under `server` folder:
+Under `src/server` folder:
 
 - `index.js`: Entry point.
 - `entities`: A collection of data entities. Everything releated to an entity, e.g., model and API, is defined within the entity folder.
