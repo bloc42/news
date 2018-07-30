@@ -35,7 +35,7 @@
   },
   "scripts": {
     "seed": "node -r esm server/seeder.js",
-    "server": "nodemon -r esm server/index.js",
+    "server": "nodemon server/index.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
