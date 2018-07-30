@@ -4,11 +4,11 @@ const send = require('koa-send')
 const config = require('./config')
 
 const app = new Koa()
-app.use(serve('../build'))
+app.use(serve('./build'))
 
 // Serve 'index.html' for any unknown paths
 app.use(async function(ctx) {
-  await send(ctx, '/index.html', { root: '../build' })
+  await send(ctx, '/index.html', { root: './build' })
 })
 
 app.listen(config.clientPort)
