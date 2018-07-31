@@ -33,8 +33,6 @@ Always make your changes in a feature branch and create a PR against `develop` b
 
 ## Deployment
 
-The production environment is setup according to [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04). [pm2](https://github.com/Unitech/pm2) is used to serve client and server app in the background. If we run `pm2 list`, we should be able to see `news-client` and `news-server` running.
-
 To deploy new code:
 
 ```bash
@@ -48,6 +46,10 @@ yarn
 # Make client production build
 yarn run build
 ```
+
+The production environment is setup according to [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04). 
+
+[pm2](https://github.com/Unitech/pm2) is used to serve client and server app in the background. If we run `pm2 list`, we should be able to see `news-client` and `news-server` running.
 
 To configure Nginx site:
 
