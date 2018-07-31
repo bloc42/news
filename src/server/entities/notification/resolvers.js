@@ -5,7 +5,7 @@ const Query = {
     const { ctx } = context
 
     if (ctx.isUnauthenticated()) {
-      throw '用户尚未登录。'
+      return []
     }
 
     const user = ctx.state.user

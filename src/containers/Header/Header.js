@@ -79,7 +79,7 @@ class Header extends Component {
         `}
       >
         {({ loading, data }) => {
-          if (loading || !data) {
+          if (loading) {
             return null
           }
 
