@@ -5,7 +5,7 @@ const api = {
     return await InvitationCode.findOne({ code }).exec()
   },
   async claimedCode(code, name) {
-    const newtest = await InvitationCode.findOneAndUpdate(
+    return await InvitationCode.findOneAndUpdate(
       { code: code },
       {
         isClaimed: true,
@@ -13,8 +13,6 @@ const api = {
       },
       { new: true }
     ).exec()
-    console.log(newtest)
-    return newtest
   }
 }
 
