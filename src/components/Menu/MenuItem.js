@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledMenuItem = styled.li`
-  font-size: 1.2rem;
+  font-size: ${props => props.theme.fontSizeLarge};
   font-weight: bold;
-  margin: 0.8rem;
+  margin: ${props => (props.compact ? 0 : '0.8rem')};
 
   a {
     color: ${props => props.theme.fontColor};
@@ -20,8 +20,8 @@ const StyledMenuItem = styled.li`
   }
 `
 
-const MenuItem = ({ children }) => {
-  return <StyledMenuItem>{children}</StyledMenuItem>
+const MenuItem = props => {
+  return <StyledMenuItem {...props}>{props.children}</StyledMenuItem>
 }
 
 export default MenuItem

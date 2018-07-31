@@ -23,33 +23,21 @@ export const GET_POSTS = gql`
 const PostList = () => (
   <Query query={GET_POSTS}>
     {({ loading, data, fetchMore }) => {
-      if (loading) return null
+      if (loading || !data) return null
+
       const {
         postFeed: { cursor, posts }
       } = data
 
       return (
         <div>
-          {posts.map(post => (
-            <Post
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              url={post.url}
-              author={post.author}
-              commentCount={post.commentCount}
-              createdAt={post.createdAt}
-            />
-          ))}
+          {posts.map(post => <Post key={post.id} {...post} />)}
           <ScrollDetector
             onReachBottom={() =>
               fetchMore({
                 query: GET_POSTS,
                 variables: { cursor },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
-                  console.log(previousResult)
-
-                  console.log(fetchMoreResult)
                   return {
                     postFeed: {
                       cursor: fetchMoreResult.postFeed.cursor,
