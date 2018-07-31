@@ -43,7 +43,11 @@ git pull
 # Install latest dependencies
 yarn
 
-# Make client production build
+# Restart server
+pm2 restart news-server
+
+# Make client production build. Since we simply serves the static files, 
+# we don't need to restart the client server
 yarn run build
 ```
 
