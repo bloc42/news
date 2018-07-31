@@ -26,7 +26,8 @@ app.use(session({}, app))
 app.use(koaBody())
 app.use(
   cors({
-    credentials: true
+    credentials: true,
+    origin: config.allowOrigin
   })
 )
 

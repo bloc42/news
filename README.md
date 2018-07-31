@@ -4,10 +4,10 @@
 
 Make sure you have [MongoDB](https://docs.mongodb.com/manual/installation/) installed and running on your local.
 
-Initialize config file:
+Initialize and edit config file:
 
 ```bash
-cp config.example.js config.js
+cp src/config.example.js src/config.js
 ```
 
 Install dependencies:
@@ -38,6 +38,7 @@ To deploy new code:
 ```bash
 ssh deploy@bloc42.com
 cd news
+git checkout master
 git pull
 
 # Install latest dependencies
@@ -55,7 +56,12 @@ The production environment is setup according to [this tutorial](https://www.dig
 
 [pm2](https://github.com/Unitech/pm2) is used to serve client and server app in the background. If we run `pm2 list`, we should be able to see `news-client` and `news-server` running.
 
-To configure Nginx site:
+There are two endpoints configured for the production app:
+
+- `https://bloc42.com`: serve client app.
+- `https://api.bloc42.com`: serve server app. 
+
+To edit Nginx server blocks:
 
 ```
 sudo vim /etc/nginx/sites-available/bloc42.com
