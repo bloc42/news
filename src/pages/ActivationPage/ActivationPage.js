@@ -12,14 +12,14 @@ class ActivationPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      activationCode: '',
       errors: [],
       successes: []
     }
   }
   handleActivation = async e => {
-    const { username, activationCode } = this.state
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const username = searchParams.get('username')
+    const activationCode = searchParams.get('activationcode')
     try {
       const { errors } = await this.props.activationMutation({
         variables: {
@@ -32,16 +32,12 @@ class ActivationPage extends Component {
         this.setState({ errors })
       } else {
         this.setState({ successes: [{ message: '邮件激活成功,请登录' }] })
-        //setTimeout(()=>{this.props.history.push('/login')},2000)
       }
     } catch (err) {
       console.error(err)
     }
   }
   componentDidMount() {
-    const searchParams = new URLSearchParams(this.props.location.search)
-    this.state.username = searchParams.get('username')
-    this.state.activationCode = searchParams.get('activationcode')
     this.handleActivation()
   }
   render() {
@@ -51,7 +47,7 @@ class ActivationPage extends Component {
           <h2>激活邮箱</h2>
           {this.state.errors.map((error, index) => {
             let template = <Alert key={index} message={error.message} error />
-            if (error.code == '223') {
+            if (error.code === '223') {
               template = (
                 <Alert key={index} message={error.message} error>
                   <br />

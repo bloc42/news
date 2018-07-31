@@ -40,8 +40,6 @@ class LoginForm extends Component {
         },
         update: (cache, { data }) => {
           const currentUser = data.login
-
-          // Update currentUser in cache
           cache.writeQuery({
             query: GET_CURRENT_USER,
             data: {
@@ -69,7 +67,7 @@ class LoginForm extends Component {
 
         {this.state.errors.map((error, index) => {
           let template = <Alert key={index} message={error.message} error />
-          if (error.code == '223') {
+          if (error.code === '223') {
             template = (
               <Alert key={index} message={error.message} error>
                 <br />

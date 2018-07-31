@@ -65,11 +65,10 @@ const Mutation = {
       $or: [{ username }, { email }]
     }).exec()
 
-    
-    const invitation =  await invitationCodeApi.getInvitationCode(code)
-    if(!invitation || invitation.isClaimed){
+    const invitation = await invitationCodeApi.getInvitationCode(code)
+    if (!invitation || invitation.isClaimed) {
       throw '此邀请链接无效'
-    }else{
+    } else {
       if (user) {
         throw '该用户名或邮箱已存在。'
       } else {
@@ -90,22 +89,17 @@ const Mutation = {
           salt
         )
         const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
-        await User.findOneAndUpdate(
+        user = await User.findOneAndUpdate(
           { username: user.username },
           {
             activationCode: activationHashCode,
             activationDeadline: activationDeadline
           },
-          { new: true },
-          function(err,info) {
-            if (err) {
-              console.log('Error:' + err)
-            } else {
-              user=info
-            }
-          }
+          { new: true }
         ).exec()
-        const activationUrl = `${DOMAIN}/activation?username=${user.username}&activationcode=${user.activationCode}`
+        const activationUrl = `${DOMAIN}/activation?username=${
+          user.username
+        }&activationcode=${user.activationCode}`
         await mail.send({
           to: user.email,
           subject: '帐号激活',
@@ -134,22 +128,17 @@ const Mutation = {
         salt
       )
       const activationDeadline = new Date(Date.now() + 24 * 60 * 60 * 1000)
-      await User.findOneAndUpdate(
+      user = await User.findOneAndUpdate(
         { username: user.username },
         {
           activationCode: activationHashCode,
           activationDeadline: activationDeadline
         },
-        { new: true },
-        function(err, info) {
-          if (err) {
-            console.log('Error:' + err)
-          } else {
-            user = info
-          }
-        }
+        { new: true }
       ).exec()
-      const activationUrl = `${DOMAIN}/activation?username=${user.username}&activationcode=${user.activationCode}`
+      const activationUrl = `${DOMAIN}/activation?username=${
+        user.username
+      }&activationcode=${user.activationCode}`
       await mail.send({
         to: user.email,
         subject: '帐号激活',
@@ -167,17 +156,10 @@ const Mutation = {
       Date.now() < user.activationDeadline &&
       user.isActivated == 0
     ) {
-      await User.findOneAndUpdate(
+      user = await User.findOneAndUpdate(
         { username: user.username },
         { isActivated: 1 },
-        { new: true },
-        function(err, info) {
-          if (err) {
-            console.log('Error:' + err)
-          } else {
-            user = info
-          }
-        }
+        { new: true }
       ).exec()
       return user
     } else if (user.isActivated == 1) {

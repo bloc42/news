@@ -9,7 +9,6 @@ import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import { withRouter } from 'react-router-dom'
-import { GET_CURRENT_USER } from '../../query'
 import Alert from '../../components/Alert'
 
 class Signup extends Component {
@@ -19,7 +18,6 @@ class Signup extends Component {
       username: '',
       email: '',
       password: '',
-      code: '',
       errors: [],
       successes: []
     }
@@ -33,18 +31,14 @@ class Signup extends Component {
       [name]: value
     })
   }
-  componentDidMount() {
-    const searchParams = new URLSearchParams(this.props.location.search)
-    this.state.code = searchParams.get('code') ? searchParams.get('code') : ''
-
-  }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password, code } = this.state
-    console.log(code)
-    if(code == ''){
-      this.setState({ errors: [{ message: '目前只可通过邀请链接注册'}] })
-      return 
+    const { username, email, password } = this.state
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const code = searchParams.get('code') ? searchParams.get('code') : ''
+    if (code === '') {
+      this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
+      return
     }
     try {
       const { errors } = await this.props.signupMutation({
@@ -55,21 +49,14 @@ class Signup extends Component {
           code
         },
         update: (cache, { data }) => {
-          const currentUser = data.signup
           this.setState({
             successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
           })
-          this.state.username = ''
-          this.state.password = ''
-          this.state.email = ''
-          this.state.code = ''
-          // Update currentUser in cache
-          // cache.writeQuery({
-          //   query: GET_CURRENT_USER,
-          //   data: {
-          //     currentUser
-          //   }
-          // })
+          this.setState({
+            username: '',
+            password: '',
+            email: ''
+          })
         }
       })
 
@@ -136,8 +123,18 @@ class Signup extends Component {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation Signup($username: String!, $email: String!, $password: String!, $code: String!) {
-    signup(username: $username, email: $email, password: $password, code:$code) {
+  mutation Signup(
+    $username: String!
+    $email: String!
+    $password: String!
+    $code: String!
+  ) {
+    signup(
+      username: $username
+      email: $email
+      password: $password
+      code: $code
+    ) {
       id
       username
     }
