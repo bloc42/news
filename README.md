@@ -31,6 +31,30 @@ yarn run server
 
 Always make your changes in a feature branch and create a PR against `develop` branch. Our release branch is `master`, which should only accept PR from `develop` branch and hotfix branch.
 
+## Deployment
+
+The production environment is setup according to [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04). [pm2](https://github.com/Unitech/pm2) is used to serve client and server app in the background. If we run `pm2 list`, we should be able to see `news-client` and `news-server` running.
+
+To deploy new code:
+
+```bash
+ssh deploy@bloc42.com
+cd news
+git pull
+
+# Install latest dependencies
+yarn
+
+# Make client production build
+yarn run build
+```
+
+To configure Nginx site:
+
+```
+sudo vim /etc/nginx/sites-available/bloc42.com
+```
+
 ## Documentation
 
 ### Tech stack
@@ -60,6 +84,7 @@ Under `src` folder:
 - `containers`: Smart components. Cares about how things work.
 - `pages`: Page components. Each corresponds to an url route.
 - `theme.js`: Theme provider for [styled-components](https://www.styled-components.com/). Define global CSS variables here.
+- `serveClient.js`: To serve client build in production.
 
 #### Server
 
