@@ -13,13 +13,15 @@ const Notification = ({ from, post, comment }) => {
   return (
     <StyledNotification>
       <header>
-        <Link bold to={`/user/${from}`}>
+        {/* TODO: use bold instead of bold='true'. We use the latter for now
+            to avoid the warning produced by react router. */}
+        <Link bold="true" to={`/user/${from}`}>
           {from}
         </Link>
         <span> </span>
         <RelativeTime timestamp={comment.createdAt} />
         <span>在 </span>
-        <Link bold to={`/post/${post.id}#comment-${comment.id}`}>
+        <Link bold="true" to={`/post/${post.id}#comment-${comment.id}`}>
           {post.title}
         </Link>
         <span> 中回复了你：</span>
