@@ -1,10 +1,21 @@
 import User from './model'
 import userApi from './api'
+import NotificationAPI from '../notification/api'
 
 const Query = {
-  currentUser(obj, args, context, info) {
+  async currentUser(obj, args, context) {
     const { ctx } = context
-    return ctx.state.user
+    const { user } = ctx.state
+
+    if (user) {
+      const notifications = await NotificationAPI.getNotificationsByUsername(
+        user.username
+      )
+      user.notificationCount = notifications.length
+      return user
+    } else {
+      return null
+    }
   },
 
   async user(obj, args) {
@@ -15,15 +26,19 @@ const Query = {
 }
 
 const Mutation = {
-  async login(obj, args, context, info) {
+  async login(obj, args, context) {
     const { ctx } = context
     ctx.request.body = args
 
     const user = await userApi.authenticate('local')(ctx)
+    const notifications = await NotificationAPI.getNotificationsByUsername(
+      user.username
+    )
+    user.notificationCount = notifications.length
     return user
   },
 
-  async signup(obj, args, context, info) {
+  async signup(obj, args, context) {
     const { username, email, password } = args
 
     let user = await User.findOne({
@@ -42,11 +57,12 @@ const Mutation = {
 
       await user.save()
       await userApi.authenticate('local')(ctx)
+      user.notificationCount = 0
       return user
     }
   },
 
-  logout(obj, args, context, info) {
+  logout(obj, args, context) {
     const { ctx } = context
     const user = ctx.state.user
     ctx.logout()

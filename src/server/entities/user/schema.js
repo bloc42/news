@@ -17,7 +17,8 @@ const typeDefs = `
     id: ID!,
     username: String!,
     email: String,
-    createdAt: String
+    createdAt: String,
+    notificationCount: Int
   }
 `
 

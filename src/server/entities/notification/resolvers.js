@@ -1,4 +1,4 @@
-import Notification from './model'
+import NotificationAPI from './api'
 
 const Query = {
   async notifications(obj, args, context) {
@@ -8,14 +8,9 @@ const Query = {
       return []
     }
 
-    const user = ctx.state.user
-    const notifications = await Notification.find({
-      isRead: false,
-      to: user.username
-    })
-      .sort({ createdAt: -1 })
-      .exec()
-    return notifications
+    const { user } = ctx.state
+    const { username } = user
+    return await NotificationAPI.getNotificationsByUsername(username)
   }
 }
 

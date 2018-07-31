@@ -121,6 +121,7 @@ const SIGNUP_MUTATION = gql`
     signup(username: $username, email: $email, password: $password) {
       id
       username
+      notificationCount
     }
   }
 `

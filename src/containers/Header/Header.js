@@ -29,7 +29,7 @@ const StyledCounter = styled.span`
 `
 
 class Header extends Component {
-  renderLoggedInMenu(username, notificationCount) {
+  renderLoggedInMenu({ username, notificationCount }) {
     return (
       <Menu>
         <Menu.Item>
@@ -66,14 +66,11 @@ class Header extends Component {
     return (
       <Query
         query={gql`
-          query GetCurrentUserAndNotifications {
+          query GetCurrentUser {
             currentUser {
               id
               username
-            }
-
-            notifications {
-              id
+              notificationCount
             }
           }
         `}
@@ -83,13 +80,10 @@ class Header extends Component {
             return null
           }
 
-          const { currentUser, notifications } = data
+          const { currentUser } = data
 
           return currentUser
-            ? this.renderLoggedInMenu(
-                currentUser.username,
-                notifications.length
-              )
+            ? this.renderLoggedInMenu(currentUser)
             : this.renderLoggedOutMenu()
         }}
       </Query>
