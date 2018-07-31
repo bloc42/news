@@ -47,7 +47,7 @@ class Header extends Component {
     return (
       <Query query={GET_CURRENT_USER}>
         {({ loading, data }) => {
-          if (loading) {
+          if (loading || !data) {
             return null
           }
 
@@ -69,7 +69,7 @@ class Header extends Component {
             <Menu>
               <Menu.Item>
                 <NavLink exact strict to="/">
-                  Blockdog
+                  Bloc42
                 </NavLink>
               </Menu.Item>
             </Menu>

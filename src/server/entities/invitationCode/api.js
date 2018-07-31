@@ -11,7 +11,12 @@ const api = {
         isClaimed: true,
         claimer: name
       },
-      { new: true }
+      { new: true },
+      function(err, res) {
+        if (err) {
+          console.log('Error:' + err)
+        }
+      }
     ).exec()
   }
 }

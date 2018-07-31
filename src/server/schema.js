@@ -21,7 +21,14 @@ const linkTypeDefs = `
   }
 `
 
-const schemas = [userSchema, postSchema, commentSchema, invitationCodeSchema ,notificationSchema, linkTypeDefs]
+const schemas = [
+  userSchema,
+  postSchema,
+  commentSchema,
+  invitationCodeSchema,
+  notificationSchema,
+  linkTypeDefs
+]
 
 // https://www.apollographql.com/docs/graphql-tools/schema-stitching.html#adding-resolvers
 const resolvers = {

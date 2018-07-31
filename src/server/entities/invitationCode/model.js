@@ -20,5 +20,4 @@ const invitationCodeSchema = mongoose.Schema({
 
 invitationCodeSchema.set('timstamps', true)
 
-
 export default mongoose.model('invitationCode', invitationCodeSchema)

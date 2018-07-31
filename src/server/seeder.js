@@ -44,7 +44,7 @@ mongoose.connect(config.DBURL)
 
   const admin = new User({
     username: 'admin',
-    email: 'admin@blockdog.com',
+    email: 'admin@bloc42.com',
     password: '123456',
     role: 'admin',
     isActivated: 1
