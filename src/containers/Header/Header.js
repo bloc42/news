@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { GET_CURRENT_USER } from '../../query'
 import { Query, graphql, compose } from 'react-apollo'
 import Menu from '../../components/Menu'
 import Container from '../../components/Container'
@@ -14,8 +13,23 @@ const StyledContainer = styled(Container)`
   justify-content: space-between;
 `
 
+const StyledNotificationContainer = styled.div`
+  position: relative;
+`
+
+const StyledCounter = styled.span`
+  position: absolute;
+  top: -4px;
+  left: 24px;
+  background-color: rgba(212, 19, 13, 1);
+  color: #fff;
+  border-radius: 3px;
+  padding: 1px 3px;
+  font-size: 10px;
+`
+
 class Header extends Component {
-  renderLoggedInMenu({ username }) {
+  renderLoggedInMenu(username, notificationCount) {
     return (
       <Menu>
         <Menu.Item>
@@ -23,7 +37,12 @@ class Header extends Component {
         </Menu.Item>
         <Menu.Item>
           <NavLink to={`/user/${username}`}>
-            <Avatar />
+            <StyledNotificationContainer>
+              <Avatar />
+              {notificationCount > 0 && (
+                <StyledCounter>{notificationCount}</StyledCounter>
+              )}
+            </StyledNotificationContainer>
           </NavLink>
         </Menu.Item>
       </Menu>
@@ -45,16 +64,32 @@ class Header extends Component {
 
   renderRightMenu() {
     return (
-      <Query query={GET_CURRENT_USER}>
+      <Query
+        query={gql`
+          query GetCurrentUserAndNotifications {
+            currentUser {
+              id
+              username
+            }
+
+            notifications {
+              id
+            }
+          }
+        `}
+      >
         {({ loading, data }) => {
-          if (loading || !data) {
+          if (loading) {
             return null
           }
 
-          const { currentUser } = data
+          const { currentUser, notifications } = data
 
           return currentUser
-            ? this.renderLoggedInMenu(currentUser)
+            ? this.renderLoggedInMenu(
+                currentUser.username,
+                notifications.length
+              )
             : this.renderLoggedOutMenu()
         }}
       </Query>
