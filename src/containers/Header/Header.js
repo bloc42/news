@@ -25,7 +25,7 @@ const StyledCounter = styled.span`
   color: #fff;
   border-radius: 3px;
   padding: 1px 3px;
-  font-size: 10px;
+  font-size: 8px;
 `
 
 class Header extends Component {

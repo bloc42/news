@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const StyledAnchor = styled.a`
   color: ${props => props.theme.fontColor};
@@ -9,6 +9,16 @@ const StyledAnchor = styled.a`
   :hover {
     color: ${props => props.theme.primaryColor};
   }
+
+  ${props =>
+    props.bold &&
+    css`
+      font-weight: bold;
+      border-bottom: 2px solid ${props => props.theme.borderColor};
+      :hover {
+        border-bottom: 2px solid ${props => props.theme.primaryColor};
+      }
+    `};
 `
 
 const Anchor = props => {

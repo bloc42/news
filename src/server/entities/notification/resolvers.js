@@ -1,4 +1,5 @@
 import NotificationAPI from './api'
+import Notification from './model'
 
 const Query = {
   async notifications(obj, args, context) {
@@ -14,6 +15,17 @@ const Query = {
   }
 }
 
+const Mutation = {
+  async readNotification(obj, args) {
+    const { id } = args
+    const notification = await Notification.findByIdAndUpdate(id, {
+      isRead: true
+    }).exec()
+    return notification
+  }
+}
+
 export default {
-  Query
+  Query,
+  Mutation
 }

@@ -10,7 +10,7 @@ import UserProfilePage from '../../pages/UserProfilePage'
 
 const StyledMain = styled.main`
   flex: 1;
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   width: 100%;
 `
 
