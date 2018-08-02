@@ -46,7 +46,8 @@ mongoose.connect(config.DBURL)
     username: 'admin',
     email: 'admin@bloc42.com',
     password: '123456',
-    role: 'admin'
+    role: 'admin',
+    isActivated: 1
   })
 
   await admin.save()

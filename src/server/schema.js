@@ -7,6 +7,7 @@ import { mergeSchemas } from 'graphql-tools'
 import userSchema from './entities/user/schema'
 import postSchema from './entities/post/schema'
 import commentSchema from './entities/comment/schema'
+import invitationCodeSchema from './entities/invitationCode/schema'
 import notificationSchema from './entities/notification/schema'
 
 const linkTypeDefs = `
@@ -24,6 +25,7 @@ const schemas = [
   userSchema,
   postSchema,
   commentSchema,
+  invitationCodeSchema,
   notificationSchema,
   linkTypeDefs
 ]

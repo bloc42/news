@@ -7,7 +7,6 @@ const StyledAlert = styled.div`
   padding: 1rem;
   border-radius: ${props => props.theme.borderRadius};
   color: ${props => props.theme.fontColorLight};
-
   /* Error Alert */
   ${props =>
     props.error &&
@@ -15,9 +14,20 @@ const StyledAlert = styled.div`
       border: 1px solid #ffa39e;
       background-color: #fff1f0;
     `};
+  ${props =>
+    props.success &&
+    css`
+      border: 1px solid #c3ff9e;
+      background-color: #f8fff0;
+    `};
 `
 
-const Alert = props => <StyledAlert {...props}>{props.message}</StyledAlert>
+const Alert = props => (
+  <StyledAlert {...props}>
+    {props.message}
+    {props.children}
+  </StyledAlert>
+)
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired

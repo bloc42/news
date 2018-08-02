@@ -9,7 +9,6 @@ import Form from '../../components/Form'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import { withRouter } from 'react-router-dom'
-import { GET_CURRENT_USER } from '../../query'
 import Alert from '../../components/Alert'
 
 class Signup extends Component {
@@ -19,7 +18,8 @@ class Signup extends Component {
       username: '',
       email: '',
       password: '',
-      errors: []
+      errors: [],
+      successes: []
     }
   }
 
@@ -31,27 +31,31 @@ class Signup extends Component {
       [name]: value
     })
   }
-
   handleSubmit = async e => {
     e.preventDefault()
     const { username, email, password } = this.state
-
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const code = searchParams.get('code') ? searchParams.get('code') : ''
+    if (code === '') {
+      this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
+      return
+    }
     try {
       const { errors } = await this.props.signupMutation({
         variables: {
           username,
           email,
-          password
+          password,
+          code
         },
         update: (cache, { data }) => {
-          const currentUser = data.signup
-
-          // Update currentUser in cache
-          cache.writeQuery({
-            query: GET_CURRENT_USER,
-            data: {
-              currentUser
-            }
+          this.setState({
+            successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
+          })
+          this.setState({
+            username: '',
+            password: '',
+            email: ''
           })
         }
       })
@@ -60,7 +64,6 @@ class Signup extends Component {
         this.setState({ errors })
       } else {
         this.setState({ errors: [] })
-        this.props.history.push('/')
       }
     } catch (err) {
       // TODO: show error message in UI
@@ -73,6 +76,9 @@ class Signup extends Component {
       <Form onSubmit={this.handleSubmit}>
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
+        ))}
+        {this.state.successes.map((success, index) => (
+          <Alert key={index} message={success.message} success />
         ))}
 
         <Form.Item>
@@ -117,8 +123,18 @@ class Signup extends Component {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation Signup($username: String!, $email: String!, $password: String!) {
-    signup(username: $username, email: $email, password: $password) {
+  mutation Signup(
+    $username: String!
+    $email: String!
+    $password: String!
+    $code: String!
+  ) {
+    signup(
+      username: $username
+      email: $email
+      password: $password
+      code: $code
+    ) {
       id
       username
       notificationCount

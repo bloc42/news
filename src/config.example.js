@@ -5,5 +5,8 @@ module.exports = {
   serverHost: '',
   serverPort: 3001,
   allowOrigin: 'https://bloc42.com',
-  DBURL: 'mongodb://localhost:27017/news'
+  DBURL: 'mongodb://localhost:27017/news',
+  domain: '',
+  mailApiKey: 'api-key',
+  mailDomain: 'maildomain'
 }

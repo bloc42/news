@@ -28,7 +28,6 @@ const GET_USER = gql`
       email
       createdAt
     }
-
     currentUser {
       id
       username

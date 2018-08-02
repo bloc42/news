@@ -7,7 +7,7 @@ import Button from '../../components/Button'
 import Alert from '../../components/Alert'
 import { withRouter } from 'react-router-dom'
 
-class InvitationForm extends Component {
+class SendmailForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,11 +25,11 @@ class InvitationForm extends Component {
   handleSubmit = async e => {
     e.preventDefault()
     const { email } = this.state
-    const emails = email.split(',')
+
     try {
-      const { errors } = await this.props.sendInvitationFormMailMutation({
+      const { errors } = await this.props.sendActivationMailMutation({
         variables: {
-          emails
+          email
         }
       })
 
@@ -38,7 +38,7 @@ class InvitationForm extends Component {
       } else {
         this.setState({ errors: [] })
         this.setState({
-          successes: [{ message: '邀请邮件已发送至朋友' }]
+          successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
         })
       }
     } catch (err) {
@@ -49,6 +49,7 @@ class InvitationForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
+        <h2>重新发送激活邮件</h2>
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
         ))}
@@ -60,14 +61,14 @@ class InvitationForm extends Component {
             type="text"
             name="email"
             value={this.state.email}
-            placeholder="被邀请人邮箱,请用逗号隔开"
+            placeholder="邮箱"
             onChange={this.handleChange}
             required
           />
         </Form.Item>
         <Form.Item>
           <Button primary fullWidth>
-            发送邀请
+            发送
           </Button>
         </Form.Item>
       </Form>
@@ -75,21 +76,17 @@ class InvitationForm extends Component {
   }
 }
 
-const SENDINVITATIONMAIL_MUTATION = gql`
-  mutation sendInvitationMail($emails: [String!]) {
-    sendInvitationMail(emails: $emails) {
-      invitationCodes {
-        id
-        invitor
-      }
+const SENDACTIVATIONMAIL_MUTATION = gql`
+  mutation sendActivationMail($email: String!) {
+    sendActivationMail(email: $email) {
+      id
+      username
     }
   }
 `
 
-const sendInvitationFormMailWithMutation = compose(
-  graphql(SENDINVITATIONMAIL_MUTATION, {
-    name: 'sendInvitationFormMailMutation'
-  })
-)(InvitationForm)
+const sendActivationMailFormWithMutation = compose(
+  graphql(SENDACTIVATIONMAIL_MUTATION, { name: 'sendActivationMailMutation' })
+)(SendmailForm)
 
-export default withRouter(sendInvitationFormMailWithMutation)
+export default withRouter(sendActivationMailFormWithMutation)
