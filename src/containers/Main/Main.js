@@ -13,7 +13,7 @@ import SendActivationPage from '../../pages/SendActivationPage'
 
 const StyledMain = styled.main`
   flex: 1;
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   width: 100%;
 `
 

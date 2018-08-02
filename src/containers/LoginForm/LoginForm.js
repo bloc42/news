@@ -112,6 +112,7 @@ const LOGIN_MUTATION = gql`
     login(username: $username, password: $password) {
       id
       username
+      notificationCount
     }
   }
 `

@@ -137,6 +137,7 @@ const SIGNUP_MUTATION = gql`
     ) {
       id
       username
+      notificationCount
     }
   }
 `

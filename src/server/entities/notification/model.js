@@ -7,6 +7,7 @@ const notificationSchema = mongoose.Schema({
   },
   to: {
     type: String,
+    index: true,
     required: true
   },
   postId: {

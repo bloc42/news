@@ -1,3 +1,4 @@
+import NotificationAPI from './api'
 import Notification from './model'
 
 const Query = {
@@ -8,17 +9,23 @@ const Query = {
       return []
     }
 
-    const user = ctx.state.user
-    const notifications = await Notification.find({
-      isRead: false,
-      to: user.username
-    })
-      .sort({ createdAt: -1 })
-      .exec()
-    return notifications
+    const { user } = ctx.state
+    const { username } = user
+    return await NotificationAPI.getNotificationsByUsername(username)
+  }
+}
+
+const Mutation = {
+  async readNotification(obj, args) {
+    const { id } = args
+    const notification = await Notification.findByIdAndUpdate(id, {
+      isRead: true
+    }).exec()
+    return notification
   }
 }
 
 export default {
-  Query
+  Query,
+  Mutation
 }

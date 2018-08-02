@@ -6,6 +6,10 @@ const typeDefs = `
     notifications: [Notification]
   }
 
+  type Mutation {
+    readNotification(id: ID!): Notification
+  }
+
   type Notification {
     id: ID!,
     from: String!,
