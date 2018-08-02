@@ -72,7 +72,7 @@ const Mutation = {
     return user
   },
   async signup(obj, args, context) {
-    const { username, email, password } = args
+    const { username, email, password, code } = args
 
     let user = await User.findOne({
       $or: [{ username }, { email }]
