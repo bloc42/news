@@ -31,8 +31,7 @@ class SubmitPostForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    const { title, url, content } = this.state
-
+    let { title, url, content } = this.state
     try {
       const { errors } = await this.props.submitPostMutation({
         variables: {
@@ -88,6 +87,7 @@ class SubmitPostForm extends Component {
             required
           />
         </Form.Item>
+        <p>请发布链接或内容</p>
         <Form.Item>
           <Input
             type="url"

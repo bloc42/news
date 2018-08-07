@@ -44,14 +44,14 @@ const StyledPost = styled.article`
 `
 
 const Post = ({ id, title, author, url, commentCount, createdAt }) => {
-  const postTitle = url ? (
-    <Anchor href={url} target="_blank">
-      {title}
-    </Anchor>
-  ) : (
-    <Link to={`/post/${id}`}>{title}</Link>
-  )
-
+  // const postTitle = url ? (
+  //   <Anchor href={url} target="_blank">
+  //     {title}
+  //   </Anchor>
+  // ) : (
+  //   <Link to={`/post/${id}`}>{title}</Link>
+  // )
+  const postTitle = <Link to={`/post/${id}`}>{title}</Link>
   const domainMatch = url.match(/:\/\/(.[^/]+)/)
 
   return (
@@ -68,9 +68,7 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
             <Divider />
           </li>
           <li>
-            <Link smooth to={`#post-${id}`}>
-              <RelativeTime timestamp={createdAt} />
-            </Link>
+            <RelativeTime timestamp={createdAt} />
           </li>
           <li>
             <Divider />
@@ -78,21 +76,21 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
           <li>
             <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
           </li>
-          {domainMatch &&
+          {/* {domainMatch &&
             domainMatch.length > 1 && (
               <li>
                 <Divider />
               </li>
-            )}
+            )} */}
 
-          {domainMatch &&
+          {/* {domainMatch &&
             domainMatch.length > 1 && (
               <li>
                 <Anchor href={domainMatch[1]} target="_blank">
                   {domainMatch[1]}
                 </Anchor>
               </li>
-            )}
+            )} */}
         </ul>
       </footer>
     </StyledPost>

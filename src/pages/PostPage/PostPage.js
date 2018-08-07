@@ -58,7 +58,7 @@ const PostPage = props => {
       <Section padded>
         <Query query={GET_POST} variables={{ id }}>
           {({ loading, data }) => {
-            if (loading) return '加载中。。。'
+            if (loading) return '加载中...'
 
             const {
               title,
@@ -85,7 +85,16 @@ const PostPage = props => {
 
                   <section>
                     {content.split('\n').map((paragraph, key) => {
-                      return <p key={key}>{paragraph}</p>
+                      return url ? (
+                        <div>
+                          <a href={url} target="_blank">
+                            {url}
+                          </a>
+                          <p key={key}>{paragraph}</p>
+                        </div>
+                      ) : (
+                        <p key={key}>{paragraph}</p>
+                      )
                     })}
                   </section>
 

@@ -89,7 +89,7 @@ class UserProfilePage extends Component {
             }}
           >
             {({ loading, data }) => {
-              if (loading) return '加载中。。。'
+              if (loading) return '加载中...'
 
               const { user, currentUser } = data
               const { username, createdAt } = user
@@ -99,7 +99,8 @@ class UserProfilePage extends Component {
                 <div>
                   <h1>{username}</h1>
                   <Small>
-                    <RelativeTime timestamp={createdAt} />加入
+                    <RelativeTime timestamp={createdAt} />
+                    加入
                   </Small>
 
                   {isCurrentUser && this.renderUserActions()}

@@ -16,7 +16,7 @@ class Mailer {
   static async send(mailOptions) {
     const mergedOptions = R.merge(
       {
-        from: 'postmaster@bloc42.com'
+        from: 'hi@bloc42.com'
       },
       mailOptions
     )
