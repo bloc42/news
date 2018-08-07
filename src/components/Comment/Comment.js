@@ -76,6 +76,7 @@ class Comment extends Component {
         </footer>
         {this.state.showReply && (
           <SubmitCommentForm
+            toggleReply={() => this.toggleReply()}
             postId={postId}
             parentId={id}
             parentAuthor={author}

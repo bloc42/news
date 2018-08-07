@@ -39,6 +39,7 @@ class SubmitCommentForm extends Component {
           parentId
         },
         update: (cache, { data }) => {
+          this.props.toggleReply()
           const newComment = data.addComment
           const { postById } = cache.readQuery({
             query: GET_POST,
