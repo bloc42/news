@@ -94,8 +94,9 @@ const PostPage = props => {
                             <p key={key}>{paragraph}</p>
                           </div>
                         )
+                      } else {
+                        return <p key={key}>{paragraph}</p>
                       }
-                      return <p key={key}>{paragraph}</p>
                     })}
                   </section>
 
