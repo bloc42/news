@@ -46,7 +46,10 @@ const PostList = () => (
                   return {
                     postFeed: {
                       cursor: fetchMoreResult.postFeed.cursor,
-                      posts: [...fetchMoreResult.postFeed.posts],
+                      posts: [
+                        ...previousResult.postFeed.posts,
+                        ...fetchMoreResult.postFeed.posts
+                      ],
                       __typename: 'PostFeed'
                     }
                   }
