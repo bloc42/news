@@ -71,7 +71,7 @@ class SubmitPostForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <h2>发布文章</h2>
+        <h2>创建帖子</h2>
 
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />

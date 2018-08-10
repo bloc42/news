@@ -33,7 +33,7 @@ class Header extends Component {
     return (
       <Menu>
         <Menu.Item>
-          <NavLink to="/submit">发布文章</NavLink>
+          <NavLink to="/submit">创建帖子</NavLink>
         </Menu.Item>
         <Menu.Item>
           <NavLink to={`/user/${username}`}>

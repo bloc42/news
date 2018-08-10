@@ -31,20 +31,22 @@ const PostList = () => (
 
       return (
         <div>
-          {posts.map(post => <Post key={post.id} {...post} />)}
+          {posts.map(post => (
+            <Post key={post.id} {...post} />
+          ))}
           <ScrollDetector
             onReachBottom={() =>
               fetchMore({
                 query: GET_POSTS,
                 variables: { cursor },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) {
+                    return previousResult
+                  }
                   return {
                     postFeed: {
                       cursor: fetchMoreResult.postFeed.cursor,
-                      posts: [
-                        ...previousResult.postFeed.posts,
-                        ...fetchMoreResult.postFeed.posts
-                      ],
+                      posts: [...fetchMoreResult.postFeed.posts],
                       __typename: 'PostFeed'
                     }
                   }

@@ -85,16 +85,18 @@ const PostPage = props => {
 
                   <section>
                     {content.split('\n').map((paragraph, key) => {
-                      return url ? (
-                        <div>
-                          <a href={url} target="_blank">
-                            {url}
-                          </a>
-                          <p key={key}>{paragraph}</p>
-                        </div>
-                      ) : (
-                        <p key={key}>{paragraph}</p>
-                      )
+                      if (url && key == 0) {
+                        return (
+                          <div>
+                            <a href={url} target="_blank">
+                              {url}
+                            </a>
+                            <p key={key}>{paragraph}</p>
+                          </div>
+                        )
+                      } else {
+                        return <p key={key}>{paragraph}</p>
+                      }
                     })}
                   </section>
 

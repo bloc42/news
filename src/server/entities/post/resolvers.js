@@ -40,7 +40,7 @@ const Mutation = {
     const { ctx } = context
 
     if (ctx.isUnauthenticated()) {
-      throw new Error('发布文章前请先登录。')
+      throw new Error('发布帖子前请先登录。')
     }
 
     const { title, url, content } = args
