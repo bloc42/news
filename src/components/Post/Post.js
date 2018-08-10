@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import RelativeTime from '../RelativeTime'
-import Anchor from '../Anchor'
 import Link from '../Link'
 import Divider from '../Divider'
 
@@ -52,7 +51,7 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
   //   <Link to={`/post/${id}`}>{title}</Link>
   // )
   const postTitle = <Link to={`/post/${id}`}>{title}</Link>
-  const domainMatch = url.match(/:\/\/(.[^/]+)/)
+  //const domainMatch = url.match(/:\/\/(.[^/]+)/)
 
   return (
     <StyledPost id={`post-${id}`}>

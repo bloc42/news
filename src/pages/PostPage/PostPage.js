@@ -85,7 +85,7 @@ const PostPage = props => {
 
                   <section>
                     {content.split('\n').map((paragraph, key) => {
-                      if (url && key == 0) {
+                      if (url && key === 0) {
                         return (
                           <div>
                             <a href={url} target="_blank">
