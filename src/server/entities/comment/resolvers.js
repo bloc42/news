@@ -30,7 +30,7 @@ const Mutation = {
     const post = await Post.findById(postId).exec()
 
     if (!post) {
-      throw '无法找到该文章。'
+      throw '无法找到该帖子。'
     }
 
     const author = ctx.state.user.username
