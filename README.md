@@ -44,12 +44,26 @@ git pull
 # Install latest dependencies
 yarn
 
-# Restart server
-pm2 restart news-server
+# Reload server
+pm2 reload news-server
 
 # Make client production build. Since we simply serves the static files, 
 # we don't need to restart the client server
 yarn run build
+```
+
+To start client/server app on a fresh server:
+
+```bash
+pm2 start src/serveClient.js --name news-client
+pm2 start src/server/index.js --name news-server
+```
+
+To restart client/server in case they're stopped:
+
+```bash
+pm2 restart news-client
+pm2 restart news-server
 ```
 
 The production environment is setup according to [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04). 
