@@ -40,7 +40,10 @@ const PostList = () => (
                 query: GET_POSTS,
                 variables: { cursor },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) {
+                  if (
+                    !fetchMoreResult ||
+                    fetchMoreResult.postFeed.posts.length === 0
+                  ) {
                     return previousResult
                   }
                   return {
