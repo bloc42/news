@@ -37,7 +37,8 @@
     "react-router-dom": "4.3.1",
     "react-router-hash-link": "1.2.0",
     "react-scripts": "1.1.4",
-    "styled-components": "3.3.3"
+    "styled-components": "3.3.3",
+    "throttle-debounce": "^2.0.1"
   },
   "scripts": {
     "seed": "node -r esm src/server/seeder.js",
