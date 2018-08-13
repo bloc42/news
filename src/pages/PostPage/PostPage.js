@@ -12,6 +12,11 @@ import Comment from '../../components/Comment'
 import Divider from '../../components/Divider'
 
 const StyledArticle = styled.article`
+  > p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
   footer ul {
     list-style-type: none;
     display: flex;
@@ -78,25 +83,23 @@ const PostPage = props => {
               title
             )
 
+            const postUrl = url ? (
+              <p>
+                <a href={url} target="_blank">
+                  {url}
+                </a>
+              </p>
+            ) : (
+              ''
+            )
             return (
               <div>
                 <StyledArticle>
                   <h2>{postTitle}</h2>
-
+                  {postUrl}
                   <section>
                     {content.split('\n').map((paragraph, key) => {
-                      if (url && key === 0) {
-                        return (
-                          <div>
-                            <a href={url} target="_blank">
-                              {url}
-                            </a>
-                            <p key={key}>{paragraph}</p>
-                          </div>
-                        )
-                      } else {
-                        return <p key={key}>{paragraph}</p>
-                      }
+                      return <p key={key}>{paragraph}</p>
                     })}
                   </section>
 
