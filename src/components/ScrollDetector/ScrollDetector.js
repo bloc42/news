@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { debounce } from 'throttle-debounce'
+import { throttle } from 'throttle-debounce'
 
 class ScrollDetector extends Component {
   static propTypes = {
@@ -8,7 +8,7 @@ class ScrollDetector extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', debounce(100, true, this.handleScroll))
+    window.addEventListener('scroll', throttle(300, this.handleScroll))
   }
 
   componentWillUnmount() {
