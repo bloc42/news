@@ -5,29 +5,18 @@ const Query = {
     const limit = 15
     const sortCriteria = { createdAt: 'desc' }
     let posts = []
-    let topcomment = []
-    let topcomment_id = []
-    //5posts sort by comments count
-    topcomment = await Post.find()
-      .sort({ commentCount: 'desc' })
-      .limit(5)
-      .exec()
-    topcomment.forEach(element => {
-      topcomment_id.push(element._id)
-    })
     if (cursor) {
       // If cursor (ObjectID) is provided, find next set of older posts
-      posts = await Post.find({ _id: { $lt: cursor, $nin: topcomment_id } })
+      posts = await Post.find({ _id: { $lt: cursor } })
         .sort(sortCriteria)
         .limit(limit)
         .exec()
     } else {
       // If cursor is not provided, find the first set of posts
-      const lastposts = await Post.find({ _id: { $nin: topcomment_id } })
+      posts = await Post.find()
         .sort(sortCriteria)
-        .limit(limit - 5)
+        .limit(limit)
         .exec()
-      posts = topcomment.concat(lastposts)
     }
 
     // Cursor is set to the ID of the last item
