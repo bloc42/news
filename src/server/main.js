@@ -28,7 +28,8 @@ app.use(koaBody())
 app.use(
   cors({
     credentials: true,
-    origin: config.allowOrigin
+    // origin: config.allowOrigin
+    origin: 'http://localhost:8000'
   })
 )
 

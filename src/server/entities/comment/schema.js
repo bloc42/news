@@ -5,6 +5,8 @@ const typeDefs = `
   type Query {
     commentById(id: ID!): Comment
     commentsByPostId(postId: ID!): [Comment]
+    commentGrowth(dateType: String!, createdAfter: String ,createdBefore: String): CommentAnalysisResult
+    totalCommentsCount(dateTime: String,dayStart: String,dayEnd: String): CommentCount
   }
 
   type Mutation {
@@ -20,6 +22,21 @@ const typeDefs = `
     fullSlug: String!,
     createdAt: String!,
     level: Int!
+  }
+
+  type CommentAnalysisResult {
+    analysis: [CommentAnalysis]
+    beforeCount: Int
+  }
+
+  type CommentAnalysis {
+    _id: String,
+    count: String
+  }
+
+  type CommentCount {
+    total: Int,
+    day: Int
   }
 `
 
