@@ -1,4 +1,6 @@
 import User from './model'
+import Post from '../post/model'
+import Comment from '../comment/model'
 import userApi from './api'
 import invitationCodeApi from '../invitationCode/api'
 import mail from '../../mail'
@@ -31,6 +33,191 @@ const Query = {
     const { username } = args
     const user = await User.findOne({ username }).exec()
     return user
+  },
+
+  async userGrowth(obj, args, context) {
+    const { dateType, createdAfter, createdBefore } = args
+    const beforeAll = await User.aggregate([
+      { $match: { createdAt: { $lt: new Date(createdAfter) } } },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+        }
+      }
+    ])
+    let beforeCount = 0
+    if (beforeAll && beforeAll[0]) {
+      beforeCount = beforeAll[0].count
+    }
+    let analysis = []
+    if (dateType == 'today') {
+      analysis = await User.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $hour: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'week') {
+      analysis = await User.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dayOfWeek: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'month') {
+      analysis = await User.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dayOfMonth: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'year') {
+      analysis = await User.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $month: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    }
+    return {
+      analysis: analysis,
+      beforeCount: beforeCount
+    }
+  },
+
+  async hotUsers(obj, args, context) {
+    console.error()
+    let usersByPost = await Post.aggregate([
+      { $group: { _id: '$author', count: { $sum: 1 } } }
+    ])
+    let usersByComment = await Comment.aggregate([
+      { $group: { _id: '$author', count: { $sum: 1 } } }
+    ])
+    let usersByAll = []
+    usersByPost.forEach(function(val, key) {
+      const userpost = val
+      usersByComment.forEach(function(val, key) {
+        if (val['_id'] == userpost['_id']) {
+          usersByAll.push({
+            _id: val['_id'],
+            postCount: userpost['count'],
+            commentCount: val['count'],
+            rank: (
+              parseInt(userpost['count']) * 0.6 +
+              parseInt(val['count']) * 0.4
+            ).toFixed(1)
+          })
+        } else {
+          //todo a or b without one
+        }
+      })
+    })
+    const { sortType } = args
+    let result = []
+    if (sortType == 'post') {
+      result = usersByAll.sort((a, b) => {
+        return b.postCount - a.postCount
+      })
+    } else if (sortType == 'comment') {
+      result = usersByAll.sort((a, b) => {
+        return b.commentCount - a.commentCount
+      })
+    } else {
+      result = usersByAll.sort((a, b) => {
+        return b.rank - a.rank
+      })
+    }
+    return result
+  },
+
+  async totalUsersCount(obj, args, context) {
+    const { dateTime, dayStart, dayEnd } = args
+    const userCount = await User.aggregate([
+      { $match: { createdAt: { $lt: new Date(dateTime) } } },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+        }
+      }
+    ])
+    let result = {
+      total: userCount[0].count
+    }
+    if (dayStart && dayEnd) {
+      const daycount = await User.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: new Date(dayStart), $lte: new Date(dayEnd) }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: 1 }
+          }
+        }
+      ])
+      let daycountnum = 0
+      if (daycount[0] && daycount[0].count) {
+        daycountnum = daycount[0].count
+      }
+      Object.assign(result, { day: daycountnum })
+    }
+    return result
   }
 }
 

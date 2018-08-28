@@ -14,6 +14,146 @@ const Query = {
     return await Comment.find({ postId })
       .sort({ fullSlug: 1 })
       .exec()
+  },
+
+  async commentGrowth(obj, args, context) {
+    const { dateType, createdAfter, createdBefore } = args
+    const beforeAll = await Comment.aggregate([
+      { $match: { createdAt: { $lt: new Date(createdAfter) } } },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+        }
+      }
+    ])
+    let beforeCount = 0
+    if (beforeAll && beforeAll[0]) {
+      beforeCount = beforeAll[0].count
+    }
+    let analysis = []
+    if (dateType == 'today') {
+      analysis = await Comment.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $hour: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'week') {
+      analysis = await Comment.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dayOfWeek: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'month') {
+      analysis = await Comment.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dayOfMonth: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    } else if (dateType == 'year') {
+      analysis = await Comment.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(createdAfter),
+              $lte: new Date(createdBefore)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $month: '$createdAt'
+            },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    }
+    return {
+      analysis: analysis,
+      beforeCount: beforeCount
+    }
+  },
+
+  async totalCommentsCount(obj, args, context) {
+    const { dateTime, dayStart, dayEnd } = args
+    const commentCount = await Comment.aggregate([
+      { $match: { createdAt: { $lt: new Date(dateTime) } } },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 }
+        }
+      }
+    ])
+    let result = {
+      total: commentCount[0].count
+    }
+    if (dayStart && dayEnd) {
+      const daycount = await Comment.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: new Date(dayStart), $lte: new Date(dayEnd) }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: 1 }
+          }
+        }
+      ])
+      let daycountnum = 0
+      if (daycount[0] && daycount[0].count) {
+        daycountnum = daycount[0].count
+      }
+      Object.assign(result, { day: daycountnum })
+    }
+    return result
   }
 }
 
