@@ -28,7 +28,13 @@ app.use(koaBody())
 app.use(
   cors({
     credentials: true,
-    origin: config.allowOrigin
+    origin: function(ctx) {
+      if (/bloc42.com/.test(ctx.header.origin)) {
+        return ctx.header.origin
+      } else {
+        return false
+      }
+    }
   })
 )
 

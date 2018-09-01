@@ -8,5 +8,6 @@ module.exports = {
   DBURL: 'mongodb://localhost:27017/news',
   domain: '',
   mailApiKey: 'api-key',
-  mailDomain: 'maildomain'
+  mailDomain: 'maildomain',
+  publicInvitationCode: '****'
 }
