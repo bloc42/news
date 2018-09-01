@@ -279,8 +279,10 @@ const Mutation = {
         // passport needs them for authentication
         ctx.request.body = args
         user = await user.save()
-        //update invitationcode
-        await invitationCodeApi.claimedCode(code, user.username)
+        if (code !== config.publicInvitationCode) {
+          //update invitationcode
+          await invitationCodeApi.claimedCode(code, user.username)
+        }
         //save activeInfo
         const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
         const activationHashCode = await bcrypt.hash(
