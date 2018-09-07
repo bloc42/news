@@ -8,6 +8,7 @@ const typeDefs = `
     userGrowth(dateType: String!, createdAfter: String ,createdBefore: String): UserAnalysisResult
     hotUsers: [UserRank]
     totalUsersCount(dateTime: String,dayStart: String,dayEnd: String): UserCount
+    userList(cursor: String,limit: Int): UserList
   }
 
   type Mutation {
@@ -25,7 +26,12 @@ const typeDefs = `
     createdAt: String,
     notificationCount: Int
   }
-  
+
+  type UserList {
+    cursor: String!,
+    userlist: [UserRank]!
+  }
+
   type UserAnalysisResult {
     analysis: [UserAnalysis]
     beforeCount: Int
@@ -38,6 +44,8 @@ const typeDefs = `
 
   type UserRank {
     _id: String,
+    user: String,
+    email: String,
     postCount: Int,
     commentCount: Int,
     rank: String
