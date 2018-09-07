@@ -42,7 +42,9 @@ const PostList = () => (
                 updateQuery: (previousResult, { fetchMoreResult }) => {
                   if (
                     !fetchMoreResult ||
-                    fetchMoreResult.postFeed.posts.length === 0
+                    fetchMoreResult.postFeed.posts.length === 0 ||
+                    fetchMoreResult.postFeed.cursor >=
+                      previousResult.postFeed.cursor
                   ) {
                     return previousResult
                   }
