@@ -249,7 +249,6 @@ const Mutation = {
     } else if (user.isActivated == 0 && Date.now() < user.activationDeadline) {
       throw '该用户未激活,请在注册邮箱中查看激活邮件'
     } else if (user.isActivated == 1) {
-      console.log(args)
       user = await userApi.authenticate('local')(ctx)
       const notifications = await NotificationAPI.getNotificationsByUsername(
         user.username
