@@ -126,7 +126,7 @@ const PostPage = props => {
                   </footer>
                 </StyledArticle>
                 <section>
-                  <SubmitCommentForm toggleReply={() => {}} postId={id} parentAuthor={author} />
+                  <SubmitCommentForm postId={id} parentAuthor={author} />
 
                   {comments.map(comment => {
                     return <Comment key={comment.id} {...comment} />
