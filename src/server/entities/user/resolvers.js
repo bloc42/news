@@ -139,7 +139,6 @@ const Query = {
   },
 
   async hotUsers(obj, args, context) {
-    console.error()
     let usersByPost = await Post.aggregate([
       { $group: { _id: '$author', count: { $sum: 1 } } }
     ])
@@ -218,6 +217,58 @@ const Query = {
       Object.assign(result, { day: daycountnum })
     }
     return result
+  },
+
+  async userList(obj, args, context) {
+    let { cursor, limit } = args
+    let list = []
+    if (cursor) {
+      list = await User.find({ _id: { $lt: cursor } })
+        .limit(limit)
+        .exec()
+    } else {
+      list = await User.find()
+        .limit(limit)
+        .exec()
+    }
+    cursor = list[list.length - 1].id
+    let userlist = []
+
+    const usersbyPost = await Post.aggregate([
+      { $group: { _id: '$author', count: { $sum: 1 } } }
+    ])
+    const usersbyComment = await Comment.aggregate([
+      { $group: { _id: '$author', count: { $sum: 1 } } }
+    ])
+    list.forEach(function(val, key) {
+      const usernow = val
+      usersbyPost.forEach(function(val, key) {
+        const postnum = val
+        if (usernow['username'] == postnum['_id']) {
+          usersbyComment.forEach(function(val, key) {
+            const commentnum = val
+            if (usernow['username'] == commentnum['_id']) {
+              userlist.push({
+                _id: usernow['_id'],
+                email: usernow['email'],
+                user: usernow['username'],
+                postCount: postnum['count'],
+                commentCount: commentnum['count'],
+                rank: (
+                  parseInt(postnum['count']) * 0.6 +
+                  parseInt(commentnum['count']) * 0.4
+                ).toFixed(1)
+              })
+            }
+          })
+        }
+      })
+    })
+
+    return {
+      cursor,
+      userlist
+    }
   }
 }
 
