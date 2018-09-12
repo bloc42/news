@@ -240,7 +240,7 @@ const Query = {
           usersbyComment.forEach(function(val, key) {
             const commentnum = val
             if (usernow['username'] == commentnum['_id']) {
-              userlist[usernowkey]['postCount'] = commentnum['count']
+              userlist[usernowkey]['commentCount'] = commentnum['count']
               userlist[usernowkey]['rank'] = (
                 parseInt(postnum['count']) * 0.6 +
                 parseInt(commentnum['count']) * 0.4
@@ -251,7 +251,7 @@ const Query = {
           usersbyComment.forEach(function(val, key) {
             const commentnum = val
             if (usernow['username'] == commentnum['_id']) {
-              userlist[usernowkey]['postCount'] = commentnum['count']
+              userlist[usernowkey]['commentCount'] = commentnum['count']
               userlist[usernowkey]['rank'] = (
                 parseInt(commentnum['count']) * 0.4
               ).toFixed(1)
