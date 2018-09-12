@@ -51,27 +51,7 @@ const Query = {
       beforeCount = beforeAll[0].count
     }
     let analysis = []
-    if (dateType == 'today') {
-      analysis = await User.aggregate([
-        {
-          $match: {
-            createdAt: {
-              $gte: new Date(createdAfter),
-              $lte: new Date(createdBefore)
-            }
-          }
-        },
-        {
-          $group: {
-            _id: {
-              $hour: '$createdAt'
-            },
-            count: { $sum: 1 }
-          }
-        },
-        { $sort: { _id: 1 } }
-      ])
-    } else if (dateType == 'week') {
+    if (dateType == 'week') {
       analysis = await User.aggregate([
         {
           $match: {
@@ -242,27 +222,47 @@ const Query = {
     ])
     list.forEach(function(val, key) {
       const usernow = val
+      const usernowkey = key
+      userlist.push({
+        _id: usernow['_id'],
+        email: usernow['email'],
+        user: usernow['username'],
+        createdAt: usernow['createdAt'],
+        postCount: 0,
+        commentCount: 0,
+        rank: 0
+      })
       usersbyPost.forEach(function(val, key) {
         const postnum = val
         if (usernow['username'] == postnum['_id']) {
+          userlist[usernowkey]['postCount'] = postnum['count']
+          userlist[usernowkey]['rank'] = (postnum['count'] * 0.6).toFixed(1)
           usersbyComment.forEach(function(val, key) {
             const commentnum = val
             if (usernow['username'] == commentnum['_id']) {
-              userlist.push({
-                _id: usernow['_id'],
-                email: usernow['email'],
-                user: usernow['username'],
-                postCount: postnum['count'],
-                commentCount: commentnum['count'],
-                rank: (
-                  parseInt(postnum['count']) * 0.6 +
-                  parseInt(commentnum['count']) * 0.4
-                ).toFixed(1)
-              })
+              userlist[usernowkey]['postCount'] = commentnum['count']
+              userlist[usernowkey]['rank'] = (
+                parseInt(postnum['count']) * 0.6 +
+                parseInt(commentnum['count']) * 0.4
+              ).toFixed(1)
+            }
+          })
+        } else {
+          usersbyComment.forEach(function(val, key) {
+            const commentnum = val
+            if (usernow['username'] == commentnum['_id']) {
+              userlist[usernowkey]['postCount'] = commentnum['count']
+              userlist[usernowkey]['rank'] = (
+                parseInt(commentnum['count']) * 0.4
+              ).toFixed(1)
             }
           })
         }
       })
+    })
+    console.error(userlist)
+    userlist = userlist.sort((a, b) => {
+      return b.createdAt - a.createdAt
     })
 
     return {
