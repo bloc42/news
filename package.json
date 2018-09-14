@@ -4,7 +4,7 @@
     "apollo-client": "2.3.7",
     "apollo-link": "1.2.2",
     "apollo-link-http": "1.5.4",
-    "apollo-link-state": "0.4.1",
+    "apollo-link-state": "0.4.2",
     "apollo-server-koa": "1.4.0",
     "bcrypt": "3.0.0",
     "dayjs": "1.7.4",
