@@ -1,7 +1,3 @@
-/**
- * Reference: https://www.howtographql.com/react-apollo/5-authentication/
- */
-
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
@@ -10,14 +6,16 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import { withRouter } from 'react-router-dom'
 import Alert from '../../components/Alert'
+import TextArea from '../../components/TextArea'
 
-class Signup extends Component {
+class AddChannel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      email: '',
-      password: '',
+      name: '',
+      logo: '',
+      info: '',
+      code: '',
       errors: [],
       successes: []
     }
@@ -33,33 +31,29 @@ class Signup extends Component {
   }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password } = this.state
-    const searchParams = new URLSearchParams(this.props.location.search)
-    const code = searchParams.get('code') ? searchParams.get('code') : ''
-    const channel = searchParams.get('channel')
-      ? searchParams.get('channel')
-      : ''
+    this.setState({ errors: [] })
+    const { name, logo, info, code } = this.state
     if (code === '') {
-      this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
+      this.setState({ errors: [{ message: '请填写邀请码' }] })
       return
     }
     try {
-      const { errors } = await this.props.signupMutation({
+      const { errors } = await this.props.addchannelMutation({
         variables: {
-          username,
-          email,
-          password,
-          code,
-          channel
+          name,
+          logo,
+          info,
+          code
         },
         update: (cache, { data }) => {
           this.setState({
-            successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
+            successes: [{ message: '分论坛创建已完成' }]
           })
           this.setState({
-            username: '',
-            password: '',
-            email: ''
+            name: '',
+            logo: '',
+            info: '',
+            code: ''
           })
         }
       })
@@ -70,7 +64,6 @@ class Signup extends Component {
         this.setState({ errors: [] })
       }
     } catch (err) {
-      // TODO: show error message in UI
       console.error(err)
     }
   }
@@ -84,41 +77,48 @@ class Signup extends Component {
         {this.state.successes.map((success, index) => (
           <Alert key={index} message={success.message} success />
         ))}
-
         <Form.Item>
           <Input
             type="text"
-            name="username"
-            placeholder="用户名"
-            value={this.state.username}
+            name="name"
+            placeholder="分论坛名称"
+            value={this.state.name}
             onChange={this.handleChange}
             required
           />
         </Form.Item>
         <Form.Item>
           <Input
-            type="email"
-            name="email"
-            placeholder="邮箱"
-            value={this.state.email}
+            type="text"
+            name="logo"
+            placeholder="logo"
+            value={this.state.logo}
+            onChange={this.handleChange}
+          />
+        </Form.Item>
+        <Form.Item>
+          <TextArea
+            type="text"
+            name="info"
+            placeholder="分论坛简介"
+            value={this.state.info}
             onChange={this.handleChange}
             required
           />
         </Form.Item>
         <Form.Item>
           <Input
-            type="password"
-            name="password"
-            placeholder="密码（不少于6位）"
-            value={this.state.password}
+            type="text"
+            name="code"
+            placeholder="邀请码"
+            value={this.state.code}
             onChange={this.handleChange}
-            minlength="6"
             required
           />
         </Form.Item>
         <Form.Item>
           <Button primary fullWidth>
-            注册
+            开通分论坛
           </Button>
         </Form.Item>
       </Form>
@@ -126,30 +126,24 @@ class Signup extends Component {
   }
 }
 
-const SIGNUP_MUTATION = gql`
-  mutation Signup(
-    $username: String!
-    $email: String!
-    $password: String!
+const ADDCHANNEL_MUTATION = gql`
+  mutation Addchannel(
+    $name: String!
+    $logo: String
+    $info: String!
     $code: String!
-    $channel: String
   ) {
-    signup(
-      username: $username
-      email: $email
-      password: $password
-      code: $code
-      channel: $channel
-    ) {
+    addchannel(name: $name, logo: $logo, info: $info, code: $code) {
       id
-      username
-      notificationCount
+      name
+      info
+      creator
     }
   }
 `
 
-const SignupWithMutation = compose(
-  graphql(SIGNUP_MUTATION, { name: 'signupMutation' })
-)(Signup)
+const AddchannelWithMutation = compose(
+  graphql(ADDCHANNEL_MUTATION, { name: 'addchannelMutation' })
+)(AddChannel)
 
-export default withRouter(SignupWithMutation)
+export default withRouter(AddchannelWithMutation)

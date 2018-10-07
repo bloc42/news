@@ -10,14 +10,24 @@ import RelativeTime from '../../components/RelativeTime'
 import Small from '../../components/Small'
 import Menu from '../../components/Menu'
 import InvitationForm from '../../containers/InvitationForm'
+import ChannelsBoard from '../../containers/ChannelsBoard'
 import styled from 'styled-components'
 
 const StyledMenu = styled(Menu)`
   justify-content: space-between;
+  flex-direction: column;
 `
-
+const StyledMenuItem = styled(Menu.Item)`
+  margin-bottom: 2rem;
+`
 const StyledSection = styled.section`
-  margin-top: 2rem;
+  flex: 1;
+  padding-left: 2rem;
+  padding-right: 2rem;
+`
+const StyledBoard = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 const GET_USER = gql`
@@ -31,38 +41,57 @@ const GET_USER = gql`
     currentUser {
       id
       username
+      following
     }
   }
 `
 
 class UserProfilePage extends Component {
-  renderUserActions() {
+  renderUserActions(currentUser) {
     const { url } = this.props.match
 
     return (
-      <div>
+      <StyledBoard>
         <StyledMenu underline>
-          <Menu.Item compact>
+          <StyledMenuItem compact>
             <NavLink
-              to={`${url}/notifications`}
+              to={`${url}/channels`}
               isActive={(_, { pathname }) =>
-                pathname === url || pathname === `${url}/notifications`
+                pathname === url || pathname === `${url}/channels`
               }
             >
-              通知
+              论坛
             </NavLink>
-          </Menu.Item>
-          <Menu.Item compact>
+          </StyledMenuItem>
+          <StyledMenuItem compact>
+            <NavLink to={`${url}/notifications`}>通知</NavLink>
+          </StyledMenuItem>
+          <StyledMenuItem compact>
             <NavLink to={`${url}/invite`}>邀请</NavLink>
-          </Menu.Item>
-          <Menu.Item compact>
+          </StyledMenuItem>
+          <StyledMenuItem compact>
             <LogoutLink />
-          </Menu.Item>
+          </StyledMenuItem>
         </StyledMenu>
 
         <StyledSection>
           <Switch>
-            <Route exact path={`${url}`} component={NotificationList} />
+            <Route
+              exact
+              path={`${url}`}
+              render={props => (
+                <ChannelsBoard currentUser={currentUser} {...props} />
+              )}
+            />
+            )}/>
+            <Route
+              exact
+              path={`${url}/channels`}
+              render={props => (
+                <ChannelsBoard currentUser={currentUser} {...props} />
+              )}
+            />
+            )}/>
             <Route
               exact
               path={`${url}/notifications`}
@@ -71,7 +100,7 @@ class UserProfilePage extends Component {
             <Route exact path={`${url}/invite`} component={InvitationForm} />
           </Switch>
         </StyledSection>
-      </div>
+      </StyledBoard>
     )
   }
 
@@ -103,7 +132,7 @@ class UserProfilePage extends Component {
                     加入
                   </Small>
 
-                  {isCurrentUser && this.renderUserActions()}
+                  {isCurrentUser && this.renderUserActions(currentUser)}
                 </div>
               )
             }}

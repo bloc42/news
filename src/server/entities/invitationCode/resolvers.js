@@ -13,7 +13,7 @@ const Query = {}
 const Mutation = {
   async sendInvitationMail(obj, args, context) {
     const { ctx } = context
-    const { emails } = args
+    const { emails, channel } = args
     if (ctx.isUnauthenticated()) {
       throw '邀请前请先登录。'
     }
@@ -25,8 +25,14 @@ const Mutation = {
       const code = randomcode
       let invitationCode = new InvitationCode({ code, invitor })
       invitationCode = await invitationCode.save()
-
-      const invitationUrl = `${DOMAIN}/signup?code=${invitationCode.code}`
+      let invitationUrl = ''
+      if (channel !== '') {
+        invitationUrl = `${DOMAIN}/signup?channel=${channel}&code=${
+          invitationCode.code
+        }`
+      } else {
+        invitationUrl = `${DOMAIN}/signup?code=${invitationCode.code}`
+      }
       await mail.send({
         to: email,
         subject: '欢迎加入Bloc42',

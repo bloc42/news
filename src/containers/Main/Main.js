@@ -9,7 +9,8 @@ import PostPage from '../../pages/PostPage'
 import UserProfilePage from '../../pages/UserProfilePage'
 import ActivationPage from '../../pages/ActivationPage'
 import SendActivationPage from '../../pages/SendActivationPage'
-
+import AddChannelPage from '../../pages/AddChannelPage'
+import ChannelPage from '../../pages/ChannelPage'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -28,6 +29,8 @@ const Main = () => (
       <Route path="/user/:username" component={UserProfilePage} />
       <Route path="/activation" component={ActivationPage} />
       <Route path="/sendactivation" component={SendActivationPage} />
+      <Route path="/addchannel" component={AddChannelPage} />
+      <Route path="/channel/:channel" component={ChannelPage} />
     </Switch>
   </StyledMain>
 )

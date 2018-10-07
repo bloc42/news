@@ -1,22 +1,36 @@
 import Post from './model'
 
 const Query = {
-  async postFeed(obj, { cursor }) {
+  async postFeed(obj, args) {
+    let { cursor, channel } = args
     const limit = 15
     const sortCriteria = { createdAt: 'desc' }
     let posts = []
     if (cursor) {
       // If cursor (ObjectID) is provided, find next set of older posts
-      posts = await Post.find({ _id: { $lt: cursor } })
-        .sort(sortCriteria)
-        .limit(limit)
-        .exec()
+      if (channel) {
+        posts = await Post.find({ _id: { $lt: cursor }, channel: channel })
+          .sort(sortCriteria)
+          .limit(limit)
+          .exec()
+      } else {
+        posts = await Post.find({ _id: { $lt: cursor } })
+          .sort(sortCriteria)
+          .limit(limit)
+          .exec()
+      }
     } else {
-      // If cursor is not provided, find the first set of posts
-      posts = await Post.find()
-        .sort(sortCriteria)
-        .limit(limit)
-        .exec()
+      if (channel) {
+        posts = await Post.find({ channel: channel })
+          .sort(sortCriteria)
+          .limit(limit)
+          .exec()
+      } else {
+        posts = await Post.find()
+          .sort(sortCriteria)
+          .limit(limit)
+          .exec()
+      }
     }
 
     // Cursor is set to the ID of the last item

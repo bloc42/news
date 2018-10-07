@@ -5,8 +5,8 @@ import Post from '../../components/Post'
 import ScrollDetector from '../../components/ScrollDetector'
 
 export const GET_POSTS = gql`
-  query GetPosts($cursor: String) {
-    postFeed(cursor: $cursor) {
+  query GetPosts($cursor: String, $channel: String) {
+    postFeed(cursor: $cursor, channel: $channel) {
       cursor
       posts {
         id
@@ -21,8 +21,8 @@ export const GET_POSTS = gql`
   }
 `
 
-const PostList = () => (
-  <Query query={GET_POSTS}>
+const ChannelPostList = ({ channel }) => (
+  <Query query={GET_POSTS} variables={{ channel }}>
     {({ loading, data, fetchMore }) => {
       if (loading || !data) return null
 
@@ -69,4 +69,4 @@ const PostList = () => (
   </Query>
 )
 
-export default PostList
+export default ChannelPostList

@@ -42,7 +42,7 @@ const StyledPost = styled.article`
   }
 `
 
-const Post = ({ id, title, author, url, commentCount, createdAt }) => {
+const Post = ({ id, title, author, url, commentCount, createdAt, channel }) => {
   // const postTitle = url ? (
   //   <Anchor href={url} target="_blank">
   //     {title}
@@ -52,7 +52,15 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
   // )
   const postTitle = <Link to={`/post/${id}`}>{title}</Link>
   //const domainMatch = url.match(/:\/\/(.[^/]+)/)
-
+  const showChannel = channel ? (
+    <span>
+      分论坛-
+      {channel}
+    </span>
+  ) : (
+    ''
+  )
+  const showChannelDivider = channel ? <Divider /> : ''
   return (
     <StyledPost id={`post-${id}`}>
       <header>
@@ -74,6 +82,10 @@ const Post = ({ id, title, author, url, commentCount, createdAt }) => {
           </li>
           <li>
             <Link to={`/post/${id}`}>{`${commentCount}条评论`}</Link>
+          </li>
+          <li>{showChannelDivider}</li>
+          <li>
+            <Link to={`/channel/${channel}`}>{showChannel}</Link>
           </li>
           {/* {domainMatch &&
             domainMatch.length > 1 && (

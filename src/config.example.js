@@ -9,5 +9,6 @@ module.exports = {
   domain: '',
   mailApiKey: 'api-key',
   mailDomain: 'maildomain',
-  publicInvitationCode: '****'
+  publicInvitationCode: 'default',
+  channelInvitationCode: 'default'
 }
