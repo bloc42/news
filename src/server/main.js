@@ -25,24 +25,24 @@ app.use(session({}, app))
 
 // koaBody is needed just for POST.
 app.use(koaBody())
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: function(ctx) {
-//       if (/bloc42.com/.test(ctx.header.origin)) {
-//         return ctx.header.origin
-//       } else {
-//         return false
-//       }
-//     }
-//   })
-// )
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:8000'
+    origin: function(ctx) {
+      if (/bloc42.com/.test(ctx.header.origin)) {
+        return ctx.header.origin
+      } else {
+        return false
+      }
+    }
   })
 )
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: 'http://localhost:8000'
+//   })
+// )
 
 require('./passport')
 app.use(passport.initialize())
