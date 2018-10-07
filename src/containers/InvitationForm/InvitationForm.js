@@ -24,12 +24,17 @@ class InvitationForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const channel = searchParams.get('channel')
+      ? searchParams.get('channel')
+      : ''
     const { email } = this.state
     const emails = email.split(',')
     try {
       const { errors } = await this.props.sendInvitationFormMailMutation({
         variables: {
-          emails
+          emails,
+          channel
         }
       })
 
@@ -76,8 +81,8 @@ class InvitationForm extends Component {
 }
 
 const SENDINVITATIONMAIL_MUTATION = gql`
-  mutation sendInvitationMail($emails: [String!]) {
-    sendInvitationMail(emails: $emails) {
+  mutation sendInvitationMail($emails: [String!], $channel: String) {
+    sendInvitationMail(emails: $emails, channel: $channel) {
       invitationCodes {
         id
         invitor

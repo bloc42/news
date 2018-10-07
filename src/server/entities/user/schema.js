@@ -13,8 +13,9 @@ const typeDefs = `
 
   type Mutation {
     login(username: String!, password: String!): User
-    signup(username: String!, email: String!, password: String!, code: String!): User
+    signup(username: String!, email: String!, password: String!, code: String!,channel: String): User
     logout: User
+    following(channel:String!):User
     activation(username: String!, activationCode: String!): User
     sendActivationMail(email: String!): User
   }
@@ -24,7 +25,8 @@ const typeDefs = `
     username: String!,
     email: String,
     createdAt: String,
-    notificationCount: Int
+    notificationCount: Int,
+    following:[String]
   }
 
   type UserList {

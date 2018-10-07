@@ -31,6 +31,9 @@ const postSchema = mongoose.Schema({
   clickCount: {
     type: Number,
     default: 0
+  },
+  channel: {
+    type: String
   }
 })
 

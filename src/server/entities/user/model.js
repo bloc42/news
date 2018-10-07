@@ -29,7 +29,8 @@ const userSchema = mongoose.Schema({
   //for mail active
   isActivated: { type: Number, default: 0 },
   activationCode: String,
-  activationDeadline: Date
+  activationDeadline: Date,
+  following: Array
 })
 
 userSchema.set('timestamps', true)

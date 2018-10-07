@@ -3,7 +3,7 @@ import resolvers from './resolvers'
 
 const typeDefs = `
   type Query {
-    postFeed(cursor: String): PostFeed
+    postFeed(cursor: String,channel: String): PostFeed
     postById(id: ID!): Post
     postGrowth(dateType: String!, createdAfter: String ,createdBefore: String): PostAnalysisResult
     hotPosts(sort: String): [PostRank]
@@ -26,7 +26,8 @@ const typeDefs = `
     content: String,
     author: String!, 
     commentCount: Int!,
-    createdAt: String!
+    createdAt: String!,
+    channel: String
   }
 
   type PostAnalysisResult {

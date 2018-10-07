@@ -32,6 +32,10 @@ class Header extends Component {
   renderLoggedInMenu({ username, notificationCount }) {
     return (
       <Menu>
+        {/* todo 已创建用户不能继续创建？ */}
+        <Menu.Item>
+          <NavLink to="/addchannel">创建分论坛</NavLink>
+        </Menu.Item>
         <Menu.Item>
           <NavLink to="/submit">创建帖子</NavLink>
         </Menu.Item>

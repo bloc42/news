@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const StyledMenuItem = styled.li`
   font-size: ${props => props.theme.fontSizeLarge};
@@ -18,6 +18,14 @@ const StyledMenuItem = styled.li`
       color: ${props => props.theme.primaryColor};
     }
   }
+
+  ${props =>
+    props.small &&
+    css`
+      font-size: 1rem;
+      margin: 0rem;
+      margin-bottom: 0.5rem;
+    `};
 `
 
 const MenuItem = props => {

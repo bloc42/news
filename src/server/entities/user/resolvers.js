@@ -309,7 +309,7 @@ const Mutation = {
     return user
   },
   async signup(obj, args, context) {
-    const { username, email, password, code } = args
+    const { username, email, password, code, channel } = args
 
     let user = await User.findOne({
       $or: [{ username }, { email }]
@@ -348,6 +348,13 @@ const Mutation = {
           },
           { new: true }
         ).exec()
+        if (channel !== '') {
+          user = await User.findOneAndUpdate(
+            { username: user.username },
+            { $push: { following: channel } },
+            { new: true }
+          ).exec()
+        }
         const activationUrl = `${DOMAIN}/activation?username=${
           user.username
         }&activationcode=${user.activationCode}`
@@ -366,6 +373,19 @@ const Mutation = {
     const { ctx } = context
     const user = ctx.state.user
     ctx.logout()
+    return user
+  },
+  async following(obj, args, context) {
+    const { channel } = args
+    const { ctx } = context
+    let user = ctx.state.user
+    if (channel !== '') {
+      user = await User.findOneAndUpdate(
+        { username: user.username },
+        { $push: { following: channel } },
+        { new: true }
+      ).exec()
+    }
     return user
   },
   async sendActivationMail(obj, args, context, info) {
