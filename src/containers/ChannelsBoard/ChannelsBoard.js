@@ -99,35 +99,44 @@ class ChannelsBoard extends Component {
 
   renderFollowingChannels(currentUser) {
     const names = currentUser.following
-    return (
-      <Query
-        query={gql`
-          query GetFollowingChannels($names: [String!]) {
-            channels(names: $names) {
-              id
-              name
-              info
-              logo
-              creator
+    if (names && names.length > 0) {
+      return (
+        <Query
+          query={gql`
+            query GetFollowingChannels($names: [String!]) {
+              channels(names: $names) {
+                id
+                name
+                info
+                logo
+                creator
+              }
             }
-          }
-        `}
-        variables={{ names }}
-      >
-        {({ loading, data }) => {
-          if (loading) {
-            return null
-          }
-          const { channels } = data
-          return (
-            <StyledBoardItem>
-              <StyledTitle>我关注的分论坛</StyledTitle>
-              <StyledLists>{this.showChannels(channels)}</StyledLists>
-            </StyledBoardItem>
-          )
-        }}
-      </Query>
-    )
+          `}
+          variables={{ names }}
+        >
+          {({ loading, data }) => {
+            if (loading) {
+              return null
+            }
+            const { channels } = data
+            return (
+              <StyledBoardItem>
+                <StyledTitle>我关注的分论坛</StyledTitle>
+                <StyledLists>{this.showChannels(channels)}</StyledLists>
+              </StyledBoardItem>
+            )
+          }}
+        </Query>
+      )
+    } else {
+      return (
+        <StyledBoardItem>
+          <StyledTitle>我关注的分论坛</StyledTitle>
+          <StyledLists>{this.showChannels()}</StyledLists>
+        </StyledBoardItem>
+      )
+    }
   }
   render() {
     return (
