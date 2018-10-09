@@ -30,27 +30,44 @@ const StyledCounter = styled.span`
 
 class Header extends Component {
   renderLoggedInMenu({ username, notificationCount }) {
-    return (
-      <Menu>
-        {/* todo 已创建用户不能继续创建？ */}
-        <Menu.Item>
-          <NavLink to="/addchannel">创建分论坛</NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink to="/submit">创建帖子</NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink to={`/user/${username}`}>
-            <StyledNotificationContainer>
-              <Avatar />
-              {notificationCount > 0 && (
-                <StyledCounter>{notificationCount}</StyledCounter>
-              )}
-            </StyledNotificationContainer>
-          </NavLink>
-        </Menu.Item>
-      </Menu>
-    )
+    if (window.location.pathname == '/submit') {
+      return (
+        <Menu>
+          <Menu.Item>
+            <NavLink to={`/user/${username}`}>
+              <StyledNotificationContainer>
+                <Avatar />
+                {notificationCount > 0 && (
+                  <StyledCounter>{notificationCount}</StyledCounter>
+                )}
+              </StyledNotificationContainer>
+            </NavLink>
+          </Menu.Item>
+        </Menu>
+      )
+    } else {
+      return (
+        <Menu>
+          {/* todo 已创建用户不能继续创建？ */}
+          <Menu.Item>
+            <NavLink to="/addchannel">创建分论坛</NavLink>
+          </Menu.Item>
+          <Menu.Item>
+            <NavLink to="/submit">创建帖子</NavLink>
+          </Menu.Item>
+          <Menu.Item>
+            <NavLink to={`/user/${username}`}>
+              <StyledNotificationContainer>
+                <Avatar />
+                {notificationCount > 0 && (
+                  <StyledCounter>{notificationCount}</StyledCounter>
+                )}
+              </StyledNotificationContainer>
+            </NavLink>
+          </Menu.Item>
+        </Menu>
+      )
+    }
   }
 
   renderLoggedOutMenu() {
@@ -85,7 +102,6 @@ class Header extends Component {
           }
 
           const { currentUser } = data
-
           return currentUser
             ? this.renderLoggedInMenu(currentUser)
             : this.renderLoggedOutMenu()
