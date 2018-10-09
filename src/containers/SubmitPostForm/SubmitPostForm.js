@@ -32,12 +32,17 @@ class SubmitPostForm extends Component {
   handleSubmit = async e => {
     e.preventDefault()
     let { title, url, content } = this.state
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const channel = searchParams.get('channel')
+      ? searchParams.get('channel')
+      : ''
     try {
       const { errors } = await this.props.submitPostMutation({
         variables: {
           title,
           url,
-          content
+          content,
+          channel
         },
         update: (cache, { data }) => {
           const newPost = data.submitPost
@@ -115,13 +120,19 @@ class SubmitPostForm extends Component {
 }
 
 const SUBMIT_POST_MUTATION = gql`
-  mutation SubmitPost($title: String!, $url: String, $content: String) {
-    submitPost(title: $title, url: $url, content: $content) {
+  mutation SubmitPost(
+    $title: String!
+    $url: String
+    $content: String
+    $channel: String
+  ) {
+    submitPost(title: $title, url: $url, content: $content, channel: $channel) {
       id
       title
       url
       author
       commentCount
+      channel
     }
   }
 `

@@ -229,10 +229,10 @@ const Mutation = {
       throw new Error('发布帖子前请先登录。')
     }
 
-    const { title, url, content } = args
+    const { title, url, content, channel } = args
 
     const author = ctx.state.user.username
-    const post = new Post({ title, url, content, author })
+    const post = new Post({ title, url, content, author, channel })
     await post.save()
     return post
   }

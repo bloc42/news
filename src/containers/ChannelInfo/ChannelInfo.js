@@ -111,6 +111,9 @@ class ChannelInfo extends Component {
                     邀请加入
                   </NavLink>
                 </Menu.Item>
+                <Menu.Item small>
+                  <NavLink to={`/submit?channel=${name}`}>发布新帖</NavLink>
+                </Menu.Item>
               </StyledMenu>
             </StyledBoard>
           )

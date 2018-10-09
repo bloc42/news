@@ -11,7 +11,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    submitPost(title: String!, url: String, content: String): Post
+    submitPost(title: String!, url: String, content: String, channel: String): Post
   }
 
   type PostFeed {
