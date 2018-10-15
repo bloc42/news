@@ -51,7 +51,7 @@ class ChannelsBoard extends Component {
       return channels.map(channel => (
         <Link to={`/channel/${channel.name}`} key={channel.id}>
           <StyledList>
-            <Logo src={channel.logo} />
+            {/* <Logo src={channel.logo} /> */}
             <StyledName>{channel.name}</StyledName>
           </StyledList>
         </Link>

@@ -26,17 +26,27 @@ const StyledMenu = styled(Menu)`
   width: 100%;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-bottom: 0px;
 `
 const StyledItem = styled(Menu.Item)`
-  width: 33%;
+  margin-right: 1rem;
+  a {
+    color: #777;
+  }
 `
 const StyledTitle = styled.a`
   font-weight: bold;
+`
+const StyledLink = styled(NavLink)`
+  color: #777;
+  font-size: 0.6rem;
+  font-weight: lighter;
 `
 
 const StyledArrow = styled(Arrow)`
   float: right;
   cursor: pointer;
+  margin-top: -1.2rem;
 `
 class ChannelList extends Component {
   constructor(props) {
@@ -82,9 +92,9 @@ class ChannelList extends Component {
                 <StyledMenu>
                   {allchannels.map(channel => (
                     <StyledItem small key={channel.id}>
-                      <NavLink to={`/channel/${channel.name}`}>
+                      <StyledLink to={`/channel/${channel.name}`}>
                         {channel.name}
-                      </NavLink>
+                      </StyledLink>
                     </StyledItem>
                   ))}
                 </StyledMenu>
