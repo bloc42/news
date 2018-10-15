@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route, NavLink } from 'react-router-dom'
 import Container from '../../components/Container'
 import NotificationList from '../../containers/NotificationList'
-import LogoutLink from '../../containers/LogoutLink'
 import Section from '../../components/Section'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -68,9 +67,6 @@ class UserProfilePage extends Component {
           </StyledMenuItem>
           <StyledMenuItem compact>
             <NavLink to={`${url}/invite`}>邀请</NavLink>
-          </StyledMenuItem>
-          <StyledMenuItem compact>
-            <LogoutLink />
           </StyledMenuItem>
         </StyledMenu>
 

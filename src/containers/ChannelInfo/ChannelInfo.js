@@ -21,11 +21,6 @@ const StyledBoard = styled.div`
   display: flex;
   justify-content: space-between;
 `
-const StyledInfo = styled.div`
-  margin-left: 2rem;
-  margin-right: 2rem;
-  flex: 1;
-`
 const StyledMenu = styled(Menu)`
   display: flex;
   width: 100%;
@@ -109,11 +104,11 @@ class ChannelInfo extends Component {
             return null
           }
           const { channel } = data
-          const { name, info, logo, creator } = channel
+          const { name, creator } = channel
           const names = currentUser.following
 
           //creator
-          if (currentUser.username == creator) {
+          if (currentUser.username === creator) {
             return (
               <div>
                 <StyledTitle>{name}</StyledTitle>

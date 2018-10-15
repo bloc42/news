@@ -6,6 +6,7 @@ import { Query, graphql, compose } from 'react-apollo'
 import Menu from '../../components/Menu'
 import Container from '../../components/Container'
 import Avatar from '../../components/Avatar'
+import LogoutLink from '../../containers/LogoutLink'
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -15,6 +16,28 @@ const StyledContainer = styled(Container)`
 
 const StyledNotificationContainer = styled.div`
   position: relative;
+`
+
+const StyledItem = styled(Menu.Item)`
+  position: relative;
+`
+const StyledUserProfile = styled.div`
+  position: absolute;
+  top: 3rem;
+  border-radius: 4px;
+  background-color: white;
+  right: -0.8rem;
+  padding: 0.8rem;
+  width: 8rem;
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  a {
+    text-align: center;
+  }
+`
+const StyledNavLink = styled(NavLink)`
+  margin-bottom: 1rem;
 `
 
 const StyledCounter = styled.span`
@@ -29,9 +52,16 @@ const StyledCounter = styled.span`
 `
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalIsOpen: 'hidden'
+    }
+  }
+
   renderLoggedInMenu({ username, notificationCount }) {
     if (
-      window.location.pathname == '/submit' ||
+      window.location.pathname === '/submit' ||
       /\/channel\//.test(window.location.pathname)
     ) {
       return (
@@ -52,22 +82,37 @@ class Header extends Component {
       return (
         <Menu>
           {/* todo 已创建用户不能继续创建？ */}
-          <Menu.Item>
-            <NavLink to="/addchannel">创建分论坛</NavLink>
-          </Menu.Item>
-          <Menu.Item>
+          <StyledItem>
             <NavLink to="/submit">创建帖子</NavLink>
-          </Menu.Item>
-          <Menu.Item>
-            <NavLink to={`/user/${username}`}>
-              <StyledNotificationContainer>
-                <Avatar />
-                {notificationCount > 0 && (
-                  <StyledCounter>{notificationCount}</StyledCounter>
-                )}
-              </StyledNotificationContainer>
-            </NavLink>
-          </Menu.Item>
+          </StyledItem>
+          <StyledItem>
+            <StyledNotificationContainer
+              onMouseOver={this.handleMouseOver}
+              onMouseLeave={this.handleMouseOut}
+            >
+              <Avatar />
+              {notificationCount > 0 && (
+                <StyledCounter>{notificationCount}</StyledCounter>
+              )}
+            </StyledNotificationContainer>
+
+            <StyledUserProfile
+              style={{
+                visibility: this.state.modalIsOpen,
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={this.handleMouseUserOver}
+              onMouseLeave={this.handleMouseOut}
+            >
+              <StyledNavLink
+                onTouchStart={this.leavePage}
+                to={`/user/${username}`}
+              >
+                用户中心
+              </StyledNavLink>
+              <LogoutLink onTouchStart={this.leavePage} />
+            </StyledUserProfile>
+          </StyledItem>
         </Menu>
       )
     }
@@ -113,6 +158,26 @@ class Header extends Component {
     )
   }
 
+  handleMouseOut = e => {
+    this.setState({
+      modalIsOpen: 'hidden'
+    })
+  }
+  handleMouseOver = e => {
+    this.setState({
+      modalIsOpen: 'visible'
+    })
+  }
+  handleMouseUserOver = e => {
+    this.setState({
+      modalIsOpen: 'visible'
+    })
+  }
+  leavePage = e => {
+    this.setState({
+      modalIsOpen: 'hidden'
+    })
+  }
   render() {
     return (
       <header>

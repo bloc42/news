@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Query } from 'react-apollo'
-import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
-import Logo from '../../components/Logo'
 import Link from '../../components/Link'
 import { withRouter } from 'react-router-dom'
 
