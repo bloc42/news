@@ -39,15 +39,22 @@ const StyledTitle = styled.a`
 `
 const StyledLink = styled(NavLink)`
   color: #777;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   font-weight: lighter;
 `
 
 const StyledArrow = styled(Arrow)`
   float: right;
   cursor: pointer;
-  margin-top: -1.2rem;
+  margin-top: -0.5rem;
 `
+
+const StyledAdd = styled(NavLink)`
+  font-size: 0.8rem;
+  font-weight: lighter;
+  color: #ff6246 !important;
+`
+
 class ChannelList extends Component {
   constructor(props) {
     super(props)
@@ -97,6 +104,11 @@ class ChannelList extends Component {
                       </StyledLink>
                     </StyledItem>
                   ))}
+                  <StyledItem small>
+                    <StyledAdd to="/addchannel" title="创建分论坛">
+                      创建分论坛
+                    </StyledAdd>
+                  </StyledItem>
                 </StyledMenu>
               </StyledBoard>
             </StyledChannelList>

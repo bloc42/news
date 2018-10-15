@@ -4,7 +4,7 @@ import ChannelPostList from '../../containers/ChannelPostList'
 import ChannelInfo from '../../containers/ChannelInfo'
 import Container from '../../components/Container'
 import gql from 'graphql-tag'
-import { Query, graphql, compose } from 'react-apollo'
+import { Query } from 'react-apollo'
 
 const ChannelPage = props => {
   const { channel } = props.match.params
