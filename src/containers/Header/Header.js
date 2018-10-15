@@ -30,7 +30,10 @@ const StyledCounter = styled.span`
 
 class Header extends Component {
   renderLoggedInMenu({ username, notificationCount }) {
-    if (window.location.pathname == '/submit') {
+    if (
+      window.location.pathname == '/submit' ||
+      /\/channel\//.test(window.location.pathname)
+    ) {
       return (
         <Menu>
           <Menu.Item>

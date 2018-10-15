@@ -4,7 +4,8 @@ import resolvers from './resolvers'
 const typeDefs = `
   type Query {
     channel(name: String!):Channel,
-    channels(names:[String!],admin:Boolean):[Channel]
+    channels(names:[String!],admin:Boolean):[Channel],
+    allchannels:[Channel]
   }
 
   type Mutation {

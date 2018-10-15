@@ -22,13 +22,20 @@ const Query = {
     const { name } = args
     const channel = await Channel.findOne({ name }).exec()
     return channel
+  },
+  async allchannels(obj, args, context) {
+    const channel = await Channel.find().exec()
+    return channel
   }
 }
 
 const Mutation = {
   async addchannel(obj, args, context) {
     const { name, logo, info, code } = args
-
+    const { ctx } = context
+    if (ctx.isUnauthenticated()) {
+      throw new Error('创建分论坛前请先登录。')
+    }
     let channel = await Channel.findOne({ name }).exec()
     if (channel) {
       throw '该分论坛已存在。'

@@ -16,6 +16,7 @@ const typeDefs = `
     signup(username: String!, email: String!, password: String!, code: String!,channel: String): User
     logout: User
     following(channel:String!):User
+    unfollow(channel:String!):User
     activation(username: String!, activationCode: String!): User
     sendActivationMail(email: String!): User
   }

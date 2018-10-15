@@ -55,6 +55,7 @@ class AddChannel extends Component {
             info: '',
             code: ''
           })
+          setTimeout(this.props.history.push(`/channel/${name}`), 1000)
         }
       })
 
@@ -87,7 +88,7 @@ class AddChannel extends Component {
             required
           />
         </Form.Item>
-        <Form.Item>
+        {/* <Form.Item>
           <Input
             type="text"
             name="logo"
@@ -95,7 +96,7 @@ class AddChannel extends Component {
             value={this.state.logo}
             onChange={this.handleChange}
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item>
           <TextArea
             type="text"

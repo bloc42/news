@@ -388,6 +388,19 @@ const Mutation = {
     }
     return user
   },
+  async unfollow(obj, args, context) {
+    const { channel } = args
+    const { ctx } = context
+    let user = ctx.state.user
+    if (channel !== '') {
+      user = await User.findOneAndUpdate(
+        { username: user.username },
+        { $pull: { following: channel } },
+        { new: true }
+      ).exec()
+    }
+    return user
+  },
   async sendActivationMail(obj, args, context, info) {
     const { email } = args
     let user = await User.findOne({ email }).exec()
