@@ -6,8 +6,9 @@ import downarrow from './downarrow.svg'
 import styled, { css } from 'styled-components'
 
 const StyledArrow = styled.span`
-  width: 20px;
-  height: 20px;
+  width: 3rem;
+  height: 3rem;
+  background-size: contain;
   ${props =>
     props.left &&
     css`
