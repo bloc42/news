@@ -66,16 +66,29 @@ class Header extends Component {
     ) {
       return (
         <Menu>
-          <Menu.Item>
-            <NavLink to={`/user/${username}`}>
-              <StyledNotificationContainer>
-                <Avatar />
-                {notificationCount > 0 && (
-                  <StyledCounter>{notificationCount}</StyledCounter>
-                )}
-              </StyledNotificationContainer>
-            </NavLink>
-          </Menu.Item>
+          <StyledItem>
+            <StyledNotificationContainer
+              onMouseOver={this.handleMouseOver}
+              onMouseLeave={this.handleMouseOut}
+            >
+              <Avatar />
+              {notificationCount > 0 && (
+                <StyledCounter>{notificationCount}</StyledCounter>
+              )}
+            </StyledNotificationContainer>
+            <StyledUserProfile
+              style={{
+                visibility: this.state.modalIsOpen,
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={this.handleMouseUserOver}
+              onMouseLeave={this.handleMouseOut}
+              onClick={this.leavePage}
+            >
+              <StyledNavLink to={`/user/${username}`}>用户中心</StyledNavLink>
+              <LogoutLink />
+            </StyledUserProfile>
+          </StyledItem>
         </Menu>
       )
     } else {
@@ -103,14 +116,10 @@ class Header extends Component {
               }}
               onMouseOver={this.handleMouseUserOver}
               onMouseLeave={this.handleMouseOut}
+              onClick={this.leavePage}
             >
-              <StyledNavLink
-                onTouchStart={this.leavePage}
-                to={`/user/${username}`}
-              >
-                用户中心
-              </StyledNavLink>
-              <LogoutLink onTouchStart={this.leavePage} />
+              <StyledNavLink to={`/user/${username}`}>用户中心</StyledNavLink>
+              <LogoutLink />
             </StyledUserProfile>
           </StyledItem>
         </Menu>

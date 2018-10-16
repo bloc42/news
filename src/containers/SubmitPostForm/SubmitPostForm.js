@@ -74,9 +74,16 @@ class SubmitPostForm extends Component {
   }
 
   render() {
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const channel = searchParams.get('channel')
+      ? searchParams.get('channel')
+      : ''
     return (
       <Form onSubmit={this.handleSubmit}>
-        <h2>创建帖子</h2>
+        <h2>
+          在{channel === '' ? 'Bloc42' : channel}
+          中创建新帖
+        </h2>
 
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
