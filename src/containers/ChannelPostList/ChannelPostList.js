@@ -49,7 +49,7 @@ const ChannelPostList = ({ channel }) => (
             onReachBottom={() =>
               fetchMore({
                 query: GET_POSTS,
-                variables: { cursor },
+                variables: { cursor, channel },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
                   if (
                     !fetchMoreResult ||
