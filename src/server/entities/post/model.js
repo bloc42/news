@@ -24,6 +24,10 @@ const postSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  downvoteCount: {
+    type: Number,
+    default: 0
+  },
   favoriteCount: {
     type: Number,
     default: 0

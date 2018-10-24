@@ -12,6 +12,8 @@ const typeDefs = `
 
   type Mutation {
     submitPost(title: String!, url: String, content: String, channel: String): Post
+    upvote(id: ID!):Post
+    downvote(id: ID!):Post
   }
 
   type PostFeed {
@@ -27,7 +29,9 @@ const typeDefs = `
     author: String!, 
     commentCount: Int!,
     createdAt: String!,
-    channel: String
+    channel: String,
+    upvoteCount:Int,
+    downvoteCount:Int
   }
 
   type PostAnalysisResult {

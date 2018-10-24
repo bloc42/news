@@ -149,16 +149,38 @@ class Header extends Component {
               id
               username
               notificationCount
+              upvotePost
+              downvotePost
             }
           }
         `}
       >
-        {({ loading, data }) => {
+        {({ loading, data, client }) => {
           if (loading) {
             return null
           }
 
           const { currentUser } = data
+          if (currentUser) {
+            client.cache.writeQuery({
+              query: gql`
+                query GetCurrentUser {
+                  currentUser {
+                    id
+                    username
+                    notificationCount
+                    upvotePost
+                    downvotePost
+                  }
+                }
+              `,
+              data: {
+                currentUser: {
+                  ...currentUser
+                }
+              }
+            })
+          }
           return currentUser
             ? this.renderLoggedInMenu(currentUser)
             : this.renderLoggedOutMenu()
