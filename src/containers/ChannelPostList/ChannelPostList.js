@@ -16,30 +16,40 @@ export const GET_POSTS = gql`
         commentCount
         createdAt
         channel
+        upvoteCount
       }
     }
   }
 `
-
+const query = gql`
+  query {
+    currentUser {
+      id
+      username
+      upvotePost
+      downvotePost
+    }
+  }
+`
 const ChannelPostList = ({ channel }) => (
   <Query query={GET_POSTS} variables={{ channel }}>
-    {({ loading, data, fetchMore }) => {
+    {({ loading, data, fetchMore, client }) => {
       if (loading || !data) return null
 
       const {
         postFeed: { cursor, posts }
       } = data
-
+      const { currentUser } = client.cache.readQuery({ query })
       return (
         <div>
           {posts.map(post => (
-            <Post key={post.id} {...post} />
+            <Post key={post.id} {...post} currentUser={currentUser} />
           ))}
           <ScrollDetector
             onReachBottom={() =>
               fetchMore({
                 query: GET_POSTS,
-                variables: { cursor },
+                variables: { cursor, channel },
                 updateQuery: (previousResult, { fetchMoreResult }) => {
                   if (
                     !fetchMoreResult ||

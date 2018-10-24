@@ -43,6 +43,39 @@ const api = {
         reject(errorMsg)
       }
     })
+  },
+
+  async addupvotePost(userid, postid) {
+    let user = await User.findById(userid).exec()
+    user = await User.findOneAndUpdate(
+      { _id: user.id },
+      { $push: { upvotePost: postid } },
+      { new: true }
+    ).exec()
+  },
+  async removeupvotePost(userid, postid) {
+    let user = await User.findById(userid).exec()
+    user = await User.findOneAndUpdate(
+      { _id: user.id },
+      { $pull: { upvotePost: postid } },
+      { new: true }
+    ).exec()
+  },
+  async adddownvotePost(userid, postid) {
+    let user = await User.findById(userid).exec()
+    user = await User.findOneAndUpdate(
+      { _id: user.id },
+      { $push: { downvotePost: postid } },
+      { new: true }
+    ).exec()
+  },
+  async removedownvotePost(userid, postid) {
+    let user = await User.findById(userid).exec()
+    user = await User.findOneAndUpdate(
+      { _id: user.id },
+      { $pull: { downvotePost: postid } },
+      { new: true }
+    ).exec()
   }
 }
 

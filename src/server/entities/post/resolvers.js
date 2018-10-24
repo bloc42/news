@@ -1,4 +1,5 @@
 import Post from './model'
+import userApi from '../../entities/user/api'
 
 const Query = {
   async postFeed(obj, args) {

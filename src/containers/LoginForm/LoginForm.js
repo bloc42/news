@@ -113,6 +113,8 @@ const LOGIN_MUTATION = gql`
       id
       username
       notificationCount
+      upvotePost
+      downvotePost
     }
   }
 `

@@ -27,7 +27,9 @@ const typeDefs = `
     email: String,
     createdAt: String,
     notificationCount: Int,
-    following:[String]
+    following:[String],
+    upvotePost:[String],
+    downvotePost:[String]
   }
 
   type UserList {

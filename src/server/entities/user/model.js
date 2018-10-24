@@ -30,7 +30,10 @@ const userSchema = mongoose.Schema({
   isActivated: { type: Number, default: 0 },
   activationCode: String,
   activationDeadline: Date,
-  following: Array
+  point: { type: Number, default: 0 },
+  following: Array,
+  upvotePost: Array,
+  downvotePost: Array
 })
 
 userSchema.set('timestamps', true)
