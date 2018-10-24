@@ -10,6 +10,44 @@ const Query = {
     const voterId = ctx.state.user.id
     let vote = await Vote.find({ voterId: voterId, post: postId }).exec()
     return vote
+  },
+  async point(obj, args, context, info) {
+    const { ctx } = context
+    const author = ctx.state.user.username
+    const upResult = await Vote.aggregate([
+      {
+        $match: {
+          author: 'admin',
+          upStatus: true
+        }
+      },
+      {
+        $group: {
+          _id: '$author',
+          upcount: { $sum: 1 }
+        }
+      }
+    ])
+    const downResult = await Vote.aggregate([
+      {
+        $match: {
+          author: 'admin',
+          downStatus: true
+        }
+      },
+      {
+        $group: {
+          _id: '$author',
+          downcount: { $sum: 1 }
+        }
+      }
+    ])
+    const uppoint = upResult[0] ? upResult[0].upcount : 0
+    const downpoint = downResult[0] ? downResult[0].downcount : 0
+    return {
+      author: author,
+      userpoint: Number(uppoint - downpoint)
+    }
   }
 }
 
