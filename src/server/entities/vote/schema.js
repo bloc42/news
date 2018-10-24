@@ -4,6 +4,7 @@ import resolvers from './resolvers'
 const typeDefs = `
   type Query {
     vote: Vote
+    point:Point
   }
 
   type Mutation {
@@ -18,6 +19,11 @@ const typeDefs = `
     upStatus: Boolean!,
     downStatus: Boolean!,
     author: String!
+  }
+
+  type Point {
+    author: String!,
+    userpoint: Int!
   }
 `
 

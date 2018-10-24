@@ -10,6 +10,7 @@ import Small from '../../components/Small'
 import Menu from '../../components/Menu'
 import InvitationForm from '../../containers/InvitationForm'
 import ChannelsBoard from '../../containers/ChannelsBoard'
+import UserPoint from '../../containers/UserPoint'
 import styled from 'styled-components'
 
 const StyledMenu = styled(Menu)`
@@ -63,6 +64,9 @@ class UserProfilePage extends Component {
             </NavLink>
           </StyledMenuItem>
           <StyledMenuItem compact>
+            <NavLink to={`${url}/point`}>积分</NavLink>
+          </StyledMenuItem>
+          <StyledMenuItem compact>
             <NavLink to={`${url}/notifications`}>通知</NavLink>
           </StyledMenuItem>
           <StyledMenuItem compact>
@@ -88,6 +92,7 @@ class UserProfilePage extends Component {
               )}
             />
             )}/>
+            <Route exact path={`${url}/point`} component={UserPoint} />
             <Route
               exact
               path={`${url}/notifications`}
