@@ -17,7 +17,7 @@ const Query = {
     const upResult = await Vote.aggregate([
       {
         $match: {
-          author: 'admin',
+          author: author,
           upStatus: true
         }
       },
@@ -31,7 +31,7 @@ const Query = {
     const downResult = await Vote.aggregate([
       {
         $match: {
-          author: 'admin',
+          author: author,
           downStatus: true
         }
       },
@@ -59,13 +59,14 @@ const Mutation = {
       throw new Error('请先登录。')
     }
     const voterId = ctx.state.user.id
+    const voter = ctx.state.user.username
     //查询此用户关于此频道记录
     let vote = await Vote.findOne({ voterId: voterId, postId: postId }).exec()
 
     //无记录,新建一条记录
     if (!vote || vote.length == 0) {
       const { author } = await postApi.getPost(postId)
-      vote = new Vote({ voterId, postId, author })
+      vote = new Vote({ voterId, postId, voter, author })
       await vote.save()
 
       vote = await Vote.findOneAndUpdate(
@@ -116,12 +117,13 @@ const Mutation = {
       throw new Error('请先登录。')
     }
     const voterId = ctx.state.user.id
+    const voter = ctx.state.user.username
     //查询此用户关于此频道记录
     let vote = await Vote.findOne({ voterId: voterId, postId: postId }).exec()
     //无记录,新建一条记录
     if (!vote) {
       const { author } = await postApi.getPost(postId)
-      vote = new Vote({ voterId, postId, author })
+      vote = new Vote({ voterId, postId, voter, author })
       vote = await Vote.findOneAndUpdate(
         { voterId: voterId, postId: postId },
         { downStatus: !vote.downStatus },
