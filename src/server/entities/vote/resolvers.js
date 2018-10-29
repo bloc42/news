@@ -60,7 +60,7 @@ const Mutation = {
     }
     const voterId = ctx.state.user.id
     const voter = ctx.state.user.username
-    //查询此用户关于此频道记录
+    //查询此用户关于此帖子记录
     let vote = await Vote.findOne({ voterId: voterId, postId: postId }).exec()
 
     //无记录,新建一条记录
@@ -78,7 +78,7 @@ const Mutation = {
       await postApi.addupvoteCount(postId)
     } else {
       if (!vote.upStatus && !vote.downStatus) {
-        //有记录,downStatus为false,up频道
+        //有记录,downStatus为false,up帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { upStatus: !vote.upStatus },
@@ -87,7 +87,7 @@ const Mutation = {
         await userApi.addupvotePost(voterId, postId)
         await postApi.addupvoteCount(postId)
       } else if (!vote.upStatus && vote.downStatus) {
-        //有记录,downStatus为true,up频道
+        //有记录,downStatus为true,up帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { upStatus: !vote.upStatus, downStatus: !vote.downStatus },
@@ -98,7 +98,7 @@ const Mutation = {
         await userApi.removedownvotePost(voterId, postId)
         await postApi.removedownvoteCount(postId)
       } else if (vote.upStatus) {
-        //有记录,取消频道
+        //有记录,取消帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { upStatus: !vote.upStatus },
@@ -118,7 +118,7 @@ const Mutation = {
     }
     const voterId = ctx.state.user.id
     const voter = ctx.state.user.username
-    //查询此用户关于此频道记录
+    //查询此用户关于此帖子记录
     let vote = await Vote.findOne({ voterId: voterId, postId: postId }).exec()
     //无记录,新建一条记录
     if (!vote) {
@@ -133,7 +133,7 @@ const Mutation = {
       await postApi.addupvoteCount(postId)
     } else {
       if (!vote.downStatus && !vote.upStatus) {
-        //有记录,upStatus为false,down频道
+        //有记录,upStatus为false,down帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { downStatus: !vote.downStatus },
@@ -142,7 +142,7 @@ const Mutation = {
         await userApi.adddownvotePost(voterId, postId)
         await postApi.adddownvoteCount(postId)
       } else if (!vote.downStatus && vote.upStatus) {
-        //有记录,upStatus为true,up频道
+        //有记录,upStatus为true,up帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { downStatus: !vote.downStatus, upStatus: !vote.upStatus },
@@ -153,7 +153,7 @@ const Mutation = {
         await userApi.removeupvotePost(voterId, postId)
         await postApi.removeupvoteCount(postId)
       } else if (vote.downStatus) {
-        //有记录,取消频道
+        //有记录,取消帖子
         vote = await Vote.findOneAndUpdate(
           { voterId: voterId, postId: postId },
           { downStatus: !vote.downStatus },

@@ -15,6 +15,9 @@ const channelSchema = mongoose.Schema({
   },
   creator: {
     type: String
+  },
+  muteUser: {
+    type: Array
   }
 })
 

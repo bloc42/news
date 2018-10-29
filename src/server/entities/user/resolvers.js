@@ -260,7 +260,6 @@ const Query = {
         }
       })
     })
-    console.error(userlist)
     userlist = userlist.sort((a, b) => {
       return b.createdAt - a.createdAt
     })
