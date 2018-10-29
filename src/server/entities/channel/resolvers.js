@@ -9,8 +9,9 @@ const Query = {
     let namequery = []
     const { names, admin } = args
     const { ctx } = context
-    const creator = ctx.state.user.username
+
     if (admin == true) {
+      const creator = ctx.state.user.username
       channels = await Channel.find({ creator }).exec()
     } else {
       names.map(name => namequery.push({ name: name }))
@@ -26,6 +27,22 @@ const Query = {
   async allchannels(obj, args, context) {
     const channel = await Channel.find().exec()
     return channel
+  },
+  async userInMute(obj, args, context) {
+    let isMute = false
+    let muteUser = []
+    const { username, name } = args
+    const channel = await Channel.findOne({ name }).exec()
+    muteUser = channel.muteUser
+    if (channel.muteUser.indexOf(username) !== -1) {
+      isMute = true
+    } else {
+      isMute = false
+    }
+    return {
+      isMute: isMute,
+      muteUser: muteUser
+    }
   }
 }
 
@@ -48,6 +65,32 @@ const Mutation = {
       ctx.request.body = args
       channel = await channel.save()
       return channel
+    }
+  },
+  async changeMuteStatus(obj, args, context) {
+    const { username, name } = args
+    let channel = await Channel.findOne({ name }).exec()
+    const { ctx } = context
+    const creator = ctx.state.user.username
+    if (creator == channel.creator) {
+      if (channel.muteUser.indexOf(username) !== -1) {
+        //已在mute列表中
+        channel = await Channel.findOneAndUpdate(
+          { name },
+          { $pull: { muteUser: username } },
+          { new: true }
+        ).exec()
+      } else {
+        //不在mute列表中
+        channel = await Channel.findOneAndUpdate(
+          { name },
+          { $push: { muteUser: username } },
+          { new: true }
+        ).exec()
+      }
+      return channel
+    } else {
+      throw '无权限'
     }
   }
 }

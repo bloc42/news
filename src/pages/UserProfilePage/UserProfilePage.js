@@ -12,6 +12,7 @@ import InvitationForm from '../../containers/InvitationForm'
 import ChannelsBoard from '../../containers/ChannelsBoard'
 import UserPoint from '../../containers/UserPoint'
 import styled from 'styled-components'
+import UserFollowing from '../../containers/UserFollowing'
 
 const StyledMenu = styled(Menu)`
   justify-content: space-between;
@@ -105,6 +106,9 @@ class UserProfilePage extends Component {
     )
   }
 
+  renderUserFollowing() {
+    return <UserFollowing />
+  }
   render() {
     const { params } = this.props.match
     const { username } = params
@@ -134,6 +138,7 @@ class UserProfilePage extends Component {
                   </Small>
 
                   {isCurrentUser && this.renderUserActions(currentUser)}
+                  {!isCurrentUser && this.renderUserFollowing()}
                 </div>
               )
             }}

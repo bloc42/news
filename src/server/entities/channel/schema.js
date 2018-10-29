@@ -5,11 +5,13 @@ const typeDefs = `
   type Query {
     channel(name: String!):Channel,
     channels(names:[String!],admin:Boolean):[Channel],
-    allchannels:[Channel]
+    allchannels:[Channel],
+    userInMute(username: String!,name:String!):Result
   }
 
   type Mutation {
     addchannel(name: String!,logo: String,info: String!,code: String!): Channel 
+    changeMuteStatus(username: String!,name:String!):Channel
   }
 
   type Channel {
@@ -18,7 +20,13 @@ const typeDefs = `
     createdAt: String,
     logo: String,
     info: String!,
-    creator: String
+    creator: String,
+    muteUser: [String]
+  }
+
+  type Result {
+    isMute: Boolean,
+    muteUser: [String]
   }
 `
 

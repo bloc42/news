@@ -1,6 +1,6 @@
 import Post from './model'
 import userApi from '../../entities/user/api'
-
+import channelApi from '../../entities/channel/api'
 const Query = {
   async postFeed(obj, args) {
     let { cursor, channel } = args
@@ -233,6 +233,13 @@ const Mutation = {
     const { title, url, content, channel } = args
 
     const author = ctx.state.user.username
+    //发帖权限
+    const result = await channelApi.isMute(channel, author)
+    console.error(result)
+    if (result) {
+      throw new Error('在此频道被禁言。')
+    }
+
     const post = new Post({ title, url, content, author, channel })
     await post.save()
     return post
