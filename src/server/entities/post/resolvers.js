@@ -234,10 +234,11 @@ const Mutation = {
 
     const author = ctx.state.user.username
     //发帖权限
-    const result = await channelApi.isMute(channel, author)
-    console.error(result)
-    if (result) {
-      throw new Error('在此频道被禁言。')
+    if (channel) {
+      const result = await channelApi.isMute(channel, author)
+      if (result) {
+        throw new Error('在此频道被禁言。')
+      }
     }
 
     const post = new Post({ title, url, content, author, channel })
