@@ -66,7 +66,7 @@ const Post = ({
   //const domainMatch = url.match(/:\/\/(.[^/]+)/)
   const showChannel = channel ? (
     <span>
-      分论坛-
+      来自
       {channel}
     </span>
   ) : (

@@ -9,7 +9,7 @@ const SignupPage = () => {
   return (
     <Container small>
       <Section padded>
-        <h2>创建属于你的Bloc42账号。</h2>
+        <h2>创建属于你的唠嗑账号。</h2>
         <SignupForm />
         <Small>
           <span>已经有账号？</span>

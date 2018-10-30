@@ -47,7 +47,7 @@ class AddChannel extends Component {
         },
         update: (cache, { data }) => {
           this.setState({
-            successes: [{ message: '分论坛创建已完成' }]
+            successes: [{ message: '小唠嗑创建已完成' }]
           })
           this.setState({
             name: '',
@@ -82,7 +82,7 @@ class AddChannel extends Component {
           <Input
             type="text"
             name="name"
-            placeholder="分论坛名称"
+            placeholder="小唠嗑名称"
             value={this.state.name}
             onChange={this.handleChange}
             required
@@ -101,7 +101,7 @@ class AddChannel extends Component {
           <TextArea
             type="text"
             name="info"
-            placeholder="分论坛简介"
+            placeholder="小唠嗑简介"
             value={this.state.info}
             onChange={this.handleChange}
             required
@@ -119,7 +119,7 @@ class AddChannel extends Component {
         </Form.Item>
         <Form.Item>
           <Button primary fullWidth>
-            开通分论坛
+            开通小唠嗑
           </Button>
         </Form.Item>
       </Form>

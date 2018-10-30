@@ -103,7 +103,7 @@ class UserFollowing extends Component {
             const { currentUser } = client.cache.readQuery({ query })
             return (
               <StyledBoardItem>
-                <StyledTitle>他/她关注的分论坛</StyledTitle>
+                <StyledTitle>他/她关注的小唠嗑</StyledTitle>
                 <StyledLists>
                   {this.showChannels(channels, currentUser)}
                 </StyledLists>

@@ -35,7 +35,7 @@ const Mutation = {
       }
       await mail.send({
         to: email,
-        subject: '欢迎加入Bloc42',
+        subject: '欢迎加入唠嗑',
         html: invitationMail(invitor, invitationUrl)
       })
       codes.push(invitationCode)

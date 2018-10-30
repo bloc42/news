@@ -61,7 +61,7 @@ class UserProfilePage extends Component {
                 pathname === url || pathname === `${url}/channels`
               }
             >
-              论坛
+              唠嗑
             </NavLink>
           </StyledMenuItem>
           <StyledMenuItem compact>

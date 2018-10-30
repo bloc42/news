@@ -89,7 +89,7 @@ class ChannelList extends Component {
           const { allchannels } = data
           return (
             <StyledChannelList hide={this.state.hide}>
-              <StyledTitle>分论坛列表</StyledTitle>
+              <StyledTitle>小唠嗑列表</StyledTitle>
               <StyledArrow
                 onClick={this.toggleInfoShow}
                 up={!this.state.hide}
@@ -106,7 +106,7 @@ class ChannelList extends Component {
                   ))}
                   <StyledItem small>
                     <StyledAdd to="/addchannel" title="创建分论坛">
-                      创建分论坛
+                      创建小唠嗑
                     </StyledAdd>
                   </StyledItem>
                 </StyledMenu>
