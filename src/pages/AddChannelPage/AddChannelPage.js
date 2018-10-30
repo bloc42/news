@@ -7,7 +7,7 @@ const AddChannelPage = () => {
   return (
     <Container>
       <Section padded>
-        <h2>创建属于你的分论坛。</h2>
+        <h2>创建属于你的小唠嗑。</h2>
         <AddChannelForm />
       </Section>
     </Container>

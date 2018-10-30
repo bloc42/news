@@ -42,7 +42,7 @@ notificationSchema.pre('save', async function(next) {
     //发送邮件提醒收到评论
     mail.send({
       to: user.email,
-      subject: 'bloc42回复提醒',
+      subject: '唠嗑回复提醒',
       html: replyMail(postUrl, post.title, userfrom.username)
     })
     next()

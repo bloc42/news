@@ -96,7 +96,7 @@ class Header extends Component {
         <Menu>
           {/* todo 已创建用户不能继续创建？ */}
           <StyledItem>
-            <NavLink to="/submit">创建帖子</NavLink>
+            <NavLink to="/submit">唠一唠</NavLink>
           </StyledItem>
           <StyledItem>
             <StyledNotificationContainer
@@ -217,7 +217,7 @@ class Header extends Component {
             <Menu>
               <Menu.Item>
                 <NavLink exact strict to="/">
-                  Bloc42
+                  唠嗑
                 </NavLink>
               </Menu.Item>
             </Menu>

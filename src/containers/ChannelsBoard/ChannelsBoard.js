@@ -86,7 +86,7 @@ class ChannelsBoard extends Component {
           const { channels } = data
           return (
             <StyledBoardItem>
-              <StyledTitle>我创建的分论坛</StyledTitle>
+              <StyledTitle>我创建的小唠嗑</StyledTitle>
               <StyledLists>{this.showChannels(channels)}</StyledLists>
             </StyledBoardItem>
           )
@@ -120,7 +120,7 @@ class ChannelsBoard extends Component {
             const { channels } = data
             return (
               <StyledBoardItem>
-                <StyledTitle>我关注的分论坛</StyledTitle>
+                <StyledTitle>我关注的小唠嗑</StyledTitle>
                 <StyledLists>{this.showChannels(channels)}</StyledLists>
               </StyledBoardItem>
             )
@@ -130,7 +130,7 @@ class ChannelsBoard extends Component {
     } else {
       return (
         <StyledBoardItem>
-          <StyledTitle>我关注的分论坛</StyledTitle>
+          <StyledTitle>我关注的小唠嗑</StyledTitle>
           <StyledLists>{this.showChannels()}</StyledLists>
         </StyledBoardItem>
       )

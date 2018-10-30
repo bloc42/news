@@ -163,7 +163,7 @@ class ChannelInfo extends Component {
                     </Menu.Item>
                     <Menu.Item small>
                       <StyledButton onClick={this.quitChannel}>
-                        退出论坛
+                        退出小唠嗑
                       </StyledButton>
                     </Menu.Item>
                   </StyledMenu>
@@ -193,7 +193,7 @@ class ChannelInfo extends Component {
                     </Menu.Item>
                     <Menu.Item small>
                       <StyledButton onClick={this.joinChannel}>
-                        加入论坛
+                        加入小唠嗑
                       </StyledButton>
                     </Menu.Item>
                   </StyledMenu>
