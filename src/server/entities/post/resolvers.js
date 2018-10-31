@@ -167,7 +167,8 @@ const Query = {
           title: 1,
           commentCount: 1,
           author: 1,
-          clickCount: 1
+          clickCount: 1,
+          createdAt: 1
         }
       }
     ])
@@ -179,6 +180,10 @@ const Query = {
     } else if (sort == 'click') {
       result = postByAll.sort((a, b) => {
         return b.clickCount - a.clickCount
+      })
+    } else {
+      result = postByAll.sort((a, b) => {
+        return b.createdAt - a.createdAt
       })
     }
     return result

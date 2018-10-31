@@ -49,7 +49,8 @@ const typeDefs = `
     title: String,
     commentCount: Int,
     clickCount: Int,
-    author: String
+    author: String,
+    createdAt: String
   }
 
   type PostCount {
