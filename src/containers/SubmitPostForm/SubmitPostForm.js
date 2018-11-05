@@ -81,7 +81,7 @@ class SubmitPostForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <h2>
-          在{channel === '' ? 'Bloc42' : channel}
+          在{channel === '' ? '唠嗑' : channel}
           中创建新帖
         </h2>
 

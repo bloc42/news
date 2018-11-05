@@ -39,41 +39,63 @@ const PostList = () => (
       const {
         postFeed: { cursor, posts }
       } = data
-      const { currentUser } = client.cache.readQuery({ query })
+      // const { currentUser } = client.cache.readQuery({ query })
       return (
-        <div>
-          {posts.map(post => (
-            <Post key={post.id} {...post} currentUser={currentUser} />
-          ))}
-          <ScrollDetector
-            onReachBottom={() =>
-              fetchMore({
-                query: GET_POSTS,
-                variables: { cursor },
-                updateQuery: (previousResult, { fetchMoreResult }) => {
-                  if (
-                    !fetchMoreResult ||
-                    fetchMoreResult.postFeed.posts.length === 0 ||
-                    fetchMoreResult.postFeed.cursor >=
-                      previousResult.postFeed.cursor
-                  ) {
-                    return previousResult
-                  }
-                  return {
-                    postFeed: {
-                      cursor: fetchMoreResult.postFeed.cursor,
-                      posts: [
-                        ...previousResult.postFeed.posts,
-                        ...fetchMoreResult.postFeed.posts
-                      ],
-                      __typename: 'PostFeed'
-                    }
-                  }
-                }
-              })
+        <Query
+          query={gql`
+            query GetCurrentUser {
+              currentUser {
+                id
+                username
+                notificationCount
+                upvotePost
+                downvotePost
+              }
             }
-          />
-        </div>
+          `}
+        >
+          {({ loading, data, client }) => {
+            if (loading) {
+              return null
+            }
+            const { currentUser } = data
+            return (
+              <div>
+                {posts.map(post => (
+                  <Post key={post.id} {...post} currentUser={currentUser} />
+                ))}
+                <ScrollDetector
+                  onReachBottom={() =>
+                    fetchMore({
+                      query: GET_POSTS,
+                      variables: { cursor },
+                      updateQuery: (previousResult, { fetchMoreResult }) => {
+                        if (
+                          !fetchMoreResult ||
+                          fetchMoreResult.postFeed.posts.length === 0 ||
+                          fetchMoreResult.postFeed.cursor >=
+                            previousResult.postFeed.cursor
+                        ) {
+                          return previousResult
+                        }
+                        return {
+                          postFeed: {
+                            cursor: fetchMoreResult.postFeed.cursor,
+                            posts: [
+                              ...previousResult.postFeed.posts,
+                              ...fetchMoreResult.postFeed.posts
+                            ],
+                            __typename: 'PostFeed'
+                          }
+                        }
+                      }
+                    })
+                  }
+                />
+              </div>
+            )
+          }}
+        </Query>
       )
     }}
   </Query>

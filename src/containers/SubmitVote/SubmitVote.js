@@ -239,50 +239,28 @@ class SubmitVote extends Component {
     }
   }
   render() {
-    const { upvoteCount } = this.props
-    return (
-      <Query
-        query={gql`
-          query GetCurrentUser {
-            currentUser {
-              id
-              username
-              notificationCount
-              upvotePost
-              downvotePost
-            }
-          }
-        `}
-      >
-        {({ loading, data, client }) => {
-          if (loading) {
-            return null
-          }
+    const { upvoteCount, currentUser } = this.props
 
-          const { currentUser } = data
-          return currentUser ? (
-            <StyledLeft>
-              <Voteicon
-                upvote={this.state.iconHasUpvote}
-                upvotegray={!this.state.iconHasUpvote}
-                onClick={this.upvote}
-              />
-              <StyledVoteNum>{upvoteCount}</StyledVoteNum>
-              <Voteicon
-                downvote={this.state.iconHasDownvote}
-                downvotegray={!this.state.iconHasDownvote}
-                onClick={this.downvote}
-              />
-            </StyledLeft>
-          ) : (
-            <StyledLeft>
-              <Voteicon upvotegray onClick={this.jumptoLogin} />
-              <StyledVoteNum>{upvoteCount}</StyledVoteNum>
-              <Voteicon downvotegray onClick={this.jumptoLogin} />
-            </StyledLeft>
-          )
-        }}
-      </Query>
+    return currentUser ? (
+      <StyledLeft>
+        <Voteicon
+          upvote={this.state.iconHasUpvote}
+          upvotegray={!this.state.iconHasUpvote}
+          onClick={this.upvote}
+        />
+        <StyledVoteNum>{upvoteCount}</StyledVoteNum>
+        <Voteicon
+          downvote={this.state.iconHasDownvote}
+          downvotegray={!this.state.iconHasDownvote}
+          onClick={this.downvote}
+        />
+      </StyledLeft>
+    ) : (
+      <StyledLeft>
+        <Voteicon upvotegray onClick={this.jumptoLogin} />
+        <StyledVoteNum>{upvoteCount}</StyledVoteNum>
+        <Voteicon downvotegray onClick={this.jumptoLogin} />
+      </StyledLeft>
     )
   }
 }
