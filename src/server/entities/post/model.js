@@ -38,6 +38,9 @@ const postSchema = mongoose.Schema({
   },
   channel: {
     type: String
+  },
+  lastReader: {
+    type: String
   }
 })
 
