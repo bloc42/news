@@ -43,12 +43,17 @@ const Query = {
     }
   },
 
-  async postById(obj, { id }) {
+  async postById(obj, { id }, context) {
+    const { ctx } = context
+    const user = ctx.state.user
     const post = await Post.findById(id).exec()
     //add click
     const newpost = await Post.findOneAndUpdate(
       { _id: post._id },
-      { clickCount: post.clickCount + 1 },
+      {
+        clickCount: post.clickCount + 1,
+        lastReader: user ? user.username : ''
+      },
       { new: true }
     ).exec()
 
@@ -168,7 +173,8 @@ const Query = {
           commentCount: 1,
           author: 1,
           clickCount: 1,
-          createdAt: 1
+          createdAt: 1,
+          lastReader: 1
         }
       }
     ])

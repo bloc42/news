@@ -31,7 +31,8 @@ const typeDefs = `
     createdAt: String!,
     channel: String,
     upvoteCount:Int,
-    downvoteCount:Int
+    downvoteCount:Int,
+    lastReader: String
   }
 
   type PostAnalysisResult {
@@ -50,7 +51,8 @@ const typeDefs = `
     commentCount: Int,
     clickCount: Int,
     author: String,
-    createdAt: String
+    createdAt: String,
+    lastReader: String
   }
 
   type PostCount {
