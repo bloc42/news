@@ -11,6 +11,7 @@ import ActivationPage from '../../pages/ActivationPage'
 import SendActivationPage from '../../pages/SendActivationPage'
 import AddChannelPage from '../../pages/AddChannelPage'
 import ChannelPage from '../../pages/ChannelPage'
+import creatNewEtherAccountPage from '../../pages/CreatNewEtherAccountPage'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -24,6 +25,10 @@ const Main = () => (
       <Route exact path="/" component={HomePage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/signup" component={SignupPage} />
+      <Route
+        path="/creatNewEtherAccount"
+        component={creatNewEtherAccountPage}
+      />
       <Route path="/submit" component={SubmitPostPage} />
       <Route path="/post/:id" component={PostPage} />
       <Route path="/user/:username" component={UserProfilePage} />
