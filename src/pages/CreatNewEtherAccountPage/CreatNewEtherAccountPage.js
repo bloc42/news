@@ -1,12 +1,9 @@
 import React from 'react'
 import Section from '../../components/Section'
 import Container from '../../components/Container'
-import Link from '../../components/Link'
-import Form from '../../components/Form'
 import Button from '../../components/Button'
-import Small from '../../components/Small'
 import CustomSteps from '../../components/CustomSteps'
-import SignupForm from '../../containers/SignupForm'
+import CreatEtherAccountForm from '../../containers/CreatEtherAccountForm'
 
 const CustomStep = CustomSteps.CustomStep
 const CreatNewEtherAccountPage = props => {
@@ -17,7 +14,7 @@ const CreatNewEtherAccountPage = props => {
     },
     {
       title: '请创建并保存钱包',
-      description: '点击并生成钱包'
+      description: <CreatEtherAccountForm />
     },
     {
       title: '请再次确认已离线保存钱包',

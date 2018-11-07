@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const StyledTextArea = styled.textarea`
   font-size: ${props => props.theme.fontSize};
@@ -13,6 +13,13 @@ const StyledTextArea = styled.textarea`
   &:focus {
     border: 1px solid ${props => props.theme.primaryColor};
   }
+  ${props =>
+    props.intagli &&
+    css`
+      font-size: 0.6rem;
+      vertical-align: top;
+      padding: 0.2rem;
+    `};
 `
 
 const TextArea = props => {
