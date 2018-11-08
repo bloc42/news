@@ -4,13 +4,14 @@ import Container from '../../components/Container'
 import Button from '../../components/Button'
 import CustomSteps from '../../components/CustomSteps'
 import CreatEtherAccountForm from '../../containers/CreatEtherAccountForm'
+import RegistrationStatement from '../../containers/RegistrationStatement'
 
 const CustomStep = CustomSteps.CustomStep
 const CreatNewEtherAccountPage = props => {
   const steps = [
     {
-      title: '请阅读并同意免责声明',
-      description: '阅读免责声明'
+      title: '请阅读并同意注册声明',
+      description: <RegistrationStatement />
     },
     {
       title: '请创建并保存钱包',
