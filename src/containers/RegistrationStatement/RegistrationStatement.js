@@ -30,6 +30,7 @@ class RegistrationStatement extends Component {
   agreeStatement = () => {
     this.setState({ showStatement: false })
     this.setState({ isAgree: true })
+    this.props.nextStep()
   }
   render() {
     return (

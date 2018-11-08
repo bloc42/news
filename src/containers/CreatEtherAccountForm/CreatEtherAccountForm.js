@@ -13,12 +13,12 @@ const Styledli = styled.li`
 `
 const FloatRightButton = styled(Button)`
   float: right;
+  margin-left: 0.5rem;
 `
 class CreatEtherAccountForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      clickStatus: false,
       isReCreat: true,
       isWalletCreated: false,
       address: '',
@@ -48,8 +48,9 @@ class CreatEtherAccountForm extends Component {
       that.setState({ isReCreat: true })
       that.setState({ countDown: 5 })
     }, 6000)
-
-    console.log(wallet)
+  }
+  hasSaved = () => {
+    this.props.nextStep()
   }
   downloadWalletInfo = () => {
     const TextArray = [
@@ -64,15 +65,15 @@ class CreatEtherAccountForm extends Component {
     a.click()
   }
   render() {
-    return this.state.clickStatus ? (
-      <span>钱包生成中</span>
-    ) : (
+    return (
       <div>
         <Button
           primary
           small
           onClick={this.creatRandomAccount}
-          disabled={!this.state.isReCreat}
+          disabled={
+            this.props.currentStep == 1 && this.state.isReCreat ? false : true
+          }
         >
           {!this.state.isReCreat
             ? `已更新(${this.state.countDown})`
@@ -101,6 +102,18 @@ class CreatEtherAccountForm extends Component {
               onClick={this.downloadWalletInfo}
             >
               导出钱包信息为txt格式
+            </FloatRightButton>
+            <FloatRightButton
+              primary
+              small
+              disabled={
+                this.props.currentStep == 1 && this.state.isWalletCreated
+                  ? false
+                  : true
+              }
+              onClick={this.hasSaved}
+            >
+              已保存
             </FloatRightButton>
           </div>
         ) : (
