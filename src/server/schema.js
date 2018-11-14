@@ -11,6 +11,7 @@ import invitationCodeSchema from './entities/invitationCode/schema'
 import notificationSchema from './entities/notification/schema'
 import channelSchema from './entities/channel/schema'
 import voteSchema from './entities/vote/schema'
+import etherAccount from './entities/etherAccount/schema'
 
 const linkTypeDefs = `
   extend type Post {
@@ -31,7 +32,8 @@ const schemas = [
   notificationSchema,
   linkTypeDefs,
   channelSchema,
-  voteSchema
+  voteSchema,
+  etherAccount
 ]
 
 // https://www.apollographql.com/docs/graphql-tools/schema-stitching.html#adding-resolvers
