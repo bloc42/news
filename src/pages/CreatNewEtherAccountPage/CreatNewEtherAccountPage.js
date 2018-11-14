@@ -23,7 +23,16 @@ class CreatNewEtherAccountPage extends Component {
   }
   reConfirm = () => {
     this.nextStep()
-    this.props.history.push(`/binduseraccount?address=${this.state.address}`)
+    const searchParams = new URLSearchParams(this.props.location.search)
+    const code = searchParams.get('code') ? searchParams.get('code') : ''
+    const channel = searchParams.get('channel')
+      ? searchParams.get('channel')
+      : ''
+    this.props.history.push(
+      `/binduseraccount?address=${
+        this.state.address
+      }&code=${code}&channel=${channel}`
+    )
   }
   render() {
     const steps = [
