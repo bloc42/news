@@ -46,12 +46,16 @@ class ImportEtherAccountPage extends Component {
       <Container>
         <Section padded>
           <Form onSubmit={this.handleSubmit}>
-            <h3>
-              请填写以太坊账户地址
-              <small>(支持MetaMask)</small>
-            </h3>
+            <h3>请填写以太坊账户地址</h3>
 
-            {this.state.hasMetaMask ? <p>检测到MetaMask账户,已自动填入</p> : ''}
+            {this.state.hasMetaMask ? (
+              <p>
+                检测到MetaMask账户,已自动填入
+                <small>(切换账户后请刷新本页)</small>
+              </p>
+            ) : (
+              ''
+            )}
             <Form.Item>
               <Input
                 type="text"
@@ -68,6 +72,7 @@ class ImportEtherAccountPage extends Component {
               </Button>
             </Form.Item>
           </Form>
+          <small>支持登录MetaMask，获取已有账户地址</small>
         </Section>
       </Container>
     )
