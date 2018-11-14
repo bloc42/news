@@ -11,15 +11,19 @@ class CreatNewEtherAccountPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentStep: 0
+      currentStep: 0,
+      address: ''
     }
   }
-
+  getAddress = address => {
+    this.setState({ address: address })
+  }
   nextStep = () => {
     this.setState({ currentStep: this.state.currentStep + 1 })
   }
   reConfirm = () => {
     this.nextStep()
+    this.props.history.push(`/binduseraccount?address=${this.state.address}`)
   }
   render() {
     const steps = [
@@ -36,6 +40,7 @@ class CreatNewEtherAccountPage extends Component {
         description: (
           <CreatEtherAccountForm
             nextStep={currentStep => this.nextStep(currentStep)}
+            getAddress={address => this.getAddress(address)}
             currentStep={this.state.currentStep}
           />
         )

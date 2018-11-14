@@ -36,6 +36,7 @@ class CreatEtherAccountForm extends Component {
       privateKey: wallet.privateKey,
       mnemonic: wallet.mnemonic
     })
+    this.props.getAddress(wallet.address)
     const that = this
     const countDownFn = setInterval(function() {
       if (that.state.countDown > 0) {
