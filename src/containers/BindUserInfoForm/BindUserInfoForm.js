@@ -11,15 +11,17 @@ import Button from '../../components/Button'
 import { withRouter } from 'react-router-dom'
 import Alert from '../../components/Alert'
 
-class Signup extends Component {
+class BindUserInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
       email: '',
       password: '',
+      repassword: '',
       errors: [],
-      successes: []
+      successes: [],
+      address: ''
     }
   }
 
@@ -33,12 +35,23 @@ class Signup extends Component {
   }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password } = this.state
+    const { username, email, password, repassword } = this.state
+    if (password !== repassword) {
+      this.setState({ errors: [{ message: '密码填写不一致' }] })
+      return
+    }
     const searchParams = new URLSearchParams(this.props.location.search)
     const code = searchParams.get('code') ? searchParams.get('code') : ''
     const channel = searchParams.get('channel')
       ? searchParams.get('channel')
       : ''
+    const mainEthAddress = searchParams.get('address')
+      ? searchParams.get('address')
+      : ''
+    if (mainEthAddress == '') {
+      this.setState({ errors: [{ message: '无以太坊账户,请返回上一步' }] })
+      return
+    }
     if (code === '') {
       this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
       return
@@ -50,7 +63,8 @@ class Signup extends Component {
           email,
           password,
           code,
-          channel
+          channel,
+          mainEthAddress
         },
         update: (cache, { data }) => {
           this.setState({
@@ -117,6 +131,17 @@ class Signup extends Component {
           />
         </Form.Item>
         <Form.Item>
+          <Input
+            type="password"
+            name="repassword"
+            placeholder="请重复密码"
+            value={this.state.repassword}
+            onChange={this.handleChange}
+            minlength="6"
+            required
+          />
+        </Form.Item>
+        <Form.Item>
           <Button primary fullWidth>
             注册
           </Button>
@@ -133,6 +158,7 @@ const SIGNUP_MUTATION = gql`
     $password: String!
     $code: String!
     $channel: String
+    $mainEthAddress: String!
   ) {
     signup(
       username: $username
@@ -140,6 +166,7 @@ const SIGNUP_MUTATION = gql`
       password: $password
       code: $code
       channel: $channel
+      mainEthAddress: $mainEthAddress
     ) {
       id
       username
@@ -150,6 +177,6 @@ const SIGNUP_MUTATION = gql`
 
 const SignupWithMutation = compose(
   graphql(SIGNUP_MUTATION, { name: 'signupMutation' })
-)(Signup)
+)(BindUserInfo)
 
 export default withRouter(SignupWithMutation)
