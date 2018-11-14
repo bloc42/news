@@ -33,7 +33,13 @@ const userSchema = mongoose.Schema({
   point: { type: Number, default: 0 },
   following: Array,
   upvotePost: Array,
-  downvotePost: Array
+  downvotePost: Array,
+  mainEthAddress: {
+    type: String,
+    require: [true, '以太坊账户不能为空。']
+  },
+  //0:账户生成 //1:账户已激活 //2:账户已认证
+  status: { type: Number, default: 0 }
 })
 
 userSchema.set('timestamps', true)

@@ -9,6 +9,7 @@ import config from '../../../config'
 import { GraphQLError } from 'graphql/error'
 import activationMail from '../../maillayout/activationMail'
 import NotificationAPI from '../notification/api'
+import EtherAccountAPI from '../etherAccount/api'
 
 const DOMAIN = config.isLocal ? 'http://localhost:3000' : config.domain
 const SALT_WORK_FACTOR = 1
@@ -308,13 +309,13 @@ const Mutation = {
     return user
   },
   async signup(obj, args, context) {
-    const { username, email, password, code, channel } = args
+    const { username, email, password, code, channel, mainEthAddress } = args
 
     let user = await User.findOne({
       $or: [{ username }, { email }]
     }).exec()
-
     const invitation = await invitationCodeApi.getInvitationCode(code)
+    await EtherAccountAPI.addEtherAccountRecord(mainEthAddress, username)
     if (!invitation || invitation.isClaimed) {
       throw '此邀请链接无效'
     } else {
@@ -343,7 +344,8 @@ const Mutation = {
           { username: user.username },
           {
             activationCode: activationHashCode,
-            activationDeadline: activationDeadline
+            activationDeadline: activationDeadline,
+            status: 0
           },
           { new: true }
         ).exec()
