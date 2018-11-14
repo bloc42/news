@@ -83,6 +83,7 @@ class BindUserInfo extends Component {
             username: '',
             password: '',
             email: '',
+            repassword: '',
             hasSubmit: false
           })
         }
