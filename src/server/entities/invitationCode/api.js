@@ -2,7 +2,12 @@ import InvitationCode from './model'
 
 const api = {
   async getInvitationCode(code) {
-    return await InvitationCode.findOne({ code }).exec()
+    const invitation = await InvitationCode.findOne({ code }).exec()
+    if (!invitation || invitation.isClaimed) {
+      throw '此邀请链接无效'
+    } else {
+      return true
+    }
   },
   async claimedCode(code, name) {
     return await InvitationCode.findOneAndUpdate(
