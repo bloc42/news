@@ -31,6 +31,22 @@ const StyledButton = styled.button`
     css`
       width: 100%;
     `};
+  ${props =>
+    props.small &&
+    css`
+      font-size: 0.6rem;
+      padding: 0.2rem 0.2rem;
+    `};
+  ${props =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+      background-color: #ccc;
+      border-color: #ccc;
+      &:hover {
+        background: #ccc;
+      }
+    `};
 `
 
 class Button extends Component {

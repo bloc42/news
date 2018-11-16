@@ -11,15 +11,19 @@ import Button from '../../components/Button'
 import { withRouter } from 'react-router-dom'
 import Alert from '../../components/Alert'
 
-class Signup extends Component {
+class BindUserInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
       email: '',
       password: '',
+      repassword: '',
       errors: [],
-      successes: []
+      successes: [],
+      info: [],
+      address: '',
+      hasSubmit: false
     }
   }
 
@@ -33,12 +37,29 @@ class Signup extends Component {
   }
   handleSubmit = async e => {
     e.preventDefault()
-    const { username, email, password } = this.state
+    this.setState({ hasSubmit: true })
+    this.setState({
+      info: [{ message: '请求提交中,请等待' }],
+      errors: [],
+      successes: []
+    })
+    const { username, email, password, repassword } = this.state
+    if (password !== repassword) {
+      this.setState({ errors: [{ message: '密码填写不一致' }] })
+      return
+    }
     const searchParams = new URLSearchParams(this.props.location.search)
     const code = searchParams.get('code') ? searchParams.get('code') : ''
     const channel = searchParams.get('channel')
       ? searchParams.get('channel')
       : ''
+    const mainEthAddress = searchParams.get('address')
+      ? searchParams.get('address')
+      : ''
+    if (mainEthAddress == '') {
+      this.setState({ errors: [{ message: '无以太坊账户,请返回上一步' }] })
+      return
+    }
     if (code === '') {
       this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
       return
@@ -50,25 +71,30 @@ class Signup extends Component {
           email,
           password,
           code,
-          channel
+          channel,
+          mainEthAddress
         },
         update: (cache, { data }) => {
           this.setState({
-            successes: [{ message: '激活邮件已发送,请前往邮箱查看' }]
+            successes: [{ message: '激活邮件已发送,请前往邮箱查看' }],
+            info: []
           })
           this.setState({
             username: '',
             password: '',
-            email: ''
+            email: '',
+            repassword: '',
+            hasSubmit: false
           })
         }
       })
 
       if (errors && errors.length > 0) {
-        this.setState({ errors })
+        this.setState({ errors, info: [], successes: [] })
       } else {
-        this.setState({ errors: [] })
+        this.setState({ errors: [], info: [] })
       }
+      this.setState({ hasSubmit: false })
     } catch (err) {
       // TODO: show error message in UI
       console.error(err)
@@ -84,7 +110,9 @@ class Signup extends Component {
         {this.state.successes.map((success, index) => (
           <Alert key={index} message={success.message} success />
         ))}
-
+        {this.state.info.map((info, index) => (
+          <Alert key={index} message={info.message} info />
+        ))}
         <Form.Item>
           <Input
             type="text"
@@ -117,7 +145,18 @@ class Signup extends Component {
           />
         </Form.Item>
         <Form.Item>
-          <Button primary fullWidth>
+          <Input
+            type="password"
+            name="repassword"
+            placeholder="请重复密码"
+            value={this.state.repassword}
+            onChange={this.handleChange}
+            minlength="6"
+            required
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button primary fullWidth disabled={this.state.hasSubmit}>
             注册
           </Button>
         </Form.Item>
@@ -133,6 +172,7 @@ const SIGNUP_MUTATION = gql`
     $password: String!
     $code: String!
     $channel: String
+    $mainEthAddress: String!
   ) {
     signup(
       username: $username
@@ -140,6 +180,7 @@ const SIGNUP_MUTATION = gql`
       password: $password
       code: $code
       channel: $channel
+      mainEthAddress: $mainEthAddress
     ) {
       id
       username
@@ -150,6 +191,6 @@ const SIGNUP_MUTATION = gql`
 
 const SignupWithMutation = compose(
   graphql(SIGNUP_MUTATION, { name: 'signupMutation' })
-)(Signup)
+)(BindUserInfo)
 
 export default withRouter(SignupWithMutation)

@@ -20,6 +20,12 @@ const StyledAlert = styled.div`
       border: 1px solid #c3ff9e;
       background-color: #f8fff0;
     `};
+  ${props =>
+    props.info &&
+    css`
+      border: 1px solid #bce8f1;
+      background-color: #d9edf7;
+    `};
 `
 
 const Alert = props => (
