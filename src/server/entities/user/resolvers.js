@@ -314,7 +314,7 @@ const Mutation = {
     let user = await User.findOne({
       $or: [{ username }, { email }]
     }).exec()
-    await invitationCodeApi.getInvitationCode(code)
+    //await invitationCodeApi.getInvitationCode(code)
     await EtherAccountAPI.addEtherAccountRecord(mainEthAddress, username)
     if (user) {
       throw '该用户名或邮箱已存在。'
@@ -326,10 +326,10 @@ const Mutation = {
       // passport needs them for authentication
       ctx.request.body = args
       user = await user.save()
-      if (code !== config.publicInvitationCode) {
-        //update invitationcode
-        await invitationCodeApi.claimedCode(code, user.username)
-      }
+      // if (code !== config.publicInvitationCode) {
+      //   //update invitationcode
+      //   await invitationCodeApi.claimedCode(code, user.username)
+      // }
       //save activeInfo
       const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
       const activationHashCode = await bcrypt.hash(

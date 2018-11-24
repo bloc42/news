@@ -60,10 +60,10 @@ class BindUserInfo extends Component {
       this.setState({ errors: [{ message: '无以太坊账户,请返回上一步' }] })
       return
     }
-    if (code === '') {
-      this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
-      return
-    }
+    // if (code === '') {
+    //   this.setState({ errors: [{ message: '目前只可通过邀请链接注册' }] })
+    //   return
+    // }
     try {
       const { errors } = await this.props.signupMutation({
         variables: {
