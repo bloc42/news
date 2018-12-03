@@ -10,6 +10,7 @@ import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import styled from 'styled-components'
 import Comment from '../../components/Comment'
 import Divider from '../../components/Divider'
+import ReactMarkdown from 'react-markdown'
 
 const StyledArticle = styled.article`
   > p {
@@ -98,9 +99,7 @@ const PostPage = props => {
                   <h2>{postTitle}</h2>
                   {postUrl}
                   <section>
-                    {content.split('\n').map((paragraph, key) => {
-                      return <p key={key}>{paragraph}</p>
-                    })}
+                    <ReactMarkdown source={content} />
                   </section>
 
                   <footer>
@@ -126,7 +125,11 @@ const PostPage = props => {
                   </footer>
                 </StyledArticle>
                 <section>
-                  <SubmitCommentForm toggleReply={() => {}} postId={id} parentAuthor={author} />
+                  <SubmitCommentForm
+                    toggleReply={() => {}}
+                    postId={id}
+                    parentAuthor={author}
+                  />
 
                   {comments.map(comment => {
                     return <Comment key={comment.id} {...comment} />
