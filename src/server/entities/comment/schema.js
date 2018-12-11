@@ -11,6 +11,7 @@ const typeDefs = `
 
   type Mutation {
     addComment(content: String!, postId: ID!, parentId: ID): Comment
+    delComment(id: ID!): Comment
   }
 
   type Comment {

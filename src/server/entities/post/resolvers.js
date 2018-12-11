@@ -1,6 +1,7 @@
 import Post from './model'
-import userApi from '../../entities/user/api'
 import channelApi from '../../entities/channel/api'
+import commentApi from '../../entities/comment/api'
+import notificationApi from '../../entities/notification/api'
 const Query = {
   async postFeed(obj, args) {
     let { cursor, channel } = args
@@ -255,6 +256,62 @@ const Mutation = {
     const post = new Post({ title, url, content, author, channel })
     await post.save()
     return post
+  },
+  async editPost(obj, args, context, info) {
+    const { ctx } = context
+
+    if (ctx.isUnauthenticated()) {
+      throw new Error('修改帖子前请先登录。')
+    }
+
+    const { id, title, url, content, channel } = args
+
+    const author = ctx.state.user.username
+    const post = await Post.findById(id).exec()
+    //发帖权限
+    if (channel) {
+      const result = await channelApi.isMute(channel, author)
+      if (result) {
+        throw new Error('在此频道被禁言。')
+      }
+    }
+    if (post.author !== author) {
+      throw new Error('无此操作权限')
+    }
+    const newpost = await Post.findOneAndUpdate(
+      { _id: post._id },
+      {
+        title: title,
+        url: url,
+        content: content,
+        channel: channel ? channel : ''
+      },
+      { new: true }
+    ).exec()
+    await newpost.save()
+    return newpost
+  },
+  async delPost(obj, args, context, info) {
+    const { ctx } = context
+
+    if (ctx.isUnauthenticated()) {
+      throw new Error('删除帖子前请先登录。')
+    }
+    const { id } = args
+    const post = await Post.findById(id).exec()
+    const creator = await channelApi.creatorByChannel(post.channel)
+    const currentuser = ctx.state.user.username
+    if (post.author == currentuser || creator == currentuser) {
+      //删除评论
+      await commentApi.delByPostId(id)
+      //删除notification
+      await notificationApi.delByPostId(id)
+      //删除文章
+      await Post.remove({ _id: id })
+      return true
+    } else {
+      throw new Error('无权限删除此帖。')
+    }
   }
 }
 

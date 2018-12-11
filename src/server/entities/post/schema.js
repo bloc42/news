@@ -12,6 +12,8 @@ const typeDefs = `
 
   type Mutation {
     submitPost(title: String!, url: String, content: String, channel: String): Post
+    editPost(id: ID!, title: String!, url: String, content: String, channel: String): Post
+    delPost(id: ID!): Boolean
     upvote(id: ID!):Post
     downvote(id: ID!):Post
   }

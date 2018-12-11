@@ -35,5 +35,9 @@ export default {
 
     await comment.save()
     return comment
+  },
+  async delByPostId(id) {
+    await Comment.remove({ postId: id })
+    return true
   }
 }

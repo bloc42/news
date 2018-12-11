@@ -8,6 +8,17 @@ const api = {
     } else {
       return false
     }
+  },
+  async creatorByChannel(name) {
+    if (name !== '') {
+      let channel = await Channel.findOne({ name }).exec()
+      if (channel.creator) {
+        const { creator } = channel
+        return creator
+      }
+    } else {
+      return ''
+    }
   }
 }
 
