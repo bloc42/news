@@ -6,6 +6,7 @@ import SignupPage from '../../pages/SignupPage'
 import SubmitPostPage from '../../pages/SubmitPostPage'
 import styled from 'styled-components'
 import PostPage from '../../pages/PostPage'
+import PostEditPage from '../../pages/PostEditPage'
 import UserProfilePage from '../../pages/UserProfilePage'
 import ActivationPage from '../../pages/ActivationPage'
 import SendActivationPage from '../../pages/SendActivationPage'
@@ -14,6 +15,7 @@ import ChannelPage from '../../pages/ChannelPage'
 import creatNewEtherAccountPage from '../../pages/CreatNewEtherAccountPage'
 import ImportEtherAccountPage from '../../pages/ImportEtherAccountPage'
 import BindUserAccountPage from '../../pages/BindUserAccountPage'
+import FaqPage from '../../pages/FaqPage'
 
 const StyledMain = styled.main`
   flex: 1;
@@ -35,11 +37,13 @@ const Main = () => (
       <Route path="/importEtherAccount" component={ImportEtherAccountPage} />
       <Route path="/submit" component={SubmitPostPage} />
       <Route path="/post/:id" component={PostPage} />
+      <Route path="/edit/:id" component={PostEditPage} />
       <Route path="/user/:username" component={UserProfilePage} />
       <Route path="/activation" component={ActivationPage} />
       <Route path="/sendactivation" component={SendActivationPage} />
       <Route path="/addchannel" component={AddChannelPage} />
       <Route path="/channel/:channel" component={ChannelPage} />
+      <Route path="/faq" component={FaqPage} />
     </Switch>
   </StyledMain>
 )

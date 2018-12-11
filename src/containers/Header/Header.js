@@ -119,6 +119,7 @@ class Header extends Component {
               onClick={this.leavePage}
             >
               <StyledNavLink to={`/user/${username}`}>用户中心</StyledNavLink>
+              <StyledNavLink to={`/faq`}>FAQ</StyledNavLink>
               <LogoutLink />
             </StyledUserProfile>
           </StyledItem>
@@ -130,6 +131,9 @@ class Header extends Component {
   renderLoggedOutMenu() {
     return (
       <Menu>
+        <Menu.Item>
+          <NavLink to="/faq">FAQ</NavLink>
+        </Menu.Item>
         <Menu.Item>
           <NavLink to="/login">登录</NavLink>
         </Menu.Item>
@@ -217,7 +221,7 @@ class Header extends Component {
             <Menu>
               <Menu.Item>
                 <NavLink exact strict to="/">
-                  唠嗑
+                  Bloc42
                 </NavLink>
               </Menu.Item>
             </Menu>
