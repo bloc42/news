@@ -10,6 +10,7 @@ import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import styled from 'styled-components'
 import Comment from '../../components/Comment'
 import Divider from '../../components/Divider'
+import ReactMarkdown from 'react-markdown'
 
 const StyledArticle = styled.article`
   > p {
@@ -30,7 +31,9 @@ const StyledArticle = styled.article`
     color: ${props => props.theme.fontColorLight};
   }
 `
-
+const Styledflexli = styled.li`
+  display: flex;
+`
 export const GET_POST = gql`
   query GetPost($id: ID!) {
     postById(id: $id) {
@@ -41,6 +44,7 @@ export const GET_POST = gql`
       author
       commentCount
       createdAt
+      channel
       comments {
         id
         author
@@ -51,6 +55,10 @@ export const GET_POST = gql`
         parentId
         createdAt
       }
+    }
+    currentUser {
+      id
+      username
     }
   }
 `
@@ -70,10 +78,13 @@ const PostPage = props => {
               url,
               content,
               author,
+              channel,
               createdAt,
               commentCount,
               comments
             } = data.postById
+
+            const { currentUser } = data
 
             const postTitle = url ? (
               <Anchor href={url} target="_blank">
@@ -92,15 +103,88 @@ const PostPage = props => {
             ) : (
               ''
             )
+
+            const postEdit =
+              currentUser && currentUser.username == author ? (
+                <Styledflexli>
+                  <span>
+                    <Divider />
+                  </span>
+                  <span>
+                    <Anchor href={`/edit/${id}`}>编辑</Anchor>
+                  </span>
+                </Styledflexli>
+              ) : (
+                ''
+              )
+
+            const postDel =
+              currentUser && currentUser.username == author ? (
+                <Styledflexli>
+                  <span>
+                    <Divider />
+                  </span>
+                  <span>
+                    <Anchor href={`/del/${id}`}>删除</Anchor>
+                  </span>
+                </Styledflexli>
+              ) : (
+                ''
+              )
+
+            const creatorDel = channel ? (
+              <Query
+                query={gql`
+                  query GetChannelInfo($channel: String!) {
+                    channel(name: $channel) {
+                      id
+                      name
+                      info
+                      logo
+                      creator
+                    }
+                  }
+                `}
+                variables={{ channel }}
+              >
+                {({ loading, data }) => {
+                  if (loading) {
+                    return null
+                  }
+                  const { channel } = data
+                  const { creator } = channel
+
+                  if (
+                    currentUser &&
+                    creator == currentUser.username &&
+                    creator !== author
+                  ) {
+                    return (
+                      <Styledflexli>
+                        <span>
+                          <Divider />
+                        </span>
+                        <span>
+                          <Anchor href={`/del/${id}`}>删除</Anchor>
+                        </span>
+                      </Styledflexli>
+                    )
+                  } else {
+                    return ''
+                  }
+                }}
+              </Query>
+            ) : (
+              ''
+            )
+
             return (
               <div>
                 <StyledArticle>
                   <h2>{postTitle}</h2>
                   {postUrl}
                   <section>
-                    {content.split('\n').map((paragraph, key) => {
-                      return <p key={key}>{paragraph}</p>
-                    })}
+                    <ReactMarkdown source={content} />
                   </section>
 
                   <footer>
@@ -122,14 +206,28 @@ const PostPage = props => {
                           to={`/post/${id}`}
                         >{`${commentCount}条评论`}</Link>
                       </li>
+
+                      {postEdit}
+                      {postDel}
+                      {creatorDel}
                     </ul>
                   </footer>
                 </StyledArticle>
                 <section>
-                  <SubmitCommentForm toggleReply={() => {}} postId={id} parentAuthor={author} />
+                  <SubmitCommentForm
+                    toggleReply={() => {}}
+                    postId={id}
+                    parentAuthor={author}
+                  />
 
                   {comments.map(comment => {
-                    return <Comment key={comment.id} {...comment} />
+                    return (
+                      <Comment
+                        key={comment.id}
+                        {...comment}
+                        currentUser={currentUser}
+                      />
+                    )
                   })}
                 </section>
               </div>

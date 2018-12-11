@@ -20,6 +20,11 @@ const StyledTextArea = styled.textarea`
       vertical-align: top;
       padding: 0.2rem;
     `};
+  ${props =>
+    props.halfwidth &&
+    css`
+      width: 50%;
+    `};
 `
 
 const TextArea = props => {

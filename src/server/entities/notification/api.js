@@ -10,5 +10,9 @@ export default {
       .exec()
 
     return notifications
+  },
+  async delByPostId(id) {
+    await Notification.remove({ postId: id })
+    return true
   }
 }

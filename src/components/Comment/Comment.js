@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo'
 import styled from 'styled-components'
 import RelativeTime from '../RelativeTime'
 import Divider from '../Divider'
+import { withRouter } from 'react-router-dom'
+
 import SubmitCommentForm from '../../containers/SubmitCommentForm'
 import Anchor from '../Anchor'
 import Link from '../Link'
@@ -23,8 +27,11 @@ const StyledComment = styled.div`
     color: ${props => props.theme.fontColorLight};
   }
 `
+const Styledflexdiv = styled.div`
+  display: flex;
+`
 
-class Comment extends Component {
+class rawComment extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -38,18 +45,57 @@ class Comment extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showReply: false
+      showReply: false,
+      errors: []
     }
   }
-
   toggleReply = e => {
     this.setState({
       showReply: !this.state.showReply
     })
   }
-
+  delComment = async e => {
+    e.preventDefault()
+    let { id } = this.props
+    try {
+      const { errors } = await this.props.delCommentMutation({
+        variables: {
+          id
+        },
+        update: (cache, { data }) => {
+          this.forceUpdate()
+          this.setState({ errors })
+        }
+      })
+      if (errors && errors.length > 0) {
+        this.setState({ errors })
+      } else {
+        this.setState({ errors: [] })
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  showdel(author, currentUser) {
+    if (author == currentUser.username) {
+      return (
+        <Styledflexdiv>
+          <Divider />
+          <Anchor onClick={this.delComment}>删除</Anchor>
+        </Styledflexdiv>
+      )
+    }
+  }
   render() {
-    const { id, author, content, createdAt, postId, level } = this.props
+    const {
+      id,
+      author,
+      content,
+      createdAt,
+      postId,
+      level,
+      currentUser
+    } = this.props
     return (
       <StyledComment level={level} id={`comment-${id}`}>
         <section>
@@ -73,6 +119,7 @@ class Comment extends Component {
               {this.state.showReply ? '取消' : '回复'}
             </Anchor>
           </div>
+          {this.showdel(author, currentUser)}
         </footer>
         {this.state.showReply && (
           <SubmitCommentForm
@@ -86,5 +133,15 @@ class Comment extends Component {
     )
   }
 }
+const DEL_COMMENT_MUTATION = gql`
+  mutation delComment($id: ID!) {
+    delComment(id: $id) {
+      id
+    }
+  }
+`
 
-export default Comment
+const Comment = compose(
+  graphql(DEL_COMMENT_MUTATION, { name: 'delCommentMutation' })
+)(rawComment)
+export default withRouter(Comment)

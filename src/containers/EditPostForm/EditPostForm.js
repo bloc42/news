@@ -47,15 +47,17 @@ const StyledTips = styled.i`
   cursor: pointer;
   font-size: 0.8rem;
 `
-class SubmitPostForm extends Component {
+
+class EditPostForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: '',
-      url: '',
-      content: '',
+      id: this.props.id,
+      title: this.props.title,
+      url: this.props.url,
+      content: this.props.content,
+      channel: this.props.channel,
       errors: [],
-      mdeValue: { text: '', selection: null },
       tips: `
       MarkDown语法支持
 
@@ -72,9 +74,6 @@ class SubmitPostForm extends Component {
       `
     }
   }
-  handleValueChange(value) {
-    this.setState({ mdeValue: value })
-  }
   handleChange = e => {
     const { target } = e
     const { name, value } = target
@@ -86,21 +85,18 @@ class SubmitPostForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    let { title, url, content } = this.state
-    const searchParams = new URLSearchParams(this.props.location.search)
-    const channel = searchParams.get('channel')
-      ? searchParams.get('channel')
-      : ''
+    let { id, title, url, content, channel } = this.state
     try {
-      const { errors } = await this.props.submitPostMutation({
+      const { errors } = await this.props.editPostMutation({
         variables: {
+          id,
           title,
           url,
           content,
           channel
         },
         update: (cache, { data }) => {
-          const newPost = data.submitPost
+          const newPost = data.editPost
           const { postFeed } = cache.readQuery({ query: GET_POSTS })
           const { posts } = postFeed
           const mergedPosts = [newPost, ...posts]
@@ -129,21 +125,15 @@ class SubmitPostForm extends Component {
   }
 
   render() {
-    const searchParams = new URLSearchParams(this.props.location.search)
-    const channel = searchParams.get('channel')
-      ? searchParams.get('channel')
-      : ''
     return (
       <Form onSubmit={this.handleSubmit}>
         <h2>
-          在{channel === '' ? '唠嗑' : channel}
-          中创建新帖
+          在{this.state.channel ? this.state.channel : '唠嗑'}
+          中编辑帖子
         </h2>
-
         {this.state.errors.map((error, index) => (
           <Alert key={index} message={error.message} error />
         ))}
-
         <Form.Item>
           <Input
             type="text"
@@ -186,33 +176,41 @@ class SubmitPostForm extends Component {
           </StyledItem>
         </Form.Item>
         <Form.Item>
-          <Button primary>提交</Button>
+          <Button primary>修改</Button>
         </Form.Item>
       </Form>
     )
   }
 }
 
-const SUBMIT_POST_MUTATION = gql`
-  mutation SubmitPost(
+const EDIT_POST_MUTATION = gql`
+  mutation EditPost(
+    $id: ID!
     $title: String!
     $url: String
     $content: String
     $channel: String
   ) {
-    submitPost(title: $title, url: $url, content: $content, channel: $channel) {
+    editPost(
+      id: $id
+      title: $title
+      url: $url
+      content: $content
+      channel: $channel
+    ) {
       id
       title
       url
       author
+      content
       commentCount
       channel
     }
   }
 `
 
-const SubmitPostWithMutation = compose(
-  graphql(SUBMIT_POST_MUTATION, { name: 'submitPostMutation' })
-)(SubmitPostForm)
+const EditPostWithMutation = compose(
+  graphql(EDIT_POST_MUTATION, { name: 'editPostMutation' })
+)(EditPostForm)
 
-export default withRouter(SubmitPostWithMutation)
+export default withRouter(EditPostWithMutation)

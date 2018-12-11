@@ -212,6 +212,24 @@ const Mutation = {
     }
 
     return comment
+  },
+  async delComment(obj, args, context) {
+    const { ctx } = context
+    if (ctx.isUnauthenticated()) {
+      throw '发布评论前请先登录。'
+    }
+    const { id } = args
+    const comment = await Comment.findOneAndUpdate(
+      {
+        _id: id
+      },
+      {
+        content: '该用户已删除此评论'
+      },
+      { new: true }
+    ).exec()
+    await comment.save()
+    return comment
   }
 }
 
