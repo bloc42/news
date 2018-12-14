@@ -12,7 +12,7 @@ const api = {
   async creatorByChannel(name) {
     if (name !== '') {
       let channel = await Channel.findOne({ name }).exec()
-      if (channel.creator) {
+      if (channel && channel.creator) {
         const { creator } = channel
         return creator
       }
