@@ -6,7 +6,7 @@ const typeDefs = `
     postFeed(cursor: String,channel: String): PostFeed
     postById(id: ID!): Post
     postGrowth(dateType: String!, createdAfter: String ,createdBefore: String): PostAnalysisResult
-    hotPosts(sort: String): [PostRank]
+    hotPosts(sort: String,channel:String): [PostRank]
     totalPostsCount(dateTime: String,dayStart: String,dayEnd: String): PostCount
   }
 

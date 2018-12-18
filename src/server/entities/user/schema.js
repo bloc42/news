@@ -8,7 +8,7 @@ const typeDefs = `
     userGrowth(dateType: String!, createdAfter: String ,createdBefore: String): UserAnalysisResult
     hotUsers: [UserRank]
     totalUsersCount(dateTime: String,dayStart: String,dayEnd: String): UserCount
-    userList(cursor: String,limit: Int): UserList
+    userList(cursor: String,limit: Int,channel: String): UserList
   }
 
   type Mutation {

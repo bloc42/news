@@ -28,6 +28,13 @@ const Query = {
     const channel = await Channel.find().exec()
     return channel
   },
+  async ownChannels(obj, args, context) {
+    let channels = []
+    const { creator } = args
+    const { ctx } = context
+    channels = await Channel.find({ creator }).exec()
+    return channels
+  },
   async userInMute(obj, args, context) {
     let isMute = false
     let muteUser = []

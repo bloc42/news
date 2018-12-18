@@ -201,26 +201,60 @@ const Query = {
   },
 
   async userList(obj, args, context) {
-    let { cursor, limit } = args
+    let { cursor, limit, channel } = args
     let list = []
-    if (cursor) {
-      list = await User.find({ _id: { $lt: cursor } })
-        .limit(limit)
-        .exec()
+    if (channel) {
+      if (cursor) {
+        list = await User.find({
+          _id: { $lt: cursor },
+          following: { $in: [channel] }
+        })
+          .limit(limit)
+          .exec()
+      } else {
+        list = await User.find({ following: { $in: [channel] } })
+          .limit(limit)
+          .exec()
+      }
     } else {
-      list = await User.find()
-        .limit(limit)
-        .exec()
+      if (cursor) {
+        list = await User.find({ _id: { $lt: cursor } })
+          .limit(limit)
+          .exec()
+      } else {
+        list = await User.find()
+          .limit(limit)
+          .exec()
+      }
+    }
+
+    if (list.length == 0) {
+      return {
+        cursor: '',
+        userlist: ['']
+      }
     }
     cursor = list[list.length - 1].id
     let userlist = []
+    let usersbyPost = []
+    let usersbyComment = []
+    if (channel) {
+      usersbyPost = await Post.aggregate([
+        { $match: { channel: channel } },
+        { $group: { _id: '$author', count: { $sum: 1 } } }
+      ])
+      usersbyComment = await Comment.aggregate([
+        { $group: { _id: '$author', count: { $sum: 1 } } }
+      ])
+    } else {
+      usersbyPost = await Post.aggregate([
+        { $group: { _id: '$author', count: { $sum: 1 } } }
+      ])
+      usersbyComment = await Comment.aggregate([
+        { $group: { _id: '$author', count: { $sum: 1 } } }
+      ])
+    }
 
-    const usersbyPost = await Post.aggregate([
-      { $group: { _id: '$author', count: { $sum: 1 } } }
-    ])
-    const usersbyComment = await Comment.aggregate([
-      { $group: { _id: '$author', count: { $sum: 1 } } }
-    ])
     list.forEach(function(val, key) {
       const usernow = val
       const usernowkey = key
@@ -314,11 +348,11 @@ const Mutation = {
     let user = await User.findOne({
       $or: [{ username }, { email }]
     }).exec()
-    //await invitationCodeApi.getInvitationCode(code)
-    await EtherAccountAPI.addEtherAccountRecord(mainEthAddress, username)
     if (user) {
       throw '该用户名或邮箱已存在。'
     } else {
+      //await invitationCodeApi.getInvitationCode(code)
+      await EtherAccountAPI.addEtherAccountRecord(mainEthAddress, username)
       user = new User({ username, email, password })
       const { ctx } = context
 

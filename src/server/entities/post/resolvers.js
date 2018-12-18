@@ -165,20 +165,40 @@ const Query = {
   },
 
   async hotPosts(obj, args, context) {
-    const { sort } = args
-    let postByAll = await Post.aggregate([
-      {
-        $project: {
-          _id: '$_id',
-          title: 1,
-          commentCount: 1,
-          author: 1,
-          clickCount: 1,
-          createdAt: 1,
-          lastReader: 1
+    const { sort, channel } = args
+    let postByAll = []
+    if (channel) {
+      postByAll = await Post.aggregate([
+        {
+          $match: { channel: channel }
+        },
+        {
+          $project: {
+            _id: '$_id',
+            title: 1,
+            commentCount: 1,
+            author: 1,
+            clickCount: 1,
+            createdAt: 1,
+            lastReader: 1
+          }
         }
-      }
-    ])
+      ])
+    } else {
+      postByAll = await Post.aggregate([
+        {
+          $project: {
+            _id: '$_id',
+            title: 1,
+            commentCount: 1,
+            author: 1,
+            clickCount: 1,
+            createdAt: 1,
+            lastReader: 1
+          }
+        }
+      ])
+    }
     let result = []
     if (sort == 'comment') {
       result = postByAll.sort((a, b) => {
