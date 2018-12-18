@@ -6,6 +6,7 @@ const typeDefs = `
     channel(name: String!):Channel,
     channels(names:[String!],admin:Boolean):[Channel],
     allchannels:[Channel],
+    ownChannels(creator: String!):[Channel],
     userInMute(username: String!,name:String!):Result
   }
 
