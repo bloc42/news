@@ -36,7 +36,7 @@ const Query = {
     }
 
     // Cursor is set to the ID of the last item
-    cursor = posts[posts.length - 1].id
+    cursor = posts. length > 0 ? posts[posts.length - 1].id : cursor
 
     return {
       cursor,
