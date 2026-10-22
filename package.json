@@ -35,7 +35,7 @@
     "ramda": "^0.25.0",
     "rc-steps": "^3.3.0",
     "react": "16.4.1",
-    "react-apollo": "2.1.9",
+    "react-apollo": "3.1.5",
     "react-dom": "16.4.1",
     "react-markdown": "^4.0.3",
     "react-router-dom": "4.3.1",
